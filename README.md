@@ -13,6 +13,8 @@ The app has the following key features:
 
 ## Supporting Documents
 
+All Documentation is hosted on [GitHub Pages](https://waimea-ammacintosh.github.io/level3-project-music-roster/)
+
 Task Instructions:
 - [Instruction documents](docs/instructions/)
 
