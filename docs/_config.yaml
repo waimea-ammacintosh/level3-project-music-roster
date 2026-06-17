@@ -1,7 +1,6 @@
-title: Flask Project Template
-description: A starter Flask, Jinja and SQLite project
-author: Digital Technologies Dept.
+title: Music Roster Project
+description: A system for managing and creating a music roster
+author: Aaron Macintosh
 
-# If development is true, guides will be shown
 development: true
 picotheme: azure
