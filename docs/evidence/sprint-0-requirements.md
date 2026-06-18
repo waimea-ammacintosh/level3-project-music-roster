@@ -41,7 +41,7 @@ This implication is relevant to this project, as the app has to be useable by th
 
 ### Impact / Considerations
 
-When I make my app, I will need to consider Nielsens Useability Heuristics while designing the layout and UX of the app, so the users have a good time using my app. This implication will impact my app, as it will severely impact my design, as I will need to make sure my app is useable when I design the app, and when I implement my design.
+When I make my app, I will need to consider Nielsens Useability Heuristics while designing the layout and UX of the app, so the users have a good time using my app. I will make sure the layout of my site is consistant across all pages, especially the location of essential things like the nav bar. I will also make sure my website shows updates when a user completes an action, such as showing 'Account created' when a user finishes creating an account. This implication will impact my app, as it will severely impact my design, as I will need to make sure my app is useable when I design the app, and when I implement my design.
 
 
 
@@ -55,41 +55,41 @@ This implication is relevent to this app, as my app needs to be functional for u
 
 ### Impact / Considerations
 
-Replace this text with an explanation of what you will need to consider moving forward and how the project will be impacted by this implication.
+To make sure this implication is planned for, I will need to consider how the app will work, and what possible insecurities or bugs may arise from the design. I will need to make sure I optimise my coding to reduce lag and bugs. I will make sure to thoroughly test my app when I have finished making it to check everything works as expected. This implication will affect my project as I will need to consider making my app well optimised and free of bugs and errors.
 
 
 
-## NAME OF IMPLICATION 4
+## Legal
 
-Replace this text with a clear explanation of what the implication means.
-
-### Relevance to the System
-
-Replace this text with an explanation of why the implication is relevant to this particular project.
-
-### Impact / Considerations
-
-Replace this text with an explanation of what you will need to consider moving forward and how the project will be impacted by this implication.
-
-
-
-## NAME OF IMPLICATION 5
-
-Replace this text with a clear explanation of what the implication means.
+The legal implication of an app refers to the relevant laws that a web app must adhere to. For example, if a system is storing personal data, it must comply with the New Zealand Privacy Act of 2020.
 
 ### Relevance to the System
 
-Replace this text with an explanation of why the implication is relevant to this particular project.
+In this app, I will be storing users data. This means I will have to comply with the NZ Privacy Act 2020. Also, I will have to comply with the NZ Harmful Digital Communications Act of 2015, specifically the requirements of the 'safe harbour' protocol, as users will have the option to send messages to the admin user.
 
 ### Impact / Considerations
 
-Replace this text with an explanation of what you will need to consider moving forward and how the project will be impacted by this implication.
+I will need to consider how to effectivly implement the above laws to make sure my site is legal, and that I will have no legal responsibility if harmful content is messaged on my app. This will impact my app, as I will need to make sure these laws are well planned for, and they could have significant impacts on the design and functions of the app.
+
+
+
+## Aesthetic
+
+This implication refers to how an app looks for the users. It covers all visual aspects of the app, such as layout, colour scheme, and design.
+
+### Relevance to the System
+
+This is relevant to my app, as users will more likely trust and want to use a system that looks appealing, rather than one that is visually unpleasant to look at. This means that if I want people to use my app, I must consider asthetic choices to make them like, and use, it.
+
+### Impact / Considerations
+
+I will need to make descisions, especially about the design and layout of this app to make sure it appeals to the right audience, follows common conventions, and 
 
 
 
 # User Experience (UX) Principles
 
-## NAME OF UX PRINCIPLE 1
+## Test and Improve
 
 Replace this text with a clear explanation of what the principle means.
 
@@ -102,7 +102,7 @@ Replace this text with an explanation of why the principle is relevant to this p
 Replace this text with an explanation of what you will need to consider moving forward and how the project will be impacted by this principle.
 
 
-## NAME OF UX PRINCIPLE 2
+## Keep Tasks Quick
 
 Replace this text with a clear explanation of what the principle means.
 
@@ -115,7 +115,7 @@ Replace this text with an explanation of why the principle is relevant to this p
 Replace this text with an explanation of what you will need to consider moving forward and how the project will be impacted by this principle.
 
 
-## NAME OF UX PRINCIPLE 3
+## Clear User Flows
 
 Replace this text with a clear explanation of what the principle means.
 
