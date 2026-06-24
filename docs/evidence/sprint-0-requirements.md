@@ -83,7 +83,7 @@ This is relevant to my app, as users will more likely trust and want to use a sy
 
 ### Impact / Considerations
 
-I will need to make descisions, especially about the design and layout of this app to make sure it appeals to the right audience, follows common conventions, and 
+I will need to make descisions, especially about the design and layout of this app to make sure it appeals to the right audience, follows common conventions, and looks aesthetically pleasing. This implication will impact my project as I will need to make major UI and Aesthetic descisions to make sure my app has this implication considered and implemented.
 
 
 
@@ -91,24 +91,24 @@ I will need to make descisions, especially about the design and layout of this a
 
 ## Test and Improve
 
-Replace this text with a clear explanation of what the principle means.
+This Principle refers to regularly testing the app to catch errors, bugs, and bad design choices as soon as they are made, to minimise errors made in the code, and improve the overall UX.
 
 ### Relevance to the System
 
-Replace this text with an explanation of why the principle is relevant to this particular project.
+This Principle is relevant to my app as I will need my app to work in order for it to be a success, an this is a principal that I can apply throughout the creation process, both by myself and with the end user, to catch errors early and improve my app to work at the highest standard possible.
 
 ### Impact / Considerations
 
-Replace this text with an explanation of what you will need to consider moving forward and how the project will be impacted by this principle.
+I will need to consider regularly testing this app in all phases of the design and implementation processes, so I can catch unforseen issues, and fix them quickly before they become a problem. This consideration will impact my app, as I will have to Make sure all elements of my design is tested thoroughly.
 
 
 ## Keep Tasks Quick
 
-Replace this text with a clear explanation of what the principle means.
+This principle refers to keeping tasks within a system quick, to minimise user annoyance. This can be in terms of how many steps it takes to do an action, or how long the app takes to process requests.
 
 ### Relevance to the System
 
-Replace this text with an explanation of why the principle is relevant to this particular project.
+This principle is relevant to my system as the users must want to use my app for it to be a success, and if users are getting frustrated about unnescessary 
 
 ### Impact / Considerations
 
@@ -117,7 +117,7 @@ Replace this text with an explanation of what you will need to consider moving f
 
 ## Clear User Flows
 
-Replace this text with a clear explanation of what the principle means.
+This principle refers to how the app flows, and whether it is clear for the end user(s) how to navigate the app without trouble.
 
 ### Relevance to the System
 
