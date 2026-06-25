@@ -108,22 +108,20 @@ This principle refers to keeping tasks within a system quick, to minimise user a
 
 ### Relevance to the System
 
-This principle is relevant to my system as the users must want to use my app for it to be a success, and if users are getting frustrated about unnescessary 
+This principle is relevant to my system as the users must want to use my app for it to be a success, and if users are getting frustrated about unnecessary actions and steps to preform simple tasks, they will not want to use my app. Also, if the app takes a long time to load, they will get increaingly annoyed at my app, and not want to use it.
 
 ### Impact / Considerations
 
-Replace this text with an explanation of what you will need to consider moving forward and how the project will be impacted by this principle.
-
+I will need to consider how my design flows within my app to minimize unnecessary steps, and make it so users arent bogged down by other unnecessary actions, like too many feilds in a form. This will Impact my design as I will need to make design choices that minimise user discomfort, and minimise unnecessary site pages. I will also need to make sure that I optimise the site, so it doesnt take too long for actions to be processed.
 
 ## Clear User Flows
 
-This principle refers to how the app flows, and whether it is clear for the end user(s) how to navigate the app without trouble.
+This principle refers to how the app flows, and whether it is clear for the end user(s) how to navigate the app without trouble or guides.
 
 ### Relevance to the System
 
-Replace this text with an explanation of why the principle is relevant to this particular project.
+This is relevant to my project, as I need my app to flow well and be easy to use, as some of my end users may be older people, so they might not be able to use it if it isnt intuitive, and others might not enjoy using my app if it is hard to use.
 
 ### Impact / Considerations
 
-Replace this text with an explanation of what you will need to consider moving forward and how the project will be impacted by this principle.
-
+Due to this Principle, I will need to consider how my app appears to the user, and make it easy and intutive to move through the app. I will also need to make sure that I consider how the user will expect the app to be layed out, and stick to these expectations so that the app is intuitive to use
