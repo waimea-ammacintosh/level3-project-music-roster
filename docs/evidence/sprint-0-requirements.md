@@ -124,4 +124,4 @@ This is relevant to my project, as I need my app to flow well and be easy to use
 
 ### Impact / Considerations
 
-Due to this Principle, I will need to consider how my app appears to the user, and make it easy and intutive to move through the app. I will also need to make sure that I consider how the user will expect the app to be layed out, and stick to these expectations so that the app is intuitive to use
+Due to this Principle, I will need to consider how my app appears to the user, and make it easy and intutive to move through the app. I will also need to make sure that I consider how the user will expect the app to be layed out, and stick to these expectations so that the app is intuitive to use, and users enjoy using my app.

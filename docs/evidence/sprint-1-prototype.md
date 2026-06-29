@@ -25,9 +25,9 @@ Develop a design for the database and a UI prototype that simulates the key func
 
 ## Initial Database Design
 
-Replace this text with notes regarding the DB design.
+In the database, the user table
 
-![DB Design](screenshots/placeholder.png)
+![DB Design](screenshots/db-1.png)
 
 
 ### Required Data Input
@@ -49,7 +49,8 @@ The first stage of prototyping was to explore how the UI might 'flow' between st
 
 This Figma demo shows the initial design for the UI 'flow':
 
-**FIGMA FLOW - PLACE THE FIGMA EMBED CODE HERE - MAKE SURE IT IS SET SO THAT EVERYONE CAN ACCESS IT**
+<iframe src="https://design.penpot.app/#/view?file-id=f0485fb1-4e63-8165-8008-3908f4b684e5&page-id=f0485fb1-4e63-8165-8008-3908f4b684e6&section=interactions&index=11" width="100%" height="600px" style="border: none;"></iframe>
+
 
 ### Testing
 
