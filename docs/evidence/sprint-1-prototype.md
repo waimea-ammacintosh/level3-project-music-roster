@@ -7,8 +7,6 @@ Develop a design for the database and a UI prototype that simulates the key func
 
 ### Specific Goals
 
-**Edit these goals as needed**
-
 - Design the database:
     - Tables
     - Fields / types
@@ -20,34 +18,43 @@ Develop a design for the database and a UI prototype that simulates the key func
     - User interactions and 'flow'
     - Page layouts / features
     - Colour palette
-    - Etc.
 
 
 ## Initial Database Design
 
-In the database, the user table
+In the database, the user table holds data about the user, such as their names, instruments, password hash, and their usename. The week table holds data about the specific week, such as its date and practice date. These tables are linked to create a roster, represented by the roster table. They are also linked to create a table of when people are unavailable, represented by the unavailabilities table. Finally, the requests table stores requests made by users to change a time, and holds data of the date they need changes, the message they sent, and the id of the user who sent the request.
 
 ![DB Design](screenshots/db-1.png)
 
 
 ### Required Data Input
 
-users will initially input text data to create their account, and then every once in a while, they will input dates to show unavailability. 
+Users will initially input text data to create their account, and then every once in a while, they will input date type data to show unavailability. They will also need to input text and date data when making a request. Admin Users will need to input date data to create weeks, and text data to change people, and also add them to the roster.
 
 ### Required Data Output
 
-Replace this text with a description of the outputs for the system - what types of data will be displayed?
+Users will see text data (their names, instruments, and the names/instruments of others on at the same time), and date data (the date of the weeks they are playing). Admin will see text data (names and instruments in the roster, and while reviewing requests), and data data (date of weeks in roster, and when reviewing requests).
 
 ### Required Data Processing
 
 Replace this text with a description of how the data will be processed to achieve the desired output(s) - any processes / formulae?
 
 
+### Testing
+ 
+I showed this database to my end-user, and they had some ideas. They thought that it would be good if people could have more than one instrument, as some people do multiple things, so they need to be able to be put on for multiple instruments. They also thought that the roles should be stored in a separate table, as users might have multiple roles.
+
+### Changes / Improvements
+
+Taking into account his suggestions, and created a new database design, with a new instruments and link table, and a new roles and link table.
+
+![2nd DB Design](screenshots/db-2.png)
+
 ## UI 'Flow'
 
 The first stage of prototyping was to explore how the UI might 'flow' between states, based on the required functionality.
 
-[This](https://design.penpot.app/#/view?file-id=f0485fb1-4e63-8165-8008-3908f4b684e5&page-id=f0485fb1-4e63-8165-8008-3908f4b684e6&section=interactions&index=11) demo shows the initial design for the UI 'flow'.
+[This](https://design.penpot.app/#/view?file-id=f0485fb1-4e63-8165-8008-3908f4b684e5&page-id=f0485fb1-4e63-8165-8008-3908f4b684e6&section=interactions&index=0&share-id=a234c67f-eb39-8116-8008-3f6be796e777) demo shows the initial design for the UI 'flow'.
 
 
 
@@ -69,17 +76,16 @@ Because of this feedback, I improved the flow to include a more pages for a week
 
 The next stage of prototyping was to develop the layout for each screen of the UI.
 
-This Figma demo shows the initial layout design for the UI:
+[This](https://design.penpot.app/#/view?file-id=f0485fb1-4e63-8165-8008-3908f4b684e5&page-id=f0485fb1-4e63-8165-8008-3908f4b684e6&section=interactions&index=11) demo shows the initial design prototype for the UI.
 
-*FIGMA PROTOTYPE - PLACE THE FIGMA EMBED CODE HERE - MAKE SURE IT IS SET SO THAT EVERYONE CAN ACCESS IT*
 
 ### Testing
 
-Replace this text with notes about what you did to test the UI flow and the outcome of the testing.
+When I tested this design with my end user, I found a few bugs in my UI, such as some buttons not leading to the right place, for example, if a regular user tried to see the roster, it would take them back to the admin page when they exited.
 
 ### Changes / Improvements
 
-Replace this text with notes any improvements you made as a result of the testing.
+I fixed these bugs, and made sure all my buttons work as intended, and cleaned up a few other UI errors, like making sure buttons were centered, and looked like buttons.
 
 *FIGMA IMPROVED PROTOTYPE - PLACE THE FIGMA EMBED CODE HERE - MAKE SURE IT IS SET SO THAT EVERYONE CAN ACCESS IT*
 
