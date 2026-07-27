@@ -94,9 +94,48 @@ I fixed these bugs, and made sure all my buttons work as intended, and cleaned u
 
 Having established the layout of the UI screens, the prototype was refined visually, in terms of colour, fonts, etc.
 
-This Figma demo shows the UI with refinements applied:
+For initial colour schemes, I gave my user a few options:
 
-*FIGMA REFINED PROTOTYPE - PLACE THE FIGMA EMBED CODE HERE - MAKE SURE IT IS SET SO THAT EVERYONE CAN ACCESS IT*
+Blue:
+
+![blue dark color scheme](screenshots/blue-dark.png)
+
+![blue light color scheme](screenshots/blue-light.png)
+
+Bright Purple:
+
+![bright purple dark color scheme](screenshots/bright-purple-dark.png)
+
+![bright purple light color scheme](screenshots/bright-purple-light.png)
+
+Earth:
+
+![earth dark color scheme](screenshots/earth-dark.png)
+
+![earth light color scheme](screenshots/earth-light.png)
+
+Slate:
+
+![slate dark color scheme](screenshots/slate-dark.png)
+
+![slate dark color scheme](screenshots/slate-light.png)
+
+The end user thought that was the best color scheme, so I implemented this color scheme in the demo.
+
+I also had a few font options for them to choose from:
+
+![Epunda Sans](screenshots/epunda-sans.png)
+![Golos Text](screenshots/Golos-Text.png)
+
+![Kanchenjunga](screenshots/Kanchenjunga.png)
+![Namdhinggo](screenshots/namdhinggo.png)
+
+![ZCOOL XianWei](screenshots/ZCOOL-XiaoWei.png)
+
+The end user thought that was the best font, so I implemented it in the demo
+
+This demo shows the UI with refinements applied.
+
 
 ### Testing
 
