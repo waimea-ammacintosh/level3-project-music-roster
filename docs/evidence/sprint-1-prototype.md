@@ -120,7 +120,7 @@ Slate:
 
 ![slate dark color scheme](screenshots/slate-light.png)
 
-The end user thought that was the best color scheme, so I implemented this color scheme in the demo.
+The end user thought that the blue colour scheme was the best color scheme, so I implemented this color scheme in the demo.
 
 I also had a few font options for them to choose from:
 
@@ -132,7 +132,7 @@ I also had a few font options for them to choose from:
 
 ![ZCOOL XianWei](screenshots/ZCOOL-XiaoWei.png)
 
-The end user thought that was the best font, so I implemented it in the demo
+The end user liked Golos text and Epunda Sans the best, so I chose Epunda Sans as my font, and implemented it in the demo
 
 This demo shows the UI with refinements applied.
 
