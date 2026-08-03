@@ -85,9 +85,7 @@ When I tested this design with my end user, I found a few bugs in my UI, such as
 
 ### Changes / Improvements
 
-I fixed these bugs, and made sure all my buttons work as intended, and cleaned up a few other UI errors, like making sure buttons were centered, and looked like buttons.
-
-*FIGMA IMPROVED PROTOTYPE - PLACE THE FIGMA EMBED CODE HERE - MAKE SURE IT IS SET SO THAT EVERYONE CAN ACCESS IT*
+I fixed these bugs, and made sure all my buttons work as intended. I also cleaned up a few other UI errors, like making sure buttons were centered and looked like buttons, and made sure everything was in a good layout that suited my project.
 
 
 ## Refined UI Prototype
@@ -134,7 +132,7 @@ I also had a few font options for them to choose from:
 
 The end user liked Golos text and Epunda Sans the best, so I chose Epunda Sans as my font, and implemented it in the demo
 
-This demo shows the UI with refinements applied.
+[This](https://design.penpot.app/#/view?file-id=8b1c6e78-ea22-8156-8008-63757c0fb0b8&page-id=f0485fb1-4e63-8165-8008-3908f4b684e6&section=interactions&index=0&interactions-mode=show-on-click&share-id=6f06cb60-262a-804c-8008-6c83824208d0) demo shows the UI with refinements applied.
 
 
 ### Testing
