@@ -15,33 +15,120 @@
 #     SEED_DATA = "INSERT INTO name (...)" or None
 #----------------------------------------------------------------------------
 
-class NoteTable:
+class UserTable:
 
-    NAME = "note"
+    NAME = "user"
 
     SCHEMA = """
-        CREATE TABLE note (
-            id      INTEGER PRIMARY KEY AUTOINCREMENT,
-            title   TEXT NOT NULL,
-            body    TEXT,
-            pinned  INTEGER DEFAULT 0,
-            created TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        CREATE TABLE user (
+            id             INTEGER PRIMARY KEY AUTOINCREMENT,
+            email          TEXT NOT NULL,
+            first_name     TEXT NOT NULL,
+            last_name      TEXT NOT NULL,
+            pw_hash        TEXT NOT NULL,
+            instrument_id  INTEGER NOT NULL,
+            role_id        INTEGER 
         )
     """
 
     SEED_DATA = """
-        INSERT INTO note (title, pinned, body)
+        INSERT INTO user (email, first_name, last_name, pw_hash, instrument_id, role_id)
         VALUES
-            ("Welcome!",      1, "This is a demo application using Flask, Jinja and SQLite."),
-            ("Shopping List", 0, "Milk\nBread\nEggs\nCheese"),
-            ("Meeting Notes", 0, "Discussed project timeline.\n\nAction items:\n- Review design\n- Update docs"),
-            ("Recipe: Pasta", 0, "Ingredients:\n- 500g pasta\n- Tomato sauce\n- Garlic\n\nCook pasta, add sauce, enjoy!"),
-            ("Important!",    1, "Remember to backup your database regularly.")
+            
     """
 
 # Add more table classes here...
+class WeekTable:
 
+    NAME = "week"
 
+    SCHEMA = """
+        CREATE TABLE week (
+            id              INTEGER PRIMARY KEY AUTOINCREMENT,
+            date            DATE NOT NULL,
+            practice_date   DATE NOT NULL,
+            file_id         BIGINT
+,  
+        )
+    """
+
+    SEED_DATA = """
+        INSERT INTO week (date, practice_date, file_id)
+        VALUES
+            
+    """
+
+class FileTable:
+
+    NAME = "file"
+
+    SCHEMA = """
+        CREATE TABLE file (
+            id          BIGINT PRIMARY KEY AUTOINCREMENT,
+            filename    TEXT NOT NULL
+        )
+    """
+
+    SEED_DATA = """
+        INSERT INTO file (filename)
+        VALUES
+    """
+
+class RoleTable:
+
+    NAME = "role"
+
+    SCHEMA = """
+        CREATE TABLE role (
+            id  INTEGER PRIMARY KEY AUTOINCREMENT,
+            name    TEXT NOT NULL
+
+        )
+    """
+
+    SEED_DATA = """
+        INSERT INTO role (name)
+        VALUES
+
+    """
+
+class InstrumentTable:
+
+    NAME = "instrument"
+
+    SCHEMA = """
+        CREATE TABLE instrument (
+            id      INTEGER PRIMARY KEY AUTOINCREMENT,
+            name    TEXT NOT NULL
+
+        )
+    """
+
+    SEED_DATA = """
+        INSERT INTO instrument (name)
+        VALUES
+
+    """
+
+class RequestTable:
+
+    NAME = "request"
+
+    SCHEMA = """
+        CREATE TABLE request (
+            id        INTEGER PRIMARY KEY AUTOINCREMENT,
+            date      DATE NOT NULL,
+            message   DATE NOT NULL,
+            user_id   INTEGER NOT NULL
+,  
+        )
+    """
+
+    SEED_DATA = """
+        INSERT INTO request (date, message, user_id)
+        VALUES
+            
+    """
 
 #----------------------------------------------------------------------------
 # Table registry
@@ -59,7 +146,14 @@ class NoteTable:
 #----------------------------------------------------------------------------
 
 TABLES = [
-    NoteTable,
+    UserTable,
+    WeekTable,
+    FileTable,
+    RoleTable,
+    InstrumentTable,
+    RequestTable,
+    
+
     # Add more tables here...
 ]
 
