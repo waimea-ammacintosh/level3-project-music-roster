@@ -26,14 +26,17 @@ class UserTable:
             first_name     TEXT NOT NULL,
             last_name      TEXT NOT NULL,
             pw_hash        TEXT NOT NULL,
-            instrument_id  INTEGER NOT NULL,
-            role_id        INTEGER 
+            role_id        INTEGER, 
+
+            FOREIGN KEY (role_id) REFERENCES role(id)
         )
     """
 
     SEED_DATA = """
-        INSERT INTO user (email, first_name, last_name, pw_hash, instrument_id, role_id)
+        INSERT INTO user (email, first_name, last_name, pw_hash, role_id)
         VALUES
+        ('aaron.macintosh@icloud.com', 'Aaron', 'Macintosh', 'scrypt:32768:8:1$bWFxNHmhbwCRY5lc$7f093fbd397c96d03868f046e2e51cac69ea72598b0c267933982c2b029f7cf8a4f219ca08d37ffe2f6f3bbeeffd5171f253c9291722eb58ff60e01bf262ebec', 0)
+        ('bobby@mail.com', 'Bob', 'Looffd', 'scrypt:32768:8:1$bWFxNHmhbwCRY5lc$7f093fbd397c96d03868f046e2e51cac69ea72598b0c267933982c2b029f7cf8a4f219ca08d37ffe2f6f3bbeeffd5171f253c9291722eb58ff60e01bf262ebec', 1)
             
     """
 
@@ -47,14 +50,16 @@ class WeekTable:
             id              INTEGER PRIMARY KEY AUTOINCREMENT,
             date            DATE NOT NULL,
             practice_date   DATE NOT NULL,
-            file_id         BIGINT
+
+            
 ,  
         )
     """
 
     SEED_DATA = """
-        INSERT INTO week (date, practice_date, file_id)
+        INSERT INTO week (date, practice_date)
         VALUES
+        (2026-11-08, 2026-11-05)
             
     """
 
@@ -65,13 +70,17 @@ class FileTable:
     SCHEMA = """
         CREATE TABLE file (
             id          BIGINT PRIMARY KEY AUTOINCREMENT,
-            filename    TEXT NOT NULL
+            filename    TEXT NOT NULL,
+            week_id     INTEGER
+
+            FOREIGN KEY (week_id) REFERENCES week(id)
         )
     """
 
     SEED_DATA = """
-        INSERT INTO file (filename)
+        INSERT INTO file (filename, week_id)
         VALUES
+        ('song.pdf',0)
     """
 
 class RoleTable:
@@ -89,6 +98,8 @@ class RoleTable:
     SEED_DATA = """
         INSERT INTO role (name)
         VALUES
+        ('admin')
+        ('leader')
 
     """
 
@@ -107,6 +118,9 @@ class InstrumentTable:
     SEED_DATA = """
         INSERT INTO instrument (name)
         VALUES
+        ('bass')
+        ('acoustic guitar')
+        ('sing')
 
     """
 
@@ -120,6 +134,8 @@ class RequestTable:
             date      DATE NOT NULL,
             message   DATE NOT NULL,
             user_id   INTEGER NOT NULL
+
+            FOREIGN KEY (user_id) REFERENCES user(id)
 ,  
         )
     """
@@ -127,9 +143,72 @@ class RequestTable:
     SEED_DATA = """
         INSERT INTO request (date, message, user_id)
         VALUES
+        (2026-11-08, 'I am most sorry, I am unable to attend this week, as I cannot handle my eyes.', 0)
             
     """
 
+class InstrumentUserTable:
+
+    NAME = "instrument-user"
+
+    SCHEMA = """
+        CREATE TABLE instrument-user (
+            user_id         INTEGER NOT NULL,
+            instrument_id   INTEGER NOT NULL,
+
+            FOREIGN KEY (user_id) REFERENCES user(id)
+            FOREIGN KEY (instrument_id) REFERENCES instrument(id)
+        )
+    """
+
+    SEED_DATA = """
+        INSERT INTO request (user_id, instrument_id)
+        VALUES
+        (0, 0)
+            
+    """
+
+class RosterTable:
+
+    NAME = "roster"
+
+    SCHEMA = """
+        CREATE TABLE roster (
+            user_id         INTEGER NOT NULL,
+            week_id   INTEGER NOT NULL,
+
+            FOREIGN KEY (user_id) REFERENCES user(id)
+            FOREIGN KEY (week_id) REFERENCES week(id)
+        )
+    """
+
+    SEED_DATA = """
+        INSERT INTO request (user_id, week_id)
+        VALUES
+        (0, 0)
+            
+    """
+
+class UnavailablityTable:
+
+    NAME = "unavailablity"
+
+    SCHEMA = """
+        CREATE TABLE unavailablity (
+            user_id   INTEGER NOT NULL,
+            week_id   INTEGER NOT NULL,
+
+            FOREIGN KEY (user_id) REFERENCES user(id)
+            FOREIGN KEY (week_id) REFERENCES week(id)
+        )
+    """
+
+    SEED_DATA = """
+        INSERT INTO request (user_id, instrument_id)
+        VALUES
+        (1, 0)
+            
+    """
 #----------------------------------------------------------------------------
 # Table registry
 #----------------------------------------------------------------------------
@@ -146,14 +225,14 @@ class RequestTable:
 #----------------------------------------------------------------------------
 
 TABLES = [
-    UserTable,
-    WeekTable,
-    FileTable,
     RoleTable,
     InstrumentTable,
+    UserTable,
+    InstrumentUserTable,
     RequestTable,
-    
-
-    # Add more tables here...
+    RosterTable,
+    UnavailablityTable,    
+    WeekTable,
+    FileTable,
 ]
 

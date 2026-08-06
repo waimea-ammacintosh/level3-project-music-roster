@@ -21,9 +21,9 @@ Implement the database, populated with test data. Create queries that retrieve t
     - Etc.
 
 
-## Testing FEATURE NAME HERE
+## Testing Table Implementation with test data
 
-Replace this text with notes about what you are testing, how you tested it, and the outcome of the testing
+I am testing to see wether the tables in my database are working, and can handle test data to get set up to work in the future. To test this, I put a few records in each table, and constructed the database.
 
 **PLACE SCREENSHOTS AND/OR ANIMATED GIFS OF THE TESTING HERE**
 
