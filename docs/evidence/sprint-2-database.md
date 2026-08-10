@@ -25,15 +25,29 @@ Implement the database, populated with test data. Create queries that retrieve t
 
 I am testing to see wether the tables in my database are working, and can handle test data to get set up to work in the future. To test this, I put a few records in each table, and constructed the database.
 
-**PLACE SCREENSHOTS AND/OR ANIMATED GIFS OF THE TESTING HERE**
+Some example Schemas:
 
-![Placeholder](screenshots/placeholder.png)
+![Instrument table Schema](screenshots/Instrument-table-schema.png)
+
+![Instrument-User table Schema](screenshots/Instrument-User-Table-Schema.png)
+
+![Week table Schema](screenshots/Week-table-schema.png)
+
+
+When I tested the table creation and seeding, there were many bugs. For example, there would often be an extra comma, or a missing value, and the table couldn't be created.
+For example:
+
+![Broken File table schema due to a missing comma](screenshots/broken-file-schema-F.K.png)
+
+This led to an error, as a comma was missing after the last column in the table, so the computer couldn't handle the foreign key creation, and caused this error:
+
+![File Table error](screenshots/File-Table-Error.png)
 
 ### Changes / Improvements
 
-Replace this text with notes any improvements you made as a result of the testing.
+Because of this, I went through each table, one at a time, and made sure that there were no errors, and that when I recreated the DB, it would create and seed all the tables with no errors. This resulted in each table being able to be created, and handle data, as shown here:
 
-**PLACE SCREENSHOTS AND/OR ANIMATED GIFS OF THE IMPROVED SYSTEM HERE**
+![Succesful db creation](screenshots/Successful-db.gif)
 
 
 ## Testing FEATURE NAME HERE

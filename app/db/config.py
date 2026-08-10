@@ -35,7 +35,7 @@ class UserTable:
     SEED_DATA = """
         INSERT INTO user (email, first_name, last_name, pw_hash, role_id)
         VALUES
-        ('aaron.macintosh@icloud.com', 'Aaron', 'Macintosh', 'scrypt:32768:8:1$bWFxNHmhbwCRY5lc$7f093fbd397c96d03868f046e2e51cac69ea72598b0c267933982c2b029f7cf8a4f219ca08d37ffe2f6f3bbeeffd5171f253c9291722eb58ff60e01bf262ebec', 0)
+        ('aaron.macintosh@icloud.com', 'Aaron', 'Macintosh', 'scrypt:32768:8:1$bWFxNHmhbwCRY5lc$7f093fbd397c96d03868f046e2e51cac69ea72598b0c267933982c2b029f7cf8a4f219ca08d37ffe2f6f3bbeeffd5171f253c9291722eb58ff60e01bf262ebec', 0),
         ('bobby@mail.com', 'Bob', 'Looffd', 'scrypt:32768:8:1$bWFxNHmhbwCRY5lc$7f093fbd397c96d03868f046e2e51cac69ea72598b0c267933982c2b029f7cf8a4f219ca08d37ffe2f6f3bbeeffd5171f253c9291722eb58ff60e01bf262ebec', 1)
             
     """
@@ -49,10 +49,7 @@ class WeekTable:
         CREATE TABLE week (
             id              INTEGER PRIMARY KEY AUTOINCREMENT,
             date            DATE NOT NULL,
-            practice_date   DATE NOT NULL,
-
-            
-,  
+            practice_date   DATE NOT NULL  
         )
     """
 
@@ -69,9 +66,9 @@ class FileTable:
 
     SCHEMA = """
         CREATE TABLE file (
-            id          BIGINT PRIMARY KEY AUTOINCREMENT,
+            id          INTEGER PRIMARY KEY AUTOINCREMENT,
             filename    TEXT NOT NULL,
-            week_id     INTEGER
+            week_id     INTEGER NOT NULL,
 
             FOREIGN KEY (week_id) REFERENCES week(id)
         )
@@ -89,7 +86,7 @@ class RoleTable:
 
     SCHEMA = """
         CREATE TABLE role (
-            id  INTEGER PRIMARY KEY AUTOINCREMENT,
+            id      INTEGER PRIMARY KEY AUTOINCREMENT,
             name    TEXT NOT NULL
 
         )
@@ -98,7 +95,7 @@ class RoleTable:
     SEED_DATA = """
         INSERT INTO role (name)
         VALUES
-        ('admin')
+        ('admin'),
         ('leader')
 
     """
@@ -118,8 +115,8 @@ class InstrumentTable:
     SEED_DATA = """
         INSERT INTO instrument (name)
         VALUES
-        ('bass')
-        ('acoustic guitar')
+        ('bass'),
+        ('acoustic guitar'),
         ('sing')
 
     """
@@ -132,11 +129,10 @@ class RequestTable:
         CREATE TABLE request (
             id        INTEGER PRIMARY KEY AUTOINCREMENT,
             date      DATE NOT NULL,
-            message   DATE NOT NULL,
-            user_id   INTEGER NOT NULL
+            message   TEXT NOT NULL,
+            user_id   INTEGER NOT NULL,
 
-            FOREIGN KEY (user_id) REFERENCES user(id)
-,  
+            FOREIGN KEY (user_id) REFERENCES user(id)  
         )
     """
 
@@ -149,20 +145,20 @@ class RequestTable:
 
 class InstrumentUserTable:
 
-    NAME = "instrument-user"
+    NAME = "instrumentUser"
 
     SCHEMA = """
-        CREATE TABLE instrument-user (
+        CREATE TABLE instrumentUser (
             user_id         INTEGER NOT NULL,
             instrument_id   INTEGER NOT NULL,
 
-            FOREIGN KEY (user_id) REFERENCES user(id)
+            FOREIGN KEY (user_id) REFERENCES user(id),
             FOREIGN KEY (instrument_id) REFERENCES instrument(id)
         )
     """
 
     SEED_DATA = """
-        INSERT INTO request (user_id, instrument_id)
+        INSERT INTO instrumentUser (user_id, instrument_id)
         VALUES
         (0, 0)
             
@@ -183,7 +179,7 @@ class RosterTable:
     """
 
     SEED_DATA = """
-        INSERT INTO request (user_id, week_id)
+        INSERT INTO roster (user_id, week_id)
         VALUES
         (0, 0)
             
@@ -191,10 +187,10 @@ class RosterTable:
 
 class UnavailablityTable:
 
-    NAME = "unavailablity"
+    NAME = "unavailability"
 
     SCHEMA = """
-        CREATE TABLE unavailablity (
+        CREATE TABLE unavailability (
             user_id   INTEGER NOT NULL,
             week_id   INTEGER NOT NULL,
 
@@ -204,7 +200,7 @@ class UnavailablityTable:
     """
 
     SEED_DATA = """
-        INSERT INTO request (user_id, instrument_id)
+        INSERT INTO unavailability (user_id, week_id)
         VALUES
         (1, 0)
             
