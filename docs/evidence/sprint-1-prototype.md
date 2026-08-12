@@ -137,11 +137,13 @@ The end user liked Golos text and Epunda Sans the best, so I chose Epunda Sans a
 
 ### Testing
 
-I talked to my end User, and they said that they liked the design, but would also love a desktop view for the admin user, and 
+I talked to my end User, and they had a few comments on the design. They thought that many improvements could be made, such as adding boxes around pages to make the UI look cleaner,
+having full-width buttons, smaller fonts, a new layout for the home page with all the buttons on one half of the page. They also wanted me to check my spelling and grammar, as they
+noticed that some text boxes had incorrect spelling and grammar.
 
 ### Changes / Improvements
 
-Replace this text with notes any improvements you made as a result of the testing.
+As a result of this, I went and made a final design, with a UI that looks clean, and takes into consideration all the feedback that my end user gave me.
 
 *FIGMA IMPROVED REFINED PROTOTYPE - PLACE THE FIGMA EMBED CODE HERE - MAKE SURE IT IS SET SO THAT EVERYONE CAN ACCESS IT*
 
