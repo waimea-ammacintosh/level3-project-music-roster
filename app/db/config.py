@@ -93,10 +93,10 @@ class RoleTable:
     """
 
     SEED_DATA = """
-        INSERT INTO role (name)
+        INSERT INTO role (id, name)
         VALUES
-        ('admin'),
-        ('leader')
+        (1, 'admin'),
+        (2, 'leader')
 
     """
 

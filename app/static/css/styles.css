@@ -68,13 +68,13 @@ main > h2 {
 
 /* Notes --------------------------------------------------*/
 
-#notes {
+#users {
     display: grid;
     gap: 2rem;
     grid-template-columns: repeat(auto-fit, minmax(min(15rem, 100%), 1fr));
     align-items: start;
 
-    .note {
+    .user {
         padding: 1rem;
         box-shadow: 0 0.5rem 1rem #0004;
         border: 1px solid var(--border-col);
@@ -89,10 +89,6 @@ main > h2 {
         footer {
             font-size: 0.8rem;
             font-style: italic;
-        }
-
-        &.pinned {
-            border-color: var(--accent-col);
         }
     }
 }
