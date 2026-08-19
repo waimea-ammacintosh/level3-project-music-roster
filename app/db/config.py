@@ -35,8 +35,8 @@ class UserTable:
     SEED_DATA = """
         INSERT INTO user (email, first_name, last_name, pw_hash, role_id)
         VALUES
-        ('aaron.macintosh@icloud.com', 'Aaron', 'Macintosh', 'scrypt:32768:8:1$bWFxNHmhbwCRY5lc$7f093fbd397c96d03868f046e2e51cac69ea72598b0c267933982c2b029f7cf8a4f219ca08d37ffe2f6f3bbeeffd5171f253c9291722eb58ff60e01bf262ebec', 0),
-        ('bobby@mail.com', 'Bob', 'Looffd', 'scrypt:32768:8:1$bWFxNHmhbwCRY5lc$7f093fbd397c96d03868f046e2e51cac69ea72598b0c267933982c2b029f7cf8a4f219ca08d37ffe2f6f3bbeeffd5171f253c9291722eb58ff60e01bf262ebec', 1)
+        ('aaron.macintosh@icloud.com', 'Aaron', 'Macintosh', 'scrypt:32768:8:1$bWFxNHmhbwCRY5lc$7f093fbd397c96d03868f046e2e51cac69ea72598b0c267933982c2b029f7cf8a4f219ca08d37ffe2f6f3bbeeffd5171f253c9291722eb58ff60e01bf262ebec', 1),
+        ('bobby@mail.com', 'Bob', 'Looffd', 'scrypt:32768:8:1$bWFxNHmhbwCRY5lc$7f093fbd397c96d03868f046e2e51cac69ea72598b0c267933982c2b029f7cf8a4f219ca08d37ffe2f6f3bbeeffd5171f253c9291722eb58ff60e01bf262ebec', 2)
             
     """
 
@@ -56,7 +56,7 @@ class WeekTable:
     SEED_DATA = """
         INSERT INTO week (date, practice_date)
         VALUES
-        (2026-11-08, 2026-11-05)
+        ('2026-11-08', '2026-11-05')
             
     """
 
@@ -77,7 +77,7 @@ class FileTable:
     SEED_DATA = """
         INSERT INTO file (filename, week_id)
         VALUES
-        ('song.pdf',0)
+        ('song.pdf', 1)
     """
 
 class RoleTable:
@@ -93,10 +93,10 @@ class RoleTable:
     """
 
     SEED_DATA = """
-        INSERT INTO role (id, name)
+        INSERT INTO role (name)
         VALUES
-        (1, 'admin'),
-        (2, 'leader')
+        ('Admin'),
+        ('Leader')
 
     """
 
@@ -160,7 +160,9 @@ class InstrumentUserTable:
     SEED_DATA = """
         INSERT INTO instrumentUser (user_id, instrument_id)
         VALUES
-        (0, 0)
+        (1, 1),
+        (1, 2),
+        (2, 3)
             
     """
 
@@ -181,7 +183,7 @@ class RosterTable:
     SEED_DATA = """
         INSERT INTO roster (user_id, week_id)
         VALUES
-        (0, 0)
+        (1, 1)
             
     """
 
@@ -202,7 +204,7 @@ class UnavailablityTable:
     SEED_DATA = """
         INSERT INTO unavailability (user_id, week_id)
         VALUES
-        (1, 0)
+        (1, 1)
             
     """
 #----------------------------------------------------------------------------

@@ -23,7 +23,11 @@
                 <p>{{ user.email }}</p>
 
                 <footer>
-                    Role: {% if user.name != null %} {{ user.name }} {% else %} {{ "none" }} {% endif %}
+                    Role: {% if user.name != null %} {{ user.name }} {% else %} {{ "none" }} {% endif %}<br>
+                    Instrument(s): 
+                    {% for instrument in user["instruments"] %}
+                     {{ instrument.name }}{% if instrument = user["instruments"].last() %} '' {% else %}", " {% endif %} 
+                    {% endfor %}
                 </footer>
 
             </div>
@@ -61,24 +65,21 @@
       </label>
 
       <label>
-            Instrument
-            <select name="instrument" required>
-                <option selected value="">Choose your Instrument</option>
-                {% for instrument in instruments %}
-                    <option>{{ instrument.name }}</option>
-                {% endfor %}
-            </select>
-        </label>
+        Instrument
+        {% for instrument in instruments %}
+          <label><input type="checkbox" name="instrument" value="{{ instrument.name }}"></label>{{ instrument.name }}<br>
+        {% endfor %}
+      </label>
 
-        <label>
-            Role
-            <select name="role" required>
-                <option selected value="">No Role</option>
-                {% for role in roles %}
-                    <option>{{ role.name }}</option>
-                {% endfor %}
-            </select>
-        </label>
+      <label>
+        Role
+        <select name="role">
+          <option selected value="">No Role</option>
+            {% for role in roles %}
+              <option>{{ role.name }}</option>
+            {% endfor %}
+        </select>
+      </label>
 
       <button>Submit</button>
 
