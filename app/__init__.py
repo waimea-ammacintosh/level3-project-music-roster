@@ -36,6 +36,7 @@ def home():
         params = ()
         users = db.execute(sql, params).fetchall()
 
+
         for user in users:
 
             sql = """

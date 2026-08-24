@@ -50,11 +50,13 @@ Because of this, I went through each table, one at a time, and made sure that th
 ![Succesful db creation](screenshots/Successful-db.gif)
 
 
-## Testing FEATURE NAME HERE
+## Testing User Data Display
 
-Replace this text with notes about what you are testing, how you tested it, and the outcome of the testing
+I am testing the display of all the data linked to one user. This is including data such as roles and instruments, which are stored in a separate table.
 
-**PLACE SCREENSHOTS AND/OR ANIMATED GIFS OF THE TESTING HERE**
+Table Contents:
+
+
 
 ### Changes / Improvements
 
