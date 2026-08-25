@@ -23,10 +23,10 @@
                 <p>{{ user.email }}</p>
 
                 <footer>
-                    Role: {% if user.name != null %} {{ user.name }} {% else %} {{ "none" }} {% endif %}<br>
+                    Role: {% if user.name != null %} {{ user.name }} {% else %} "none" {% endif %}<br>
                     Instrument(s): 
                     {% for instrument in user["instruments"] %}
-                     {{ instrument.name }}<br>
+                     {{ instrument.name }}{% if instrument == user["instruments"][-1] %} {% else %}, {% endif %} 
                     {% endfor %}
                 </footer>
 
