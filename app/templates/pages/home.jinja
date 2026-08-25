@@ -7,83 +7,14 @@
 
 {% block content %}
 
-    <h2>Sign Up</h2>
+  <h2>Welcome User!!</h2>
 
-    <section id="users">
+  <button onclick="window.location.href='/register';" >Register</button>
+  <h4>Or</h4>
+  <button >Sign In</button>
 
-        {% for user in users %}
+  <button onclick="window.location.href='/users/show';" >see users</button>
 
-            <div class="user">
-
-                <header>
-                    <h3>{{ user.first_name }}</h3>
-                </header>
-
-                <p>{{ user.last_name }}</p>
-                <p>{{ user.email }}</p>
-
-                <footer>
-                    Role: {% if user.name != null %} {{ user.name }} {% else %} {{ "none" }} {% endif %}<br>
-                    Instrument(s): 
-                    {% for instrument in user["instruments"] %}
-                     {{ instrument.name }}<br>
-                    {% endfor %}
-                </footer>
-
-            </div>
-
-        {% else %}
-
-            <p>No People!</p>
-
-        {% endfor %}
-
-    </section>
-
-    <h2>Sign up</h2>
-
-    <form method="post" action="/users">
-    
-      <label>
-        First name
-        <input type="text" name="first_name" required>
-      </label>
-
-      <label>
-        Surname
-        <input type="text" name="last_name" required>
-      </label>
-
-      <label>
-        Email
-        <input type="text" name="email" required>
-      </label>
-
-      <label>
-        Password
-        <input type="password" name="password" required>
-      </label>
-
-      <label>
-        Instrument
-        {% for instrument in instruments %}
-          <label><input type="checkbox" name="instrument" value="{{ instrument.name }}"></label>{{ instrument.name }}<br>
-        {% endfor %}
-      </label>
-
-      <label>
-        Role
-        <select name="role">
-          <option selected value="">No Role</option>
-            {% for role in roles %}
-              <option>{{ role.name }}</option>
-            {% endfor %}
-        </select>
-      </label>
-
-      <button>Submit</button>
-
-    </form>
 
 {% endblock %}
 

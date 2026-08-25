@@ -1,6 +1,6 @@
 #===========================================================
-# PROJECT NAME HERE
-# By YOUR NAME HERE
+# ROSTER APP
+# By AARON MACINTOSH
 #===========================================================
 
 from flask import Flask, request, session, render_template, flash, redirect, send_file, make_response
@@ -21,10 +21,44 @@ app = Flask(__name__)
 #===========================================================
 
 #-----------------------------------------------------------
-# Home page - Show all notes
+# Welcome page
 #-----------------------------------------------------------
 @app.get("/")
 def home():
+
+    return render_template("pages/home.jinja")
+
+
+#-----------------------------------------------------------
+# Sign Up page - Sign User Up
+#-----------------------------------------------------------
+@app.get("/register")
+def register():
+    with connect_db() as db:
+    
+        sql = """
+            SELECT *
+            FROM instrument
+        """
+
+        params = ()
+        instruments = db.execute(sql, params).fetchall()
+
+        sql2 = """
+            SELECT *
+            FROM role
+        """
+
+        params2 = ()
+        roles = db.execute(sql2, params2).fetchall()
+
+        return render_template("pages/register.jinja", instruments=instruments, roles = roles)
+
+#-----------------------------------------------------------
+# User List page - show all users
+#-----------------------------------------------------------
+@app.get("/users/show")
+def show_users():
     with connect_db() as db:
         sql = """
             SELECT user.id, user.first_name, user.last_name, user.email, user.role_id, role.name
@@ -52,29 +86,12 @@ def home():
             instruments = db.execute(sql, params).fetchall()
             user["instruments"] = instruments
 
-        sql2 = """
-            SELECT *
-            FROM instrument
-        """
-
-        params2 = ()
-        instruments = db.execute(sql2, params2).fetchall()
-
-        sql3 = """
-            SELECT *
-            FROM role
-        """
-
-        params3 = ()
-        roles = db.execute(sql3, params3).fetchall()
-
-        return render_template("pages/home.jinja", users=users, instruments=instruments, roles = roles)
-
+        return render_template("pages/user-list.jinja", users=users, instruments=instruments)
 
 #-----------------------------------------------------------
 # Handle user signup
 #-----------------------------------------------------------
-@app.post("/users")
+@app.post("/users/new")
 def process_new_user():
     with connect_db() as db:
         first_name = request.form.get('first_name', '').strip()

@@ -1,0 +1,60 @@
+{#=====================================================
+  Home page
+=====================================================#}
+
+{% extends 'pages/_base.jinja' %}
+
+
+{% block content %}
+
+  <h2>Register</h2>
+
+  <section id="users">
+    
+    <form method="post" action="/users/new">
+    
+      <label>
+        First name
+        <input type="text" name="first_name" required>
+      </label>
+
+      <label>
+        Surname
+        <input type="text" name="last_name" required>
+      </label>
+
+      <label>
+        Email
+        <input type="text" name="email" required>
+      </label>
+
+      <label>
+        Password
+        <input type="password" name="password" required>
+      </label>
+
+      <label>
+        Instrument
+        {% for instrument in instruments %}
+          <label><input type="checkbox" name="instrument" value="{{ instrument.name }}"></label>{{ instrument.name }}<br>
+        {% endfor %}
+      </label>
+
+      <label>
+        Role
+        <select name="role">
+          <option selected value="">No Role</option>
+            {% for role in roles %}
+              <option>{{ role.name }}</option>
+            {% endfor %}
+        </select>
+      </label>
+
+      <button>Submit</button>
+
+    </form>
+
+  </section>
+
+{% endblock %}
+

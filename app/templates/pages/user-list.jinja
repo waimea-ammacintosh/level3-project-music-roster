@@ -1,0 +1,44 @@
+{#=====================================================
+  Home page
+=====================================================#}
+
+{% extends 'pages/_base.jinja' %}
+
+
+{% block content %}
+
+    <h2>User List</h2>
+
+    <section id="users">
+
+        {% for user in users %}
+
+            <div class="user">
+
+                <header>
+                    <h3>{{ user.first_name }}</h3>
+                </header>
+
+                <p>{{ user.last_name }}</p>
+                <p>{{ user.email }}</p>
+
+                <footer>
+                    Role: {% if user.name != null %} {{ user.name }} {% else %} {{ "none" }} {% endif %}<br>
+                    Instrument(s): 
+                    {% for instrument in user["instruments"] %}
+                     {{ instrument.name }}<br>
+                    {% endfor %}
+                </footer>
+
+            </div>
+
+        {% else %}
+
+            <p>No People!</p>
+
+        {% endfor %}
+
+    </section>
+
+{% endblock %}
+
