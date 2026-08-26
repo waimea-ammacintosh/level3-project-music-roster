@@ -7,14 +7,45 @@
 
 {% block content %}
 
-  <h2>Welcome User!!</h2>
+  <h2>
+    Welcome
+    {% if session["logged_in"]%}
+     {{ session["user"]["first_name"] }}!
+    {% else %}
+     User!
+    {% endif %}
+  </h2>
 
-  <button onclick="window.location.href='/register';" >Register</button>
-  <h4>Or</h4>
-  <button onclick="window.location.href='/login';" >Sign In</button>
+  {% if session["logged_in"] %}
+    <h3>Your Weeks</h3>
+    <section id="users">
+      {% for week in session["user"]["weeks"] %}
+        <div class="user">
+
+                  <header>
+                      <h3>{{ week.date }}</h3>
+                  </header>
+
+                  <p>{{ week.name }}</p>
+
+              </div>
+      {% else %}
+        No Weeks
+      {% endfor %}
+    </section>
+    <button onclick="window.location.href='/logout';" >logout</button>
+    <button onclick="window.location.href='/roster';" >see full roster</button>
+
+  
+  {% else %}
+
+    <button onclick="window.location.href='/register';" >Register</button>
+    <h4>Or</h4>
+    <button onclick="window.location.href='/login';" >Sign In</button>
+
+  {% endif %}
 
   <button onclick="window.location.href='/users/show';" >see users</button>
-
 
 {% endblock %}
 

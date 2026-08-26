@@ -37,6 +37,18 @@ def show_login():
 
     return render_template("pages/login.jinja")
 
+#-----------------------------------------------------------
+# Welcome page
+#-----------------------------------------------------------
+@app.get("/logout")
+def logout():
+    session["logged_in"] = False
+    session["role"] = None
+    session["user"] = {}
+
+
+    return render_template("pages/home.jinja")
+
 
 #-----------------------------------------------------------
 # Handle user login
@@ -65,18 +77,29 @@ def process_login():
         if not check_password_hash(user["pw_hash"], password):
             flash(f"Incorrect password", "error")
             return redirect("/login")
+        
+        sql = """
+                SELECT week.date, instrument.name
+                FROM roster
+                INNER JOIN week
+                ON roster.week_id = week.id
+                INNER JOIN instrument
+                ON roster.instrument_id = instrument.id
+                WHERE user_id = ?    
+            """
+        params = (user["id"],)
+        # run query
+        weeks = db.execute(sql, params).fetchall()
 
         session["logged_in"] = True
-        session["Role"] = user["role.name"]
-        session["User"] = {
-            "id": user["id"],
-            "first_name": user["first_name"],
-            "last_name": user["last_name"],
-            "email": user["email"]
+        session["role"] = user.get('name')
+        session["user"] = {
+            "id": user.get('id'),
+            "first_name": user.get('first_name'),
+            "last_name": user.get('last_name'),
+            "email": user.get('email'),
+            "weeks": weeks
             }
-
-
-
 
         flash("Signed In.", "success")
 
@@ -86,7 +109,7 @@ def process_login():
 # Register page - Sign User Up
 #-----------------------------------------------------------
 @app.get("/register")
-def register():
+def show_register():
     with connect_db() as db:
     
         sql = """
@@ -106,6 +129,34 @@ def register():
         roles = db.execute(sql2, params2).fetchall()
 
         return render_template("pages/register.jinja", instruments=instruments, roles = roles)
+
+
+#-----------------------------------------------------------
+# Roster Page - Shows full roster
+#-----------------------------------------------------------
+@app.get("/roster")
+def show_roster():
+    with connect_db() as db:
+    
+        sql = """
+            SELECT user.first_name, user.last_name week.date, instrument.name
+            FROM roster
+            INNER JOIN 
+        """
+
+        params = ()
+        instruments = db.execute(sql, params).fetchall()
+
+        sql2 = """
+            SELECT *
+            FROM role
+        """
+
+        params2 = ()
+        roles = db.execute(sql2, params2).fetchall()
+
+        return render_template("pages/register.jinja", instruments=instruments, roles = roles)
+
 
 #-----------------------------------------------------------
 # User List page - show all users
@@ -205,6 +256,39 @@ def process_new_user():
             """
             params4 = (instrument_id, user_id)
             db.execute(sql4, params4)
+
+        sql5 = """
+            SELECT user.email, user.pw_hash, user.first_name, user.last_name, user.id, user.role_id, role.name FROM user 
+            INNER JOIN role 
+            ON user.role_id = role.id
+            WHERE user.id = ?
+        """
+        params5 = (user_id,)
+        user_data = db.execute(sql5, params5).fetchone()
+
+        sql = """
+                SELECT week.date, instrument.name
+                FROM roster
+                INNER JOIN week
+                ON roster.week_id = week.id
+                INNER JOIN instrument
+                ON roster.instrument_id = instrument.id
+                WHERE user_id = ?    
+            """
+        params = (user["id"],)
+        # run query
+        weeks = db.execute(sql, params).fetchall()
+
+        session["logged_in"] = True
+        session["role"] = user_data.get('name')
+        session["user"] = {
+            "id": user_data.get('id'),
+            "first_name": user_data.get('first_name'),
+            "last_name": user_data.get('last_name'),
+            "email": user_data.get('email'),
+            "weeks": weeks
+            }
+
 
         flash("Account created.", "success")
         return redirect("/")

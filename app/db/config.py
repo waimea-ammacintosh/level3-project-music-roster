@@ -173,17 +173,19 @@ class RosterTable:
     SCHEMA = """
         CREATE TABLE roster (
             user_id         INTEGER NOT NULL,
-            week_id   INTEGER NOT NULL,
+            week_id         INTEGER NOT NULL,
+            instrument_id   INTEGER NOT NULL,
 
             FOREIGN KEY (user_id) REFERENCES user(id)
             FOREIGN KEY (week_id) REFERENCES week(id)
+            FOREIGN KEY (instrument_id) REFERENCES instrument(id)
         )
     """
 
     SEED_DATA = """
-        INSERT INTO roster (user_id, week_id)
+        INSERT INTO roster (user_id, week_id, instrument_id)
         VALUES
-        (1, 1)
+        (1, 1, 1)
             
     """
 
