@@ -56,7 +56,8 @@ class WeekTable:
     SEED_DATA = """
         INSERT INTO week (date, practice_date)
         VALUES
-        ('2026-11-08', '2026-11-05')
+        ('2026-11-08', '2026-11-05'),
+        ('2026-11-15', '2026-11-02')
             
     """
 
@@ -185,7 +186,10 @@ class RosterTable:
     SEED_DATA = """
         INSERT INTO roster (user_id, week_id, instrument_id)
         VALUES
-        (1, 1, 1)
+        (1, 1, 1),
+        (2, 1, 3),
+        (1, 2, 2),
+        (1, 2, 1)
             
     """
 

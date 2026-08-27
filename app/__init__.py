@@ -139,23 +139,55 @@ def show_roster():
     with connect_db() as db:
     
         sql = """
-            SELECT user.first_name, user.last_name week.date, instrument.name
+            SELECT user.first_name, user.last_name, week.date, week.id, instrument.name
             FROM roster
-            INNER JOIN 
+            INNER JOIN user
+            ON roster.user_id = user.id
+            INNER JOIN week
+            ON roster.week_id = week.id
+            INNER JOIN instrument
+            ON roster.instrument_id = instrument.id
+            ORDER BY week.id ASC
         """
 
         params = ()
-        instruments = db.execute(sql, params).fetchall()
+        rosters = db.execute(sql, params).fetchall()
 
         sql2 = """
-            SELECT *
-            FROM role
+            SELECT id FROM week
         """
-
+        
         params2 = ()
-        roles = db.execute(sql2, params2).fetchall()
+        weeks = db.execute(sql2, params2).fetchall()
 
-        return render_template("pages/register.jinja", instruments=instruments, roles = roles)
+        roster = []
+        target_key = 'id'
+
+        for week in weeks:
+            target_id = week.get(id) 
+            global last_index           
+            for d in reversed(rosters):
+                if d.get(target_key) == target_id:
+                    
+                    last_index = d
+                    break
+
+            week_data = []
+            for i in rosters:
+                if i != rosters[last_index]:
+                    week_data.append(i)
+                elif i == rosters[last_index]:
+                    week_data.append(i)
+                    roster.append(week_data)
+                    week_data.clear()
+                    break
+
+
+            
+
+        
+
+        return render_template("pages/roster.jinja", roster=roster)
 
 
 #-----------------------------------------------------------

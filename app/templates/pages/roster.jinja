@@ -1,0 +1,35 @@
+{#=====================================================
+  Home page
+=====================================================#}
+
+{% extends 'pages/_base.jinja' %}
+
+
+{% block content %}
+
+    <h2>User List</h2>
+
+    <section id="users">
+
+        {% for week in roster %}
+
+            <div class="user">
+
+                <header>
+                    <h3>{{ week }}</h3>
+                </header>
+                
+
+
+            </div>
+
+        {% else %}
+
+            <p>No People!</p>
+
+        {% endfor %}
+
+    </section>
+
+{% endblock %}
+
