@@ -154,33 +154,43 @@ def show_roster():
         rosters = db.execute(sql, params).fetchall()
 
         sql2 = """
-            SELECT id FROM week
+            SELECT date FROM week
         """
         
         params2 = ()
         weeks = db.execute(sql2, params2).fetchall()
 
         roster = []
-        target_key = 'id'
+        target_key = 'date'
+        prev_week_id = 0
 
         for week in weeks:
-            target_id = week.get(id) 
-            global last_index           
+            
+            target_id = week.get('date')           
             for d in reversed(rosters):
-                if d.get(target_key) == target_id:
-                    
-                    last_index = d
+                if d.get(target_key) == target_id:                    
+                    last_index = d.id
                     break
 
             week_data = []
             for i in rosters:
-                if i != rosters[last_index]:
+
+                if i.get('id') < prev_week_id:
+                    continue
+                elif i != rosters[last_index+1]:
                     week_data.append(i)
-                elif i == rosters[last_index]:
+                    print(week_data)
+                    print()
+                elif i == rosters[last_index+1]:
                     week_data.append(i)
                     roster.append(week_data)
+                    print(week_data)
+                    print()
                     week_data.clear()
                     break
+            prev_week_id = last_index
+        print(roster)
+            
 
 
             
