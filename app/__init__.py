@@ -137,21 +137,33 @@ def show_register():
 @app.get("/roster")
 def show_roster():
     with connect_db() as db:
-    
         sql = """
-            SELECT user.first_name, user.last_name, week.date, week.id, instrument.name
-            FROM roster
-            INNER JOIN user
-            ON roster.user_id = user.id
-            INNER JOIN week
+            SELECT
+                week.id as w_id,
+                week.date,
+                instrument.id AS i_id,
+                instrument.name AS i_name,
+                user.id AS u_id,
+                user.first_name AS u_fname,
+                user.last_name AS u_lname
+            FROM week
+            CROSS JOIN instrument
+
+            LEFT JOIN roster
             ON roster.week_id = week.id
-            INNER JOIN instrument
-            ON roster.instrument_id = instrument.id
-            ORDER BY week.id ASC
+            AND roster.instrument_id = instrument.id
+   
+            LEFT JOIN user
+            ON user.id = roster.user_id
+    
+            ORDER BY week.date ASC, instrument.name ASC
         """
 
         params = ()
-        rosters = db.execute(sql, params).fetchall()
+        roster = db.execute(sql, params).fetchall()
+
+        print(roster)
+
 
         sql2 = """
             SELECT date FROM week
@@ -160,44 +172,13 @@ def show_roster():
         params2 = ()
         weeks = db.execute(sql2, params2).fetchall()
 
-        roster = []
-        target_key = 'date'
-        prev_week_id = 0
+        sql3 = """
+            SELECT name FROM instrument
+        """
+        params3=()
+        instruments = db.execute(sql3, params3)
 
-        for week in weeks:
-            
-            target_id = week.get('date')           
-            for d in reversed(rosters):
-                if d.get(target_key) == target_id:                    
-                    last_index = d.id
-                    break
-
-            week_data = []
-            for i in rosters:
-
-                if i.get('id') < prev_week_id:
-                    continue
-                elif i != rosters[last_index+1]:
-                    week_data.append(i)
-                    print(week_data)
-                    print()
-                elif i == rosters[last_index+1]:
-                    week_data.append(i)
-                    roster.append(week_data)
-                    print(week_data)
-                    print()
-                    week_data.clear()
-                    break
-            prev_week_id = last_index
-        print(roster)
-            
-
-
-            
-
-        
-
-        return render_template("pages/roster.jinja", roster=roster)
+        return render_template("pages/roster.jinja", roster=roster, instruments=instruments, weeks=weeks)
 
 
 #-----------------------------------------------------------

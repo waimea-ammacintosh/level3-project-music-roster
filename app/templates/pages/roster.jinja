@@ -9,25 +9,31 @@
 
     <h2>User List</h2>
 
-    <section id="users">
+    <section id="roster">
 
-        {% for week in roster %}
-
-            <div class="user">
-
-                <header>
-                    <h3>{{ week }}</h3>
-                </header>
-                
-
-
-            </div>
-
-        {% else %}
-
-            <p>No People!</p>
-
-        {% endfor %}
+        <table>
+            <thead>
+                <tr>
+                    {% for week in weeks %}
+                        <th>
+                            {{ week.date }}
+                        </th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for week in instruments %}
+                    <td>
+                        {{ instrument.name }}
+                    </td>
+                    {% for instrument in roster %}
+                        <td>
+                            {{ instrument.u_fname }}
+                        </td>
+                    {% endfor %}
+                {% endfor %}
+            </tbody>
+        </table>
 
     </section>
 
