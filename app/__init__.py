@@ -158,17 +158,12 @@ def show_roster():
     
             ORDER BY week.date ASC, instrument.name ASC
         """
-
         params = ()
         roster = db.execute(sql, params).fetchall()
 
-        print(roster)
-
-
         sql2 = """
             SELECT date FROM week
-        """
-        
+        """        
         params2 = ()
         weeks = db.execute(sql2, params2).fetchall()
 
@@ -176,7 +171,7 @@ def show_roster():
             SELECT name FROM instrument
         """
         params3=()
-        instruments = db.execute(sql3, params3)
+        instruments = db.execute(sql3, params3).fetchall()
 
         return render_template("pages/roster.jinja", roster=roster, instruments=instruments, weeks=weeks)
 

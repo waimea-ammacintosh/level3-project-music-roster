@@ -22,13 +22,13 @@
                 </tr>
             </thead>
             <tbody>
-                {% for week in instruments %}
+                {% for instrument in instruments %}
                     <td>
                         {{ instrument.name }}
                     </td>
-                    {% for instrument in roster %}
+                    {% for week in roster %}
                         <td>
-                            {{ instrument.u_fname }}
+                            {{ week.u_fname }}
                         </td>
                     {% endfor %}
                 {% endfor %}
