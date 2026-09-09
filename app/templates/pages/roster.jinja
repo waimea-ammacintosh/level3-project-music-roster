@@ -7,15 +7,16 @@
 
 {% block content %}
 
-    <h2>User List</h2>
+    <h2>Roster</h2>
 
-    <section id="roster">
+    <section>
 
-        <table>
+        <table id="roster">
             <thead>
                 <tr>
+                    <th></th>
                     {% for week in weeks %}
-                        <th>
+                        <th class"date_cell">
                             {{ week.date }}
                         </th>
                     {% endfor %}
@@ -23,19 +24,24 @@
             </thead>
             <tbody>
                 {% for instrument in instruments %}
-                    <td>
-                        {{ instrument.name }}
-                    </td>
-                    {% for week in roster %}
-                        <td>
-                            {{ week.u_fname }}
+                    <tr>
+                        <td class"instrument_cell">
+                            {{ instrument.name }}
                         </td>
-                    {% endfor %}
+                        {% for week in roster %}
+                            {% if week.i_id == instrument.id %}
+                                <td class"user_cell">
+                                    {{ week.u_fname }}
+                                </td>
+                            {% endif %}
+                        {% endfor %}
+                    </tr>
                 {% endfor %}
             </tbody>
         </table>
 
     </section>
+    <button onclick="window.location.href='/';">Back</button>
 
 {% endblock %}
 

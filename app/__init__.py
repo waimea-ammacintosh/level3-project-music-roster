@@ -61,7 +61,7 @@ def process_login():
         
 
         sql = """
-            SELECT user.email, user.pw_hash, user.first_name, user.last_name, user.id, user.role_id, role.name FROM user 
+            SELECT user.email, user.pw_hash, user.first_name, user.last_name, user.id, user.role_id, role.name AS role_name FROM user 
             INNER JOIN role 
             ON user.role_id = role.id
             WHERE email = ?
@@ -79,7 +79,7 @@ def process_login():
             return redirect("/login")
         
         sql = """
-                SELECT week.date, instrument.name
+                SELECT week.date, instrument.name AS instrument_name
                 FROM roster
                 INNER JOIN week
                 ON roster.week_id = week.id
@@ -92,7 +92,7 @@ def process_login():
         weeks = db.execute(sql, params).fetchall()
 
         session["logged_in"] = True
-        session["role"] = user.get('name')
+        session["role"] = user.get('role_name')
         session["user"] = {
             "id": user.get('id'),
             "first_name": user.get('first_name'),
@@ -129,86 +129,6 @@ def show_register():
         roles = db.execute(sql2, params2).fetchall()
 
         return render_template("pages/register.jinja", instruments=instruments, roles = roles)
-
-
-#-----------------------------------------------------------
-# Roster Page - Shows full roster
-#-----------------------------------------------------------
-@app.get("/roster")
-def show_roster():
-    with connect_db() as db:
-        sql = """
-            SELECT
-                week.id as w_id,
-                week.date,
-                instrument.id AS i_id,
-                instrument.name AS i_name,
-                user.id AS u_id,
-                user.first_name AS u_fname,
-                user.last_name AS u_lname
-            FROM week
-            CROSS JOIN instrument
-
-            LEFT JOIN roster
-            ON roster.week_id = week.id
-            AND roster.instrument_id = instrument.id
-   
-            LEFT JOIN user
-            ON user.id = roster.user_id
-    
-            ORDER BY week.date ASC, instrument.name ASC
-        """
-        params = ()
-        roster = db.execute(sql, params).fetchall()
-
-        sql2 = """
-            SELECT date FROM week
-        """        
-        params2 = ()
-        weeks = db.execute(sql2, params2).fetchall()
-
-        sql3 = """
-            SELECT name FROM instrument
-        """
-        params3=()
-        instruments = db.execute(sql3, params3).fetchall()
-
-        return render_template("pages/roster.jinja", roster=roster, instruments=instruments, weeks=weeks)
-
-
-#-----------------------------------------------------------
-# User List page - show all users
-#-----------------------------------------------------------
-@app.get("/users/show")
-def show_users():
-    with connect_db() as db:
-        sql = """
-            SELECT user.id, user.first_name, user.last_name, user.email, user.role_id, role.name
-            FROM user
-            LEFT JOIN role 
-            ON user.role_id = role.id
-        """
-        
-        params = ()
-        users = db.execute(sql, params).fetchall()
-
-
-        for user in users:
-
-            sql = """
-                SELECT instrument.name
-                FROM instrumentUser
-                INNER JOIN instrument
-                ON instrumentUser.instrument_id = instrument.id
-                WHERE user_id = ?    
-            """
-
-            params = (user["id"],)
-            # run query
-            instruments = db.execute(sql, params).fetchall()
-            user["instruments"] = instruments
-
-        return render_template("pages/user-list.jinja", users=users, instruments=instruments)
 
 #-----------------------------------------------------------
 # Handle user signup
@@ -276,7 +196,7 @@ def process_new_user():
             db.execute(sql4, params4)
 
         sql5 = """
-            SELECT user.email, user.pw_hash, user.first_name, user.last_name, user.id, user.role_id, role.name FROM user 
+            SELECT user.email, user.pw_hash, user.first_name, user.last_name, user.id, user.role_id, role.name AS role_name FROM user 
             INNER JOIN role 
             ON user.role_id = role.id
             WHERE user.id = ?
@@ -285,7 +205,7 @@ def process_new_user():
         user_data = db.execute(sql5, params5).fetchone()
 
         sql = """
-                SELECT week.date, instrument.name
+                SELECT week.date, instrument.name AS instrument_name
                 FROM roster
                 INNER JOIN week
                 ON roster.week_id = week.id
@@ -298,7 +218,7 @@ def process_new_user():
         weeks = db.execute(sql, params).fetchall()
 
         session["logged_in"] = True
-        session["role"] = user_data.get('name')
+        session["role"] = user_data.get('role_name')
         session["user"] = {
             "id": user_data.get('id'),
             "first_name": user_data.get('first_name'),
@@ -310,6 +230,83 @@ def process_new_user():
 
         flash("Account created.", "success")
         return redirect("/")
+
+#-----------------------------------------------------------
+# Roster Page - Shows full roster
+#-----------------------------------------------------------
+@app.get("/roster")
+def show_roster():
+    with connect_db() as db:
+        sql = """
+            SELECT
+                instrument.id AS i_id,
+                user.first_name AS u_fname,
+                user.last_name AS u_lname
+            FROM week
+            CROSS JOIN instrument
+
+            LEFT JOIN roster
+            ON roster.week_id = week.id
+            AND roster.instrument_id = instrument.id
+   
+            LEFT JOIN user
+            ON user.id = roster.user_id
+    
+            ORDER BY week.date ASC, instrument.name ASC
+        """
+        params = ()
+        roster = db.execute(sql, params).fetchall()
+        print(roster)
+
+        sql2 = """
+            SELECT date FROM week
+        """        
+        params2 = ()
+        weeks = db.execute(sql2, params2).fetchall()
+
+        sql3 = """
+            SELECT name, id FROM instrument
+        """
+        params3=()
+        instruments = db.execute(sql3, params3).fetchall()
+
+        return render_template("pages/roster.jinja", roster=roster, instruments=instruments, weeks=weeks)
+
+
+#-----------------------------------------------------------
+# User List page - show all users
+#-----------------------------------------------------------
+@app.get("/users/show")
+def show_users():
+    with connect_db() as db:
+        sql = """
+            SELECT user.id, user.first_name, user.last_name, user.email, user.role_id, role.name
+            FROM user
+            LEFT JOIN role 
+            ON user.role_id = role.id
+        """
+        
+        params = ()
+        users = db.execute(sql, params).fetchall()
+
+
+        for user in users:
+
+            sql = """
+                SELECT instrument.name
+                FROM instrumentUser
+                INNER JOIN instrument
+                ON instrumentUser.instrument_id = instrument.id
+                WHERE user_id = ?    
+            """
+
+            params = (user["id"],)
+            # run query
+            instruments = db.execute(sql, params).fetchall()
+            user["instruments"] = instruments
+
+        return render_template("pages/user-list.jinja", users=users, instruments=instruments)
+
 
 #-----------------------------------------------------------
 # Help page - Show some help
