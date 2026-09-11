@@ -1,0 +1,46 @@
+{#=====================================================
+  Individual week page
+=====================================================#}
+
+{% extends 'pages/_base.jinja' %}
+
+
+{% block content %}
+
+    <h2>{{ week_data.date }}</h2>
+
+    <section>
+
+        <h3>{{ week_data.practice_date }}</h3>
+        <table id="roster">
+            <tbody>
+                {% for instrument in instruments %}
+                    <tr>
+                        <td class"instrument_cell">
+                            {{ instrument.name }}
+                        </td>
+                        {% for i in week %}
+                            {% if i.i_id == instrument.id %}
+                                <td class"user_cell">
+                                    {{ i.u_fname }}
+                                </td>
+                            {% endif %}
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <h2>Attatchments</h2>
+        {% for file in files %}
+            <iframe src="/static/uploads/{{ file.filename }}" style="height:200px;width:300px;" title="File: {{ file.filename }}"></iframe>
+            <h3>{{ file.filename }}</h3>
+        {% else %}
+            <h5>No files yet!</h5>
+        {% endfor %}
+
+    </section>
+    <button onclick="window.location.href='/';">Back</button>
+
+{% endblock %}
+

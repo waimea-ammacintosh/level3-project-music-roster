@@ -79,7 +79,7 @@ def process_login():
             return redirect("/login")
         
         sql = """
-                SELECT week.date, instrument.name AS instrument_name
+                SELECT week.date, week.id, instrument.name AS instrument_name
                 FROM roster
                 INNER JOIN week
                 ON roster.week_id = week.id
@@ -205,7 +205,7 @@ def process_new_user():
         user_data = db.execute(sql5, params5).fetchone()
 
         sql = """
-                SELECT week.date, instrument.name AS instrument_name
+                SELECT week.date, week.id, instrument.name AS instrument_name
                 FROM roster
                 INNER JOIN week
                 ON roster.week_id = week.id
@@ -271,6 +271,55 @@ def show_roster():
         instruments = db.execute(sql3, params3).fetchall()
 
         return render_template("pages/roster.jinja", roster=roster, instruments=instruments, weeks=weeks)
+
+#-----------------------------------------------------------
+# Individual Week Page - Shows details for one week
+#-----------------------------------------------------------
+@app.get("/week/<int:id>")
+def show_week(id):
+    with connect_db() as db:
+        sql = """
+            SELECT
+                instrument.id AS i_id,
+                user.first_name AS u_fname,
+                user.last_name AS u_lname
+            FROM week
+            CROSS JOIN instrument
+
+            LEFT JOIN roster
+            ON roster.week_id = week.id
+            AND roster.instrument_id = instrument.id
+   
+            LEFT JOIN user
+            ON user.id = roster.user_id
+
+            WHERE week.id=?
+            ORDER BY week.date ASC, instrument.name ASC
+        """
+        params = (id,)
+        week = db.execute(sql, params).fetchall()
+
+        sql2="""
+            SELECT date, practice_date FROM week
+            WHERE id=?
+        """
+        params2=(id,)
+        week_data = db.execute(sql2, params2).fetchone()
+
+        sql3 = """
+            SELECT name, id FROM instrument
+        """
+        params3=()
+        instruments = db.execute(sql3, params3).fetchall()
+
+        sql4="""
+            SELECT filename, week_id FROM file
+            WHERE week_id=?
+        """
+        params4=(id,)
+        files = db.execute(sql4, params4).fetchall()
+
+        return render_template("pages/week-page.jinja", week=week, instruments=instruments, week_data=week_data, files=files)
 
 
 #-----------------------------------------------------------

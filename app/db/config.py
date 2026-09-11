@@ -78,7 +78,7 @@ class FileTable:
     SEED_DATA = """
         INSERT INTO file (filename, week_id)
         VALUES
-        ('song.pdf', 1)
+        ('pdftris.pdf', 1)
     """
 
 class RoleTable:
