@@ -145,10 +145,12 @@ noticed that some text boxes had incorrect spelling and grammar.
 
 As a result of this, I went and made a final design, with a UI that looks clean, and takes into consideration all the feedback that my end user gave me.
 
-*FIGMA IMPROVED REFINED PROTOTYPE - PLACE THE FIGMA EMBED CODE HERE - MAKE SURE IT IS SET SO THAT EVERYONE CAN ACCESS IT*
+[This](https://design.penpot.app/#/view?file-id=3be9e5e1-190f-8090-8008-6f1d02c8b427&page-id=f0485fb1-4e63-8165-8008-3908f4b684e6&section=interactions&index=0&share-id=3be9e5e1-190f-8090-8008-77495b79cbb4) demo shows the final UI.
 
 
 ## Sprint Review
 
 Replace this text with a statement about how the sprint has moved the project forward - key success point, any things that didn't go so well, etc.
+
+This sprint moved my project forwards, as it helped me to have a clear design in mind for what needs to happen for the next development sprints. What went well was sitting down with my end user, and being able to have a clear idea of what they want the web app to do and look like. One thing that did not go so well was communication with my end user. My end user was unsure of the design when I showed them early prototypes, so I wasted a lot of time designing what I thought was final prototypes, and they thought were still only layout and functionality designs. 
 

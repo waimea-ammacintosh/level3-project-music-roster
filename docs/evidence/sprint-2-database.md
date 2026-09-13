@@ -52,7 +52,7 @@ Because of this, I went through each table, one at a time, and made sure that th
 
 ## Testing User Data Display
 
-I am testing the display of all the data linked to one user. This is including data such as roles and instruments, which are stored in a separate table.
+I am testing the display of all the data linked to one user. This is including data such as roles and instruments, which are stored in a separate table. I tested this by running a test query to see how it would handle retreiveing data about a specific person. This will be useful later on, for implementing a session.
 
 Table Contents:
 
@@ -68,11 +68,38 @@ Display:
 ![Display of User Data](screenshots/Displayed-User-Content.png)
 
 
+### Testing Outcome
+
+As shown in the display, the correct data is displayed for each user, so the system can show the correct informations when retrieving data about a user, which could be added to a session.
+
+## Testing Roster display
+
+I am testing the display of the roster. This is to see, with the test data I have put into the system, if it can display the full roster with every person and instrument in the correct week.
+
+Using the following data, The roster returned should be:
+
+![Expected roster table](screenshots/Expected-Roster.png)
+
+Table Contents:
+
+![Roster Table Content](screenshots/Roster-Content.png)
+![Instrument table content](screenshots/Instrument-table-Content.png)
+
+![Current User Table Content](screenshots/User-Table-Content-New.png)
+![Week Table Content](screenshots/Week-Table-Content.png)
+
+
+When I ran my algorithm (below), I kept getting an error, and when I fixed the error, it would return two empty lists, which is not what should happen.
+
+![Bad roster SQL and algorithm](screenshots/Roster-Display-Old.png)
+
 ### Changes / Improvements
 
-Replace this text with notes any improvements you made as a result of the testing.
+When this would not work, I came up with a new approach that was much simpler, and worked perfectly. This new SQL query makes use of a Cross Join to join the tables, which was something new that I hadn't learnt before, and would then loop through the data on the Jinja template to get the correct display.
 
-**PLACE SCREENSHOTS AND/OR ANIMATED GIFS OF THE IMPROVED SYSTEM HERE**
+![Good roster SQL](screenshots/Roster-Display-New.png)
+
+![Correct roster is shown](screenshots/Roster-display-correct.gif)
 
 
 ## Testing FEATURE NAME HERE
