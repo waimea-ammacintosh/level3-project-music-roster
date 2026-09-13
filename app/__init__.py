@@ -47,7 +47,7 @@ def logout():
     session["user"] = {}
 
 
-    return render_template("pages/home.jinja")
+    return redirect("/")
 
 
 #-----------------------------------------------------------
