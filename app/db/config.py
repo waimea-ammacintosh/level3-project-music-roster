@@ -57,7 +57,9 @@ class WeekTable:
         INSERT INTO week (date, practice_date)
         VALUES
         ('2026-11-08', '2026-11-05'),
-        ('2026-11-15', '2026-11-02')
+        ('2026-11-15', '2026-11-12'),
+        ('2026-11-22', '2026-11-19')
+
             
     """
 
@@ -193,7 +195,7 @@ class RosterTable:
             
     """
 
-class UnavailablityTable:
+class UnavailabilityTable:
 
     NAME = "unavailability"
 
@@ -235,7 +237,7 @@ TABLES = [
     InstrumentUserTable,
     RequestTable,
     RosterTable,
-    UnavailablityTable,    
+    UnavailabilityTable,    
     WeekTable,
     FileTable,
 ]

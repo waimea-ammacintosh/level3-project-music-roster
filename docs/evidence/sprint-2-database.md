@@ -52,7 +52,7 @@ Because of this, I went through each table, one at a time, and made sure that th
 
 ## Testing User Data Display
 
-I am testing the display of all the data linked to one user. This is including data such as roles and instruments, which are stored in a separate table. I tested this by running a test query to see how it would handle retreiveing data about a specific person. This will be useful later on, for implementing a session.
+I am testing the display of all the data linked to one user. This is including data such as roles and instruments, which are stored in a separate table. I tested this by running a test query to see how it would handle retrieving data about a specific person. This will be useful later on, for implementing a session.
 
 Table Contents:
 
@@ -70,7 +70,7 @@ Display:
 
 ### Testing Outcome
 
-As shown in the display, the correct data is displayed for each user, so the system can show the correct informations when retrieving data about a user, which could be added to a session.
+As shown in the display, the correct data is displayed for each user, so the system can show the correct information when retrieving data about a user, which could be added to a session.
 
 ## Testing Roster display
 
@@ -100,6 +100,28 @@ When this would not work, I came up with a new approach that was much simpler, a
 ![Good roster SQL](screenshots/Roster-Display-New.png)
 
 ![Correct roster is shown](screenshots/Roster-display-correct.gif)
+
+
+## Testing User Register (adding user to user table)
+
+I am testing whether my app can add a user and all its associated data to the db. I tested this by getting my user register form, and inputting a test user. When this happened, everything worked as I intended it, and the correct tables were updated to show the new user.
+
+Original user Table:
+
+![Original User Table](screenshots/User-Table-Content-New.png)
+
+New User Table:
+
+![user Table with new test user implemented](screenshots/User-Table-Test-User.png)
+
+Instrument-User Table:
+
+![New User-Instrument table showing new user](screenshots/Intsrument-User-Table-Content-New.png)
+
+
+This resulted in the following card being displayed on the user list:
+
+![Test User Card on User list](screenshots/Test-User-Card.png)
 
 
 ## Testing FEATURE NAME HERE

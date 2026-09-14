@@ -273,6 +273,56 @@ def show_roster():
         return render_template("pages/roster.jinja", roster=roster, instruments=instruments, weeks=weeks)
 
 #-----------------------------------------------------------
+# Submit unavailability Page - Form to submit unavailability
+#-----------------------------------------------------------
+@app.get("/roster")
+def show_unavailability_form():
+    with connect_db() as db:
+        sql = """
+            SELECT
+                user.first_name AS u_fname,
+                week.id
+            FROM week
+
+            LEFT JOIN roster
+            ON roster.week_id = week.id
+
+            INNER JOIN user
+            ON user.id = roster.user_id
+    
+            ORDER BY week.date ASC
+        """
+        params = ()
+        roster = db.execute(sql, params).fetchall()
+
+        sql2 = """
+            SELECT id from week
+        """
+        params2 = ()
+        weeks = db.execute(sql2, params2).fetchall()
+
+        empty_weeks = []
+        for week in weeks:
+            for i in roster:
+                if i.id == week.id:
+                    break
+                else:
+                    continue
+
+            empty_weeks.append(i)
+
+        sql3 = """
+            SELECT week_id from unavailability
+            WHERE user_id = ?
+        """
+        params3 = (session['user']['id'])
+        submitted_weeks = db.execute(sql3, params3).fetchall()
+
+
+
+        return render_template("pages/roster.jinja", roster=empty_weeks, submitted_weeks=submitted_weeks)
+
+#-----------------------------------------------------------
 # Individual Week Page - Shows details for one week
 #-----------------------------------------------------------
 @app.get("/week/<int:id>")
