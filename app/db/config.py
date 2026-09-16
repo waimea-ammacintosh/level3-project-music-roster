@@ -201,8 +201,10 @@ class UnavailabilityTable:
 
     SCHEMA = """
         CREATE TABLE unavailability (
-            user_id   INTEGER NOT NULL,
-            week_id   INTEGER NOT NULL,
+            user_id     INTEGER NOT NULL,
+            week_id     INTEGER NOT NULL,
+            available   BOOLEAN NOT NULL,
+            completed   BOOLEAN NOT NULL DEFAULT FALSE,
 
             FOREIGN KEY (user_id) REFERENCES user(id)
             FOREIGN KEY (week_id) REFERENCES week(id)
@@ -210,10 +212,14 @@ class UnavailabilityTable:
     """
 
     SEED_DATA = """
-        INSERT INTO unavailability (user_id, week_id)
+        INSERT INTO unavailability (user_id, week_id, available, completed)
         VALUES
-        (1, 1)
-            
+        (1, 1, TRUE, TRUE),
+        (1, 2, TRUE, TRUE),
+        (1, 3, FALSE, FALSE),
+        (2, 1, TRUE, TRUE),
+        (2, 2, FALSE, TRUE),
+        (2, 3, FALSE, FALSE)
     """
 #----------------------------------------------------------------------------
 # Table registry

@@ -20,7 +20,7 @@ FLASK_HOST = getenv("FLASK_RUN_HOST", "localhost")
 FLASK_PORT = getenv("FLASK_RUN_PORT", "5000")
 
 # Rich console
-CONSOLE_WIDTH = int(getenv("COLUMNS", "80"))
+CONSOLE_WIDTH = int(getenv("COLUMNS", "150"))
 console = Console(width=CONSOLE_WIDTH, force_terminal=True)
 
 STATUS_INFO = {

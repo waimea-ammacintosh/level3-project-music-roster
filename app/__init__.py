@@ -78,7 +78,7 @@ def process_login():
             flash(f"Incorrect password", "error")
             return redirect("/login")
         
-        sql = """
+        sql2 = """
                 SELECT week.date, week.id, instrument.name AS instrument_name
                 FROM roster
                 INNER JOIN week
@@ -87,9 +87,9 @@ def process_login():
                 ON roster.instrument_id = instrument.id
                 WHERE user_id = ?    
             """
-        params = (user["id"],)
+        params2 = (user["id"],)
         # run query
-        weeks = db.execute(sql, params).fetchall()
+        weeks = db.execute(sql2, params2).fetchall()
 
         session["logged_in"] = True
         session["role"] = user.get('role_name')
@@ -275,13 +275,16 @@ def show_roster():
 #-----------------------------------------------------------
 # Submit unavailability Page - Form to submit unavailability
 #-----------------------------------------------------------
-@app.get("/roster")
+@app.get("/unavailability")
 def show_unavailability_form():
     with connect_db() as db:
         sql = """
             SELECT
                 user.first_name AS u_fname,
-                week.id
+                user.id AS u_id,
+                week.id AS w_id,
+                week.date,
+                unavailability.completed
             FROM week
 
             LEFT JOIN roster
@@ -289,11 +292,18 @@ def show_unavailability_form():
 
             INNER JOIN user
             ON user.id = roster.user_id
-    
-            ORDER BY week.date ASC
+
+            INNER JOIN unavailability
+            ON unavailability.week_id = week.id
+
+            WHERE user.id =? AND unavailability.completed = FALSE
+            
+            ORDER BY week.date ASC            
         """
-        params = ()
+        params = (session['user']['id'],)
         roster = db.execute(sql, params).fetchall()
+
+        print(roster)
 
         sql2 = """
             SELECT id from week
@@ -304,23 +314,37 @@ def show_unavailability_form():
         empty_weeks = []
         for week in weeks:
             for i in roster:
-                if i.id == week.id:
+                if i['w_id'] == week['id']:
                     break
                 else:
                     continue
+            
 
             empty_weeks.append(i)
+            break
 
-        sql3 = """
-            SELECT week_id from unavailability
-            WHERE user_id = ?
-        """
-        params3 = (session['user']['id'])
-        submitted_weeks = db.execute(sql3, params3).fetchall()
+        return render_template("pages/submit-unavailability.jinja", weeks=empty_weeks)
 
+#-----------------------------------------------------------
+# Handle Submit Unavailability form completion
+#-----------------------------------------------------------
+@app.post("/unavailability")
+def process_unavailability():
+    with connect_db() as db:
+        weeks = request.form.get('weeks', '').strip()
+        
+        for week in weeks:
+            sql = """
+                INSERT INTO unavailability (week_id, user_id)
+                VALUES = (?,?)
+            """
+            params = (session["user"]["id"], week)
+            # run query
+            db.execute(sql, params)
 
+        flash("Submitted.", "success")
 
-        return render_template("pages/roster.jinja", roster=empty_weeks, submitted_weeks=submitted_weeks)
+        return redirect("/")
 
 #-----------------------------------------------------------
 # Individual Week Page - Shows details for one week
