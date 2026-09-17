@@ -1,0 +1,31 @@
+{#=====================================================
+  Home page
+=====================================================#}
+
+{% extends 'pages/_base.jinja' %}
+
+
+{% block content %}
+
+  <h2>Submit Request</h2>
+
+  <section id="users">
+    
+    <form method="post" action="/users/new">
+
+    
+    
+
+      <label>
+        Email
+        <input type="text" name="email" required>
+      </label>
+
+      <button>Submit</button>
+
+    </form>
+
+  </section>
+
+{% endblock %}
+

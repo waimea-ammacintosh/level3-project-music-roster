@@ -47,7 +47,7 @@ This led to an error, as a comma was missing after the last column in the table,
 
 Because of this, I went through each table, one at a time, and made sure that there were no errors, and that when I recreated the DB, it would create and seed all the tables with no errors. This resulted in each table being able to be created, and handle data, as shown here:
 
-![Succesful db creation](screenshots/Successful-db.gif)
+![Successful db creation](screenshots/Successful-db.gif)
 
 
 ## Testing User Data Display
@@ -57,7 +57,7 @@ I am testing the display of all the data linked to one user. This is including d
 Table Contents:
 
 ![Instrument table content](screenshots/Instrument-table-Content.png) 
-![Instrumet-User table content](screenshots/InstrumentUser-Table-Content.png) 
+![Instrument-User table content](screenshots/InstrumentUser-Table-Content.png) 
 
 ![User table content](screenshots/User-Table-Content.png) 
 ![Role table content](screenshots/Role-Table-Content.png)
@@ -124,23 +124,7 @@ This resulted in the following card being displayed on the user list:
 ![Test User Card on User list](screenshots/Test-User-Card.png)
 
 
-## Testing FEATURE NAME HERE
-
-Replace this text with notes about what you are testing, how you tested it, and the outcome of the testing
-
-**PLACE SCREENSHOTS AND/OR ANIMATED GIFS OF THE TESTING HERE**
-
-### Changes / Improvements
-
-Replace this text with notes any improvements you made as a result of the testing.
-
-**PLACE SCREENSHOTS AND/OR ANIMATED GIFS OF THE IMPROVED SYSTEM HERE**
-
-
-## ETC...
-
-
 ## Sprint Review
 
-Replace this text with a statement about how the sprint has moved the project forward - key success point, any things that didn't go so well, etc.
+This sprint has moved my project forward, as it it has helped me to refine and finalize my database, and have a clear understanding of how my database will work, and be implemented into my system. Some things that went well: The implementation of my database with test data, Writing the roster display query and adding new users to the db. These went well, as they worked relatively quickly, and they all helped get my database to be displayed on my web app, and edited from the web app, which moved my project forward. One thing that did not go so well was that I had to refine my db a bit, as there were some things that I hadn't considered before, and I had to make changes that I weren't expecting, which was challenging to do.
 

@@ -285,45 +285,37 @@ def show_unavailability_form():
                 week.id AS w_id,
                 week.date,
                 unavailability.completed
-            FROM week
-
-            LEFT JOIN roster
-            ON roster.week_id = week.id
-
-            INNER JOIN user
-            ON user.id = roster.user_id
-
-            INNER JOIN unavailability
-            ON unavailability.week_id = week.id
+            FROM unavailability
+            JOIN week ON week.id = unavailability.week_id
+            JOIN user ON user.id = unavailability.user_id
 
             WHERE user.id =? AND unavailability.completed = FALSE
             
-            ORDER BY week.date ASC            
+            ORDER BY w_id ASC            
         """
         params = (session['user']['id'],)
-        roster = db.execute(sql, params).fetchall()
+        weeks = db.execute(sql, params).fetchall()
 
-        print(roster)
+        return render_template("pages/submit-unavailability.jinja", weeks=weeks)
 
-        sql2 = """
-            SELECT id from week
-        """
-        params2 = ()
-        weeks = db.execute(sql2, params2).fetchall()
 
-        empty_weeks = []
+#-----------------------------------------------------------
+# Handle unavailability form
+#-----------------------------------------------------------
+@app.post("/unavailability")
+def process_unavailability():
+    with connect_db() as db:
+        weeks = request.form.get('week').strip()
         for week in weeks:
-            for i in roster:
-                if i['w_id'] == week['id']:
-                    break
-                else:
-                    continue
-            
+            sql = """
+                UPDATE unavailability
+                SET completed = TRUE
+            """
+        
 
-            empty_weeks.append(i)
-            break
+      
 
-        return render_template("pages/submit-unavailability.jinja", weeks=empty_weeks)
+        return redirect("/")
 
 #-----------------------------------------------------------
 # Handle Submit Unavailability form completion

@@ -8,17 +8,17 @@
 {% block content %}
 
     <h2>Select Unavailability</h2>
+      <form method="/POST" action="/unavailability">
+        <label>
+          Select the dates you are unavailable for:
+          {% for week in weeks %}
+            <label><input type="checkbox" name="week" value="{{ week.w_id }}"></label>{{ week.date }}<br>
+          {% endfor %}
+        </label>
 
-      <label>
-        Select the dates you are unavailable for:
-        {% for week in weeks %}
-          <label><input type="checkbox" name="week" value="{{ week.w_id }}"></label>{{ week.date }}<br>
-        {% endfor %}
-      </label>
+        <button>Submit</button>
 
-      <button>Submit</button>
-
-    </form>
+      </form>
 
     </section>
     <button onclick="window.location.href='/';">Back</button>
