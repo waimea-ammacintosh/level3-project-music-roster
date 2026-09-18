@@ -305,38 +305,80 @@ def show_unavailability_form():
 @app.post("/unavailability")
 def process_unavailability():
     with connect_db() as db:
-        weeks = request.form.get('week').strip()
-        for week in weeks:
-            sql = """
+        submitted_weeks = request.form.get('week').strip()
+
+        sql = """
+                    SELECT
+                        week.date
+                    FROM unavailability
+                    JOIN week ON week.id = unavailability.week_id
+                    JOIN user ON user.id = unavailability.user_id
+        
+                    WHERE user.id =? AND unavailability.completed = FALSE
+                    
+                    ORDER BY w_id ASC            
+                """
+        params = (session['user']['id'],)
+        weeks = db.execute(sql, params).fetchall()
+
+        for week in submitted_weeks:
+            if week in weeks:
+                weeks.remove(week)
+
+            sql2="""
+                SELECT id FROM week
+                WHERE date =?
+            """
+            params2=(week.date)
+            week_id = db.execute(sql2, params2).fetchone()
+
+            sql3 = """
                 UPDATE unavailability
-                SET completed = TRUE
+                SET completed = TRUE, available = FALSE
+                WHERE week_id =?
             """
-        
+            params3=(week_id)
+            db.execute(sql3, params3)
 
-      
-
-        return redirect("/")
-
-#-----------------------------------------------------------
-# Handle Submit Unavailability form completion
-#-----------------------------------------------------------
-@app.post("/unavailability")
-def process_unavailability():
-    with connect_db() as db:
-        weeks = request.form.get('weeks', '').strip()
-        
         for week in weeks:
-            sql = """
-                INSERT INTO unavailability (week_id, user_id)
-                VALUES = (?,?)
+            sql2="""
+                SELECT id FROM week
+                WHERE date =?
             """
-            params = (session["user"]["id"], week)
-            # run query
-            db.execute(sql, params)
+            params2=(week.date)
+            week_id = db.execute(sql2, params2).fetchone()
+            
+            sql3 = """
+                UPDATE unavailability
+                SET completed = TRUE, available = TRUE
+                WHERE week_id =?
+            """
+            params3=(week_id)
+            db.execute(sql3, params3)
+      
+    flash('Submitted', 'Success')
+    return redirect("/")
 
-        flash("Submitted.", "success")
+# #-----------------------------------------------------------
+# # Handle Submit Unavailability form completion
+# #-----------------------------------------------------------
+# @app.post("/unavailability")
+# def process_unavailability():
+#     with connect_db() as db:
+#         weeks = request.form.get('weeks', '').strip()
+        
+#         for week in weeks:
+#             sql = """
+#                 INSERT INTO unavailability (week_id, user_id)
+#                 VALUES = (?,?)
+#             """
+#             params = (session["user"]["id"], week)
+#             # run query
+#             db.execute(sql, params)
 
-        return redirect("/")
+#         flash("Submitted.", "success")
+
+#         return redirect("/")
 
 #-----------------------------------------------------------
 # Individual Week Page - Shows details for one week
