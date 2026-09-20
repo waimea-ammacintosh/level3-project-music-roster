@@ -3,13 +3,19 @@
 # By AARON MACINTOSH
 #===========================================================
 
-from flask import Flask, request, session, render_template, flash, redirect, send_file, make_response
+from flask import Flask, request, session, render_template, flash, redirect, send_file, make_response, url_for
 from werkzeug.security import generate_password_hash, check_password_hash
 from dotenv import load_dotenv
 from os import getenv
 from io import BytesIO
 import html
 from app.helpers import *
+import os
+import uuid
+from werkzeug.utils import secure_filename
+
+
+UPLOAD_FOLDER = os.path.join('app', 'static', 'uploads')
 
 
 # Create the app
@@ -61,9 +67,7 @@ def process_login():
         
 
         sql = """
-            SELECT user.email, user.pw_hash, user.first_name, user.last_name, user.id, user.role_id, role.name AS role_name FROM user 
-            INNER JOIN role 
-            ON user.role_id = role.id
+            SELECT email, pw_hash, first_name, last_name, id, is_admin FROM user 
             WHERE email = ?
         """
         params=(email,)
@@ -85,14 +89,15 @@ def process_login():
                 ON roster.week_id = week.id
                 INNER JOIN instrument
                 ON roster.instrument_id = instrument.id
-                WHERE user_id = ?    
+                WHERE user_id = ?
+                ORDER BY week.id ASC    
             """
         params2 = (user["id"],)
         # run query
         weeks = db.execute(sql2, params2).fetchall()
 
         session["logged_in"] = True
-        session["role"] = user.get('role_name')
+        session["is_admin"] = user.get('is_admin')
         session["user"] = {
             "id": user.get('id'),
             "first_name": user.get('first_name'),
@@ -196,9 +201,7 @@ def process_new_user():
             db.execute(sql4, params4)
 
         sql5 = """
-            SELECT user.email, user.pw_hash, user.first_name, user.last_name, user.id, user.role_id, role.name AS role_name FROM user 
-            INNER JOIN role 
-            ON user.role_id = role.id
+            SELECT email, pw_hash, first_name, last_name, id, user.is_admin, role.name FROM user 
             WHERE user.id = ?
         """
         params5 = (user_id,)
@@ -211,14 +214,15 @@ def process_new_user():
                 ON roster.week_id = week.id
                 INNER JOIN instrument
                 ON roster.instrument_id = instrument.id
-                WHERE user_id = ?    
+                WHERE user_id = ?
+                ORDER BY week.id ASC    
             """
         params = (user["id"],)
         # run query
         weeks = db.execute(sql, params).fetchall()
 
         session["logged_in"] = True
-        session["role"] = user_data.get('role_name')
+        session["is_admin"] = user_data.get('is_admin')
         session["user"] = {
             "id": user_data.get('id'),
             "first_name": user_data.get('first_name'),
@@ -305,8 +309,8 @@ def show_unavailability_form():
 @app.post("/unavailability")
 def process_unavailability():
     with connect_db() as db:
-        submitted_weeks = request.form.get('weeks').strip()
-        
+        submitted_weeks = request.form.getlist('weeks')
+        submitted_weeks = [int(week) for week in submitted_weeks]
 
         sql = """
                     SELECT
@@ -323,15 +327,16 @@ def process_unavailability():
         weeks = db.execute(sql, params).fetchall()
 
         for week in submitted_weeks:
-            if week in weeks:
-                weeks.remove(week)
+            for i in weeks:
+                if week == i['id']:
+                    weeks.remove(i)
 
             sql2 = """
                 UPDATE unavailability
                 SET completed = TRUE, available = FALSE
                 WHERE week_id =?
             """
-            params2=(week_id)
+            params2=(week,)
             db.execute(sql2, params2)
 
         for week in weeks:
@@ -339,7 +344,7 @@ def process_unavailability():
                 SELECT id FROM week
                 WHERE date =?
             """
-            params3=(week.date)
+            params3=(week.date,)
             week_id = db.execute(sql3, params3).fetchone()
             
             sql4 = """
@@ -347,32 +352,12 @@ def process_unavailability():
                 SET completed = TRUE, available = TRUE
                 WHERE week_id =?
             """
-            params4=(week_id)
+            params4=(week_id,)
             db.execute(sql4, params4)
       
-    flash('Submitted', 'Success')
+    flash('Submitted', 'success')
     return redirect("/")
 
-# #-----------------------------------------------------------
-# # Handle Submit Unavailability form completion
-# #-----------------------------------------------------------
-# @app.post("/unavailability")
-# def process_unavailability():
-#     with connect_db() as db:
-#         weeks = request.form.get('weeks', '').strip()
-        
-#         for week in weeks:
-#             sql = """
-#                 INSERT INTO unavailability (week_id, user_id)
-#                 VALUES = (?,?)
-#             """
-#             params = (session["user"]["id"], week)
-#             # run query
-#             db.execute(sql, params)
-
-#         flash("Submitted.", "success")
-
-#         return redirect("/")
 
 #-----------------------------------------------------------
 # Individual Week Page - Shows details for one week
@@ -421,8 +406,45 @@ def show_week(id):
         params4=(id,)
         files = db.execute(sql4, params4).fetchall()
 
-        return render_template("pages/week-page.jinja", week=week, instruments=instruments, week_data=week_data, files=files)
+        sql5 = """
+            SELECT user_id FROM roster
+            WHERE instrument_id = '1' AND week_id=?
+        """
+        params5=(id,)
+        worship_leader = db.execute(sql5, params5).fetchone()
 
+        return render_template("pages/week-page.jinja", week=week, instruments=instruments, week_data=week_data, files=files, worship_leader=worship_leader, week_id=id)
+
+#-----------------------------------------------------------
+# New File Upload - handles new file upload form
+#-----------------------------------------------------------
+@app.post("/newfile/week/<int:id>")
+def add_file(id):
+    # Get the file selected via the form
+    file = request.files.get('file', None)
+    if not file or file.filename == '':
+        flash("There was a problem uploading the file", "error")
+        return redirect("/new/creature")
+
+    # Sanitise filename and make it unique
+    filename = secure_filename(file.filename)
+    random_prefix = uuid.uuid4().hex[:12]
+    unique_filename = f"{random_prefix}_{filename}"
+
+    # Get the path of the upload folder
+    filepath = os.path.join(UPLOAD_FOLDER, unique_filename)
+
+    # Save file to disk
+    file.save(filepath)
+
+    # Add the form data and the upload filename to the DB
+    with connect_db() as db:
+        sql = "INSERT INTO file (filename, week_id) VALUES (?, ?)"
+        params = (unique_filename, id)
+        db.execute(sql, params)
+
+        flash(f"{filename} added", "success")
+        return redirect(url_for('show_week', id=id))
 
 #-----------------------------------------------------------
 # User List page - show all users
@@ -431,10 +453,8 @@ def show_week(id):
 def show_users():
     with connect_db() as db:
         sql = """
-            SELECT user.id, user.first_name, user.last_name, user.email, user.role_id, role.name
+            SELECT user.id, user.first_name, user.last_name, user.email, user.is_admin
             FROM user
-            LEFT JOIN role 
-            ON user.role_id = role.id
         """
         
         params = ()
@@ -457,6 +477,44 @@ def show_users():
             user["instruments"] = instruments
 
         return render_template("pages/user-list.jinja", users=users, instruments=instruments)
+
+
+#-----------------------------------------------------------
+# Submit Request Page - shows submit request form
+#-----------------------------------------------------------
+# @app.get("/request")
+# def show_request():
+# 
+    # weeks = list(unique_justseen(session['user']['weeks'], key = 'id'))
+# 
+    # return render_template("pages/request.jinja", weeks=weeks)
+
+#-----------------------------------------------------------
+# Handle Request form
+#-----------------------------------------------------------
+@app.post("/request")
+def process_request():
+    with connect_db() as db:
+        week = request.form.get('week').strip()
+        message = request.form.get('message', '').strip()
+
+
+        if message:
+            sql = """
+                INSERT INTO request (week_id, user_id, message) VALUES (?, ?, ?)
+            """
+            params=(week, session['user']['id'], message )
+            db.execute(sql, params)
+        else:
+            sql = """
+                INSERT INTO request (week_id, user_id, message) VALUES (?, ?, ?)
+            """
+            params=(week, session['user']['id'], 'No Message')
+            db.execute(sql, params)
+
+      
+    flash('Submitted request', 'success')
+    return redirect("/")
 
 
 #-----------------------------------------------------------

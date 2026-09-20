@@ -9,21 +9,27 @@
 
   <h2>Submit Request</h2>
 
-  <section id="users">
-    
-    <form method="post" action="/users/new">
-
+  <section>
     
     
+    <h2>Submit Request</h2>
+      <form method="post" action="/request">
+        <label>
+          Select the date you want to change:
+          {% for week in weeks %}
+            <label><input type="radio" name="week" value="{{ week.id }}"></label>{{ week.date }}<br>
+          {% endfor %}
+        </label>
+        <label>
+          Message
+          <input type="text" name="message">
+        </label>
 
-      <label>
-        Email
-        <input type="text" name="email" required>
-      </label>
+        <button>Submit</button>
+      </form>
 
-      <button>Submit</button>
-
-    </form>
+    </section>
+    <button onclick="window.location.href='/';">Back</button>
 
   </section>
 

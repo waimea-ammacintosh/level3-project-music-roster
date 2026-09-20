@@ -23,7 +23,7 @@
                 <p>{{ user.email }}</p>
 
                 <footer>
-                    Role: {% if user.name != null %} {{ user.name }} {% else %} "none" {% endif %}<br>
+                    Role: {% if user.is_admin != False %} admin {% else %} none {% endif %}<br>
                     Instrument(s): 
                     {% for instrument in user["instruments"] %}
                      {{ instrument.name }}{% if instrument == user["instruments"][-1] %} {% else %}, {% endif %} 

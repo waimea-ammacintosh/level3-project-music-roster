@@ -26,17 +26,15 @@ class UserTable:
             first_name     TEXT NOT NULL,
             last_name      TEXT NOT NULL,
             pw_hash        TEXT NOT NULL,
-            role_id        INTEGER, 
-
-            FOREIGN KEY (role_id) REFERENCES role(id)
+            is_admin       BOOL DEFAULT FALSE
         )
     """
 
     SEED_DATA = """
-        INSERT INTO user (email, first_name, last_name, pw_hash, role_id)
+        INSERT INTO user (email, first_name, last_name, pw_hash, is_admin)
         VALUES
-        ('aaron.macintosh@icloud.com', 'Aaron', 'Macintosh', 'scrypt:32768:8:1$bWFxNHmhbwCRY5lc$7f093fbd397c96d03868f046e2e51cac69ea72598b0c267933982c2b029f7cf8a4f219ca08d37ffe2f6f3bbeeffd5171f253c9291722eb58ff60e01bf262ebec', 1),
-        ('bobby@mail.com', 'Bob', 'Looffd', 'scrypt:32768:8:1$bWFxNHmhbwCRY5lc$7f093fbd397c96d03868f046e2e51cac69ea72598b0c267933982c2b029f7cf8a4f219ca08d37ffe2f6f3bbeeffd5171f253c9291722eb58ff60e01bf262ebec', 2)
+        ('aaron.macintosh@icloud.com', 'Aaron', 'Macintosh', 'scrypt:32768:8:1$bWFxNHmhbwCRY5lc$7f093fbd397c96d03868f046e2e51cac69ea72598b0c267933982c2b029f7cf8a4f219ca08d37ffe2f6f3bbeeffd5171f253c9291722eb58ff60e01bf262ebec', TRUE),
+        ('bobby@mail.com', 'Bob', 'Looffd', 'scrypt:32768:8:1$bWFxNHmhbwCRY5lc$7f093fbd397c96d03868f046e2e51cac69ea72598b0c267933982c2b029f7cf8a4f219ca08d37ffe2f6f3bbeeffd5171f253c9291722eb58ff60e01bf262ebec', FALSE)
             
     """
 
@@ -58,7 +56,9 @@ class WeekTable:
         VALUES
         ('2026-11-08', '2026-11-05'),
         ('2026-11-15', '2026-11-12'),
-        ('2026-11-22', '2026-11-19')
+        ('2026-11-22', '2026-11-19'),
+        ('2026-11-29', '2026-11-26')
+
 
             
     """
@@ -83,26 +83,6 @@ class FileTable:
         ('pdftris.pdf', 1)
     """
 
-class RoleTable:
-
-    NAME = "role"
-
-    SCHEMA = """
-        CREATE TABLE role (
-            id      INTEGER PRIMARY KEY AUTOINCREMENT,
-            name    TEXT NOT NULL
-
-        )
-    """
-
-    SEED_DATA = """
-        INSERT INTO role (name)
-        VALUES
-        ('Admin'),
-        ('Leader')
-
-    """
-
 class InstrumentTable:
 
     NAME = "instrument"
@@ -118,9 +98,11 @@ class InstrumentTable:
     SEED_DATA = """
         INSERT INTO instrument (name)
         VALUES
+        ('Worship Lead'),
         ('bass'),
         ('acoustic guitar'),
         ('sing')
+        
 
     """
 
@@ -131,18 +113,19 @@ class RequestTable:
     SCHEMA = """
         CREATE TABLE request (
             id        INTEGER PRIMARY KEY AUTOINCREMENT,
-            date      DATE NOT NULL,
+            week_id   INTEGER NOT NULL,
             message   TEXT NOT NULL,
             user_id   INTEGER NOT NULL,
 
-            FOREIGN KEY (user_id) REFERENCES user(id)  
+            FOREIGN KEY (user_id) REFERENCES user(id),
+            FOREIGN KEY (week_id) REFERENCES week(id)  
         )
     """
 
     SEED_DATA = """
-        INSERT INTO request (date, message, user_id)
+        INSERT INTO request (week_id, message, user_id)
         VALUES
-        (2026-11-08, 'I am most sorry, I am unable to attend this week, as I cannot handle my eyes.', 0)
+        (1, 'I am most sorry, I am unable to attend this week, as I cannot handle my eyes.', 1)
             
     """
 
@@ -165,6 +148,7 @@ class InstrumentUserTable:
         VALUES
         (1, 1),
         (1, 2),
+        (1, 4),
         (2, 3)
             
     """
@@ -217,9 +201,11 @@ class UnavailabilityTable:
         (1, 1, TRUE, TRUE),
         (1, 2, TRUE, TRUE),
         (1, 3, FALSE, FALSE),
+        (1, 4, FALSE, FALSE),
         (2, 1, TRUE, TRUE),
         (2, 2, FALSE, TRUE),
-        (2, 3, FALSE, FALSE)
+        (2, 3, FALSE, FALSE),
+        (2, 4, FALSE, FALSE)
     """
 #----------------------------------------------------------------------------
 # Table registry
@@ -237,7 +223,6 @@ class UnavailabilityTable:
 #----------------------------------------------------------------------------
 
 TABLES = [
-    RoleTable,
     InstrumentTable,
     UserTable,
     InstrumentUserTable,

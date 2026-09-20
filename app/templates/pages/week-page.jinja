@@ -32,9 +32,24 @@
         </table>
 
         <h2>Attatchments</h2>
+        {% if worship_leader['user_id'] == session['user']['id'] %}
+            <form method="post" action="/newfile/week/{{ week_id }}" enctype="multipart/form-data">
+    
+                <label>
+                    New File
+                    <input
+                        name="file"
+                        type="file"
+                        accept=".pdf, .docx, .txt"
+                        required
+                    >
+                </label>
+
+                <button>Add New File</button>
+                </form>
+        {% endif %}
         {% for file in files %}
-            <iframe src="/static/uploads/{{ file.filename }}" style="height:200px;width:300px;" title="File: {{ file.filename }}"></iframe>
-            <h3>{{ file.filename }}</h3>
+            <a href="/static/uploads/{{ file.filename }}" download> {{ file.filename }}</a><br>
         {% else %}
             <h5>No files yet!</h5>
         {% endfor %}
