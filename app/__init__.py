@@ -305,18 +305,19 @@ def show_unavailability_form():
 @app.post("/unavailability")
 def process_unavailability():
     with connect_db() as db:
-        submitted_weeks = request.form.get('week').strip()
+        submitted_weeks = request.form.get('weeks').strip()
+        
 
         sql = """
                     SELECT
-                        week.date
+                        week.id
                     FROM unavailability
                     JOIN week ON week.id = unavailability.week_id
                     JOIN user ON user.id = unavailability.user_id
         
                     WHERE user.id =? AND unavailability.completed = FALSE
                     
-                    ORDER BY w_id ASC            
+                    ORDER BY week.id ASC            
                 """
         params = (session['user']['id'],)
         weeks = db.execute(sql, params).fetchall()
@@ -325,36 +326,29 @@ def process_unavailability():
             if week in weeks:
                 weeks.remove(week)
 
-            sql2="""
-                SELECT id FROM week
-                WHERE date =?
-            """
-            params2=(week.date)
-            week_id = db.execute(sql2, params2).fetchone()
-
-            sql3 = """
+            sql2 = """
                 UPDATE unavailability
                 SET completed = TRUE, available = FALSE
                 WHERE week_id =?
             """
-            params3=(week_id)
-            db.execute(sql3, params3)
+            params2=(week_id)
+            db.execute(sql2, params2)
 
         for week in weeks:
-            sql2="""
+            sql3="""
                 SELECT id FROM week
                 WHERE date =?
             """
-            params2=(week.date)
-            week_id = db.execute(sql2, params2).fetchone()
+            params3=(week.date)
+            week_id = db.execute(sql3, params3).fetchone()
             
-            sql3 = """
+            sql4 = """
                 UPDATE unavailability
                 SET completed = TRUE, available = TRUE
                 WHERE week_id =?
             """
-            params3=(week_id)
-            db.execute(sql3, params3)
+            params4=(week_id)
+            db.execute(sql4, params4)
       
     flash('Submitted', 'Success')
     return redirect("/")
