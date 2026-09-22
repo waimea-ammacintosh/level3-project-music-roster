@@ -13,6 +13,7 @@ from app.helpers import *
 import os
 import uuid
 from werkzeug.utils import secure_filename
+from more_itertools import unique_justseen
 
 
 UPLOAD_FOLDER = os.path.join('app', 'static', 'uploads')
@@ -482,12 +483,12 @@ def show_users():
 #-----------------------------------------------------------
 # Submit Request Page - shows submit request form
 #-----------------------------------------------------------
-# @app.get("/request")
-# def show_request():
-# 
-    # weeks = list(unique_justseen(session['user']['weeks'], key = 'id'))
-# 
-    # return render_template("pages/request.jinja", weeks=weeks)
+@app.get("/request")
+def show_request():
+
+    weeks = list(unique_justseen(session['user']['weeks'], key = 'id'))
+
+    return render_template("pages/request.jinja", weeks=weeks)
 
 #-----------------------------------------------------------
 # Handle Request form
