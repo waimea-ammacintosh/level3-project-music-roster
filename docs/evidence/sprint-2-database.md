@@ -12,13 +12,15 @@ Implement the database, populated with test data. Create queries that retrieve t
 - Implement the database
 - Add test data to the database
 - Create the following web pages:
-    - Home pages showing...
-    - Details page for ...
-    - Etc.
+    - Home pages showing User weeks
+    - Details page for Individual week
+    - Details page for Full Roster
+    - Form pages for submitting requests, unavailability
+    - register/login pages for users to sign in/up
 - Develop SQL database queries to:
-    - Retrieve all ...
-    - Retrieve specific ...
-    - Etc.
+    - Retrieve all data for full Roster
+    - Retrieve all data related to a specific week
+    - Edit tables to handle submissions from Unavailability, Requests, new users
 
 
 ## Testing Table Implementation with test data
@@ -126,5 +128,5 @@ This resulted in the following card being displayed on the user list:
 
 ## Sprint Review
 
-This sprint has moved my project forward, as it it has helped me to refine and finalize my database, and have a clear understanding of how my database will work, and be implemented into my system. Some things that went well: The implementation of my database with test data, Writing the roster display query and adding new users to the db. These went well, as they worked relatively quickly, and they all helped get my database to be displayed on my web app, and edited from the web app, which moved my project forward. One thing that did not go so well was that I had to refine my db a bit, as there were some things that I hadn't considered before, and I had to make changes that I weren't expecting, which was challenging to do.
+This sprint has moved my project forward, as it it has helped me to refine and finalize my database, and have a clear understanding of how my database will work, and be implemented into my system. Some things that went well: The implementation of my database with test data, Writing the roster display query and adding new users to the db. These went well, as they worked relatively quickly, and they all helped get my database to be displayed on my web app, and edited from the web app, which moved my project forward. One thing that did not go so well was that I had to refine my db a bit, as there were some things that I hadn't considered before, and I had to make changes that I weren't expecting, which was challenging to do. This slowed me down, and I took longer than I was expecting on some pages that I had assumed would be quick and easy to make.
 

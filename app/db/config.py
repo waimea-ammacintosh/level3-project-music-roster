@@ -112,10 +112,10 @@ class RequestTable:
 
     SCHEMA = """
         CREATE TABLE request (
-            id        INTEGER PRIMARY KEY AUTOINCREMENT,
-            week_id   INTEGER NOT NULL,
-            message   TEXT NOT NULL,
-            user_id   INTEGER NOT NULL,
+            id         INTEGER PRIMARY KEY AUTOINCREMENT,
+            week_id    INTEGER NOT NULL,
+            message    TEXT NOT NULL,
+            user_id    INTEGER NOT NULL,     
 
             FOREIGN KEY (user_id) REFERENCES user(id),
             FOREIGN KEY (week_id) REFERENCES week(id)  

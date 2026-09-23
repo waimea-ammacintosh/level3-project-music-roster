@@ -17,7 +17,7 @@
         <label>
           Select the date you want to change:
           {% for week in weeks %}
-            <label><input type="radio" name="week" value="{{ week.id }}"></label>{{ week.date }}<br>
+            <label><input type="radio" name="week" value="{{ week.week_id }}"></label>{{ week.date }}<br>
           {% endfor %}
         </label>
         <label>

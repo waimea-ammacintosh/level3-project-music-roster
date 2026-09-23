@@ -13,7 +13,7 @@ from app.helpers import *
 import os
 import uuid
 from werkzeug.utils import secure_filename
-from more_itertools import unique_justseen
+from more_itertools import unique_justseen, unique_everseen
 
 
 UPLOAD_FOLDER = os.path.join('app', 'static', 'uploads')
@@ -126,15 +126,7 @@ def show_register():
         params = ()
         instruments = db.execute(sql, params).fetchall()
 
-        sql2 = """
-            SELECT *
-            FROM role
-        """
-
-        params2 = ()
-        roles = db.execute(sql2, params2).fetchall()
-
-        return render_template("pages/register.jinja", instruments=instruments, roles = roles)
+        return render_template("pages/register.jinja", instruments=instruments)
 
 #-----------------------------------------------------------
 # Handle user signup
@@ -485,10 +477,19 @@ def show_users():
 #-----------------------------------------------------------
 @app.get("/request")
 def show_request():
+    with connect_db() as db:
+        sql="""
+            SELECT week_id, week.date FROM roster
+            INNER JOIN week
+            ON week_id = week.id
+            WHERE user_id = ?
+        """
+        params=(session['user']['id'],)
+        weeks = db.execute(sql, params).fetchall()
 
-    weeks = list(unique_justseen(session['user']['weeks'], key = 'id'))
+    unique_weeks = list(unique_justseen(weeks))
 
-    return render_template("pages/request.jinja", weeks=weeks)
+    return render_template("pages/request.jinja", weeks=unique_weeks)
 
 #-----------------------------------------------------------
 # Handle Request form
@@ -496,7 +497,7 @@ def show_request():
 @app.post("/request")
 def process_request():
     with connect_db() as db:
-        week = request.form.get('week').strip()
+        week = request.form.get('week')
         message = request.form.get('message', '').strip()
 
 
