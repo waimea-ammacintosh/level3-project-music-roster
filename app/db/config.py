@@ -33,9 +33,9 @@ class UserTable:
     SEED_DATA = """
         INSERT INTO user (email, first_name, last_name, pw_hash, is_admin)
         VALUES
-        ('aaron.macintosh@icloud.com', 'Aaron', 'Macintosh', 'scrypt:32768:8:1$bWFxNHmhbwCRY5lc$7f093fbd397c96d03868f046e2e51cac69ea72598b0c267933982c2b029f7cf8a4f219ca08d37ffe2f6f3bbeeffd5171f253c9291722eb58ff60e01bf262ebec', TRUE),
-        ('bobby@mail.com', 'Bob', 'Looffd', 'scrypt:32768:8:1$bWFxNHmhbwCRY5lc$7f093fbd397c96d03868f046e2e51cac69ea72598b0c267933982c2b029f7cf8a4f219ca08d37ffe2f6f3bbeeffd5171f253c9291722eb58ff60e01bf262ebec', FALSE)
-            
+        ('aaron.macintosh@icloud.com', 'Aaron', 'Macintosh', 'scrypt:32768:8:1$tfKjizzt87rOrItD$7c0b7b8269434224f29ec37e0b8de4dbee1f54fbd0d5a48225845a9706362702e7ffaff2fc9aa6d452a18a00e618e23114b164403350f68da2781dd9c4a0efed', FALSE),
+        ('bobby@mail.com', 'Bob', 'Looffd', 'scrypt:32768:8:1$tfKjizzt87rOrItD$7c0b7b8269434224f29ec37e0b8de4dbee1f54fbd0d5a48225845a9706362702e7ffaff2fc9aa6d452a18a00e618e23114b164403350f68da2781dd9c4a0efed', FALSE),
+        ('jimmy@yahoo.com', 'Jimmy', 'Carlsen', 'scrypt:32768:8:1$bWFxNHmhbwCRY5lc$7f093fbd397c96d03868f046e2e51cac69ea72598b0c267933982c2b029f7cf8a4f219ca08d37ffe2f6f3bbeeffd5171f253c9291722eb58ff60e01bf262ebec', TRUE)   
     """
 
 # Add more table classes here...

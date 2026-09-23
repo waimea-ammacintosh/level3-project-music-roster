@@ -32,8 +32,28 @@ app = Flask(__name__)
 #-----------------------------------------------------------
 @app.get("/")
 def home():
+    if session['logged_in']:
+        if session['user']['is_admin']:
+            with connect_db() as db:
 
-    return render_template("pages/home.jinja")
+                sql="""
+                    SELECT user.first_name, user.last_name, week.date
+                    FROM request
+                    INNER JOIN user
+                    ON user_id = user.id
+                    INNER JOIN week
+                    ON week_id = week.id
+                """
+                params=()
+                requests = db.execute(sql, params).fetchall()
+        else:
+            requests = None
+    else:
+        requests = None
+    
+ 
+
+    return render_template("pages/home.jinja", requests = requests)
 
 
 #-----------------------------------------------------------
@@ -45,12 +65,11 @@ def show_login():
     return render_template("pages/login.jinja")
 
 #-----------------------------------------------------------
-# Welcome page
+# sign out route
 #-----------------------------------------------------------
 @app.get("/logout")
 def logout():
     session["logged_in"] = False
-    session["role"] = None
     session["user"] = {}
 
 
@@ -98,13 +117,13 @@ def process_login():
         weeks = db.execute(sql2, params2).fetchall()
 
         session["logged_in"] = True
-        session["is_admin"] = user.get('is_admin')
         session["user"] = {
             "id": user.get('id'),
             "first_name": user.get('first_name'),
             "last_name": user.get('last_name'),
             "email": user.get('email'),
-            "weeks": weeks
+            "weeks": weeks,
+            "is_admin": user.get('is_admin')
             }
 
         flash("Signed In.", "success")
@@ -141,15 +160,12 @@ def process_new_user():
         instruments = request.form.getlist('instrument')
         role = request.form.get('role', '').strip()
 
-        pass_hash = generate_password_hash(password)
+        is_admin = False
+        if role == 'Admin':
+            is_admin = True
 
-        role_id = 0
-        if(role == 'Admin'): 
-            role_id = 1
-        elif(role == 'Leader'): 
-            role_id = 2
-        else:
-            role_id = 0
+
+        pass_hash = generate_password_hash(password)
 
         if not instruments:
             flash("Please select at least one instrument", "error")
@@ -167,11 +183,11 @@ def process_new_user():
                 return redirect("/register")
 
         sql2 = """
-            INSERT INTO user (first_name, last_name, email, pw_hash, role_id)
+            INSERT INTO user (first_name, last_name, email, pw_hash, is_admin)
             VALUES (?, ?, ?, ?, ?)
             RETURNING id;
             """
-        params2 = (first_name, last_name, email, pass_hash, role_id)
+        params2 = (first_name, last_name, email, pass_hash, is_admin)
         user = db.execute(sql2, params2).fetchone()
         user_id = next(iter(user.values()))
 
@@ -193,14 +209,29 @@ def process_new_user():
             params4 = (instrument_id, user_id)
             db.execute(sql4, params4)
 
-        sql5 = """
-            SELECT email, pw_hash, first_name, last_name, id, user.is_admin, role.name FROM user 
+        sql5="""
+            SELECT id FROM week
+        """
+        params5=()
+        all_weeks= db.execute(sql5, params5).fetchall()
+
+        for week in all_weeks:
+            sql6="""
+                INSERT INTO unavailability (user_id, week_id, available, completed)
+                VALUES (?, ?, False, False)
+            """
+            params6=(user_id, week['id'])
+            db.execute(sql6, params6)
+
+        sql7 = """
+            SELECT email, pw_hash, first_name, last_name, id, is_admin
+            FROM user 
             WHERE user.id = ?
         """
-        params5 = (user_id,)
-        user_data = db.execute(sql5, params5).fetchone()
+        params7 = (user_id,)
+        user_data = db.execute(sql7, params7).fetchone()
 
-        sql = """
+        sql8 = """
                 SELECT week.date, week.id, instrument.name AS instrument_name
                 FROM roster
                 INNER JOIN week
@@ -210,18 +241,18 @@ def process_new_user():
                 WHERE user_id = ?
                 ORDER BY week.id ASC    
             """
-        params = (user["id"],)
+        params8 = (user["id"],)
         # run query
-        weeks = db.execute(sql, params).fetchall()
+        weeks = db.execute(sql8, params8).fetchall()
 
         session["logged_in"] = True
-        session["is_admin"] = user_data.get('is_admin')
         session["user"] = {
             "id": user_data.get('id'),
             "first_name": user_data.get('first_name'),
             "last_name": user_data.get('last_name'),
             "email": user_data.get('email'),
-            "weeks": weeks
+            "weeks": weeks,
+            "is_admin": user_data.get('is_admin')
             }
 
 
@@ -267,7 +298,7 @@ def show_roster():
         params3=()
         instruments = db.execute(sql3, params3).fetchall()
 
-        return render_template("pages/roster.jinja", roster=roster, instruments=instruments, weeks=weeks)
+        return render_template("pages/roster-show.jinja", roster=roster, instruments=instruments, weeks=weeks)
 
 #-----------------------------------------------------------
 # Submit unavailability Page - Form to submit unavailability
@@ -307,7 +338,8 @@ def process_unavailability():
 
         sql = """
                     SELECT
-                        week.id
+                        week.id,
+                        week.date
                     FROM unavailability
                     JOIN week ON week.id = unavailability.week_id
                     JOIN user ON user.id = unavailability.user_id
@@ -337,7 +369,7 @@ def process_unavailability():
                 SELECT id FROM week
                 WHERE date =?
             """
-            params3=(week.date,)
+            params3=(week['date'],)
             week_id = db.execute(sql3, params3).fetchone()
             
             sql4 = """
@@ -345,7 +377,7 @@ def process_unavailability():
                 SET completed = TRUE, available = TRUE
                 WHERE week_id =?
             """
-            params4=(week_id,)
+            params4=(week_id['id'],)
             db.execute(sql4, params4)
       
     flash('Submitted', 'success')

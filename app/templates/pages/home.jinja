@@ -16,7 +16,21 @@
     {% endif %}
   </h2>
 
-  {% if session["logged_in"] %}
+  {% if session['user']['is_admin'] %}
+    <section>
+      <h2>Requests:</h2>
+      {% for request in requests %}
+        <button onclick="window.location.href='/';" >{{ request.first_name }} -- {{ request.date }}</button>
+      {% else %}
+        <h4>None!</h4>
+      {% endfor %}
+
+      <button onclick="window.location.href='/roster';" >see full roster</button>
+      <button onclick="window.location.href='/';" >roster creation</button>
+      <button onclick="window.location.href='/logout';" >logout</button>
+    </section>
+
+  {% elif session["logged_in"] %}
     <h3>Your Weeks</h3>
     <section id="users">
       {% for week in session["user"]["weeks"] %}

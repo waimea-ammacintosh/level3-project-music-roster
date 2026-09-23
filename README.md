@@ -31,12 +31,16 @@ Project Evidence
 The following user accounts have been created to demonstrate the features of the system:
 
 Test User 1:
-- Username: xxxxx
-- Password: xxxxx
+- Username: aaron.macintosh@icloud.com
+- Password: 123
 
 Test User 2:
-- Username: xxxxx
-- Password: xxxxx
+- Username: bobby@mail.com
+- Password: 123
+
+Test User 3:
+- Username: jimmy@yahoo.com
+- Password: admin123
 
 ...
 
