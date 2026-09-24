@@ -32,22 +32,26 @@ app = Flask(__name__)
 #-----------------------------------------------------------
 @app.get("/")
 def home():
-    if session['logged_in']:
-        if session['user']['is_admin']:
-            with connect_db() as db:
+    # if there is no session, create a logged out one
+    if not bool(session):
+        session["logged_in"] = False
+        session["user"] = {}
+        session['is_admin'] = False
 
-                sql="""
-                    SELECT user.first_name, user.last_name, week.date
-                    FROM request
-                    INNER JOIN user
-                    ON user_id = user.id
-                    INNER JOIN week
-                    ON week_id = week.id
-                """
-                params=()
-                requests = db.execute(sql, params).fetchall()
-        else:
-            requests = None
+    # select requests if the user is an admin, else don't as they are not required
+    if session['is_admin']:
+        with connect_db() as db:
+        
+            sql="""
+                SELECT user.first_name, user.last_name, week.date
+                FROM request
+                INNER JOIN user
+                ON user_id = user.id
+                INNER JOIN week
+                ON week_id = week.id
+            """
+            params=()
+            requests = db.execute(sql, params).fetchall()
     else:
         requests = None
     
@@ -69,8 +73,10 @@ def show_login():
 #-----------------------------------------------------------
 @app.get("/logout")
 def logout():
+    # clear session
     session["logged_in"] = False
     session["user"] = {}
+    session['is_admin'] = False
 
 
     return redirect("/")
@@ -82,10 +88,11 @@ def logout():
 @app.post("/login")
 def process_login():
     with connect_db() as db:
+        # get and sanitize the form data
         email = request.form.get('email', '').strip().lower()
         password = request.form.get('password', '').strip()
         
-
+        # select user data
         sql = """
             SELECT email, pw_hash, first_name, last_name, id, is_admin FROM user 
             WHERE email = ?
@@ -93,15 +100,17 @@ def process_login():
         params=(email,)
         user = db.execute(sql, params).fetchone()
 
-
+        # check if correct email is inputted
         if not user:
              flash(f"Unknown user", "error")
              return redirect("/login")
- 
+
+        # check if correct password is inputted
         if not check_password_hash(user["pw_hash"], password):
             flash(f"Incorrect password", "error")
             return redirect("/login")
-        
+
+        # collect week data linked to the user
         sql2 = """
                 SELECT week.date, week.id, instrument.name AS instrument_name
                 FROM roster
@@ -116,6 +125,7 @@ def process_login():
         # run query
         weeks = db.execute(sql2, params2).fetchall()
 
+        # create session
         session["logged_in"] = True
         session["user"] = {
             "id": user.get('id'),
@@ -123,8 +133,8 @@ def process_login():
             "last_name": user.get('last_name'),
             "email": user.get('email'),
             "weeks": weeks,
-            "is_admin": user.get('is_admin')
             }
+        session["is_admin"] = user.get('is_admin')
 
         flash("Signed In.", "success")
 
@@ -136,7 +146,8 @@ def process_login():
 @app.get("/register")
 def show_register():
     with connect_db() as db:
-    
+
+        # get all instruments for form
         sql = """
             SELECT *
             FROM instrument
@@ -153,6 +164,8 @@ def show_register():
 @app.post("/users/new")
 def process_new_user():
     with connect_db() as db:
+
+        # get and sanitize the form data
         first_name = request.form.get('first_name', '').strip()
         last_name  = request.form.get('last_name',  '').strip()
         email = request.form.get('email', '').strip().lower()
@@ -160,6 +173,7 @@ def process_new_user():
         instruments = request.form.getlist('instrument')
         role = request.form.get('role', '').strip()
 
+        # check wether user is admin
         is_admin = False
         if role == 'Admin':
             is_admin = True
@@ -252,8 +266,8 @@ def process_new_user():
             "last_name": user_data.get('last_name'),
             "email": user_data.get('email'),
             "weeks": weeks,
-            "is_admin": user_data.get('is_admin')
             }
+        session["is_admin"] = user_data.get('is_admin')
 
 
         flash("Account created.", "success")
@@ -521,7 +535,7 @@ def show_request():
 
     unique_weeks = list(unique_justseen(weeks))
 
-    return render_template("pages/request.jinja", weeks=unique_weeks)
+    return render_template("pages/request-submit.jinja", weeks=unique_weeks)
 
 #-----------------------------------------------------------
 # Handle Request form

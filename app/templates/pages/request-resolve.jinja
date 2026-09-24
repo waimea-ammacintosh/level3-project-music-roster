@@ -1,0 +1,40 @@
+{#=====================================================
+  Individual week page
+=====================================================#}
+
+{% extends 'pages/_base.jinja' %}
+
+
+{% block content %}
+
+    <h2>Resolve Request</h2>
+
+    <section>
+
+        <h5>Name: {{ request.f_name }} {{ request.l_name}}</h5>
+        <h5>Date: {{ request.date}}</h5>
+        <h5>Instrument: {% for instrument in instrument%}{{ instrument.name }}<br>{% endfor %}</h5>
+        
+
+        <h3>Message</h3>
+        <h5>{{ request.message }}</h5>
+
+        <h3>Replacement</h3>
+        <form>
+            {% for instrument in instrument %}
+            <label>
+                {{ instrument.name }}
+                <select name="replacement">
+                    {% for user in available_users %}
+                        <option value="{{ user.f_name }}">{{ user.f_name }}</option>
+                    {% endfor %}
+                </select>
+            </label>
+        </form>
+           
+
+    </section>
+    <button onclick="window.location.href='/';">Back</button>
+
+{% endblock %}
+

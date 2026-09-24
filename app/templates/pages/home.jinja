@@ -16,7 +16,8 @@
     {% endif %}
   </h2>
 
-  {% if session['user']['is_admin'] %}
+  
+  {% if session['is_admin'] %}
     <section>
       <h2>Requests:</h2>
       {% for request in requests %}
