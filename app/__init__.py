@@ -43,7 +43,7 @@ def home():
         with connect_db() as db:
         
             sql="""
-                SELECT user.first_name, user.last_name, week.date
+                SELECT user.first_name, user.id AS u_id, week.id AS w_id, user.last_name, week.date
                 FROM request
                 INNER JOIN user
                 ON user_id = user.id
@@ -521,7 +521,7 @@ def show_users():
 #-----------------------------------------------------------
 # Submit Request Page - shows submit request form
 #-----------------------------------------------------------
-@app.get("/request")
+@app.get("/request/submit")
 def show_request():
     with connect_db() as db:
         sql="""
@@ -538,9 +538,9 @@ def show_request():
     return render_template("pages/request-submit.jinja", weeks=unique_weeks)
 
 #-----------------------------------------------------------
-# Handle Request form
+# Handle Submit Request form
 #-----------------------------------------------------------
-@app.post("/request")
+@app.post("/request/submit")
 def process_request():
     with connect_db() as db:
         week = request.form.get('week')
@@ -554,14 +554,108 @@ def process_request():
             params=(week, session['user']['id'], message )
             db.execute(sql, params)
         else:
-            sql = """
+            sql2 = """
                 INSERT INTO request (week_id, user_id, message) VALUES (?, ?, ?)
             """
-            params=(week, session['user']['id'], 'No Message')
-            db.execute(sql, params)
+            params2=(week, session['user']['id'], 'No Message')
+            db.execute(sql2, params2)
+
+        sql3="""
+            UPDATE unavailability
+            SET available = FALSE
+            WHERE user_id = ?
+        """
+        params3=(session['user']['id'])
+        db.execute(sql3, params3)
 
       
     flash('Submitted request', 'success')
+    return redirect("/")
+
+#-----------------------------------------------------------
+# Resolve Request Page - shows resolve request form
+#-----------------------------------------------------------
+@app.get("/request/resolve/<int:u_id>/<int:w_id>")
+def show_resolve_request(u_id, w_id):
+    with connect_db() as db:
+        sql="""
+            SELECT week_id, week.date, user_id, user.first_name AS f_name, user.last_name AS l_name, message FROM request
+            INNER JOIN week
+            ON week_id = week.id
+            INNER JOIN user
+            ON user_id = user.id
+            WHERE user_id = ? AND week_id = ?
+        """
+        params=(u_id, w_id)
+        request = db.execute(sql, params).fetchone()
+
+        sql2="""
+            SELECT instrument.name, instrument.id
+            FROM roster
+            INNER JOIN instrument
+            ON instrument_id = instrument.id
+            WHERE user_id = ? AND week_id= ?
+        """
+        params2=(u_id, w_id)
+        instruments = db.execute(sql2, params2).fetchall()
+
+        available_users = []
+        for instrument in instruments:
+            sql3="""
+                SELECT user.first_name AS f_name, user.last_name AS l_name, user.id AS u_id FROM instrumentUser
+                INNER JOIN user
+                ON instrumentUser.user_id = user.id
+                INNER JOIN unavailability
+                ON unavailability.user_id = user.id
+                WHERE instrument_id = ? AND unavailability.available = TRUE AND user.id != ?
+                ORDER BY user.id ASC
+            """
+            params3=(instrument.get('id'), u_id)
+            available_users.extend(db.execute(sql3, params3).fetchall())
+
+        available_users = list(unique_justseen(available_users))
+        print(available_users)
+
+
+
+    return render_template("pages/request-resolve.jinja", u_id=u_id, w_id=w_id, request=request, available_users=available_users, instruments=instruments)
+
+#-----------------------------------------------------------
+# Resolve Request Page - shows resolve request form
+#-----------------------------------------------------------
+@app.post("/request/resolve/<int:u_id>/<int:w_id>")
+def process_resolve_request(u_id, w_id):
+    with connect_db() as db:
+        sql="""
+            SELECT instrument.name, instrument.id
+            FROM roster
+            INNER JOIN instrument
+            ON instrument_id = instrument.id
+            WHERE user_id = ? AND week_id= ?
+        """
+        params=(u_id, w_id)
+        instruments = db.execute(sql, params).fetchall()
+
+        for instrument in instruments:
+            name = instrument.get('name')
+            replacement = request.form.get(f'replacement-{name}').strip()
+            sql2="""
+                UPDATE roster
+                SET user_id = ?
+                WHERE week_id = ? and instrument_id = ?
+            """
+            params2=(replacement, w_id, instrument.get('id'))
+            db.execute(sql2, params2)
+
+        sql3="""
+            DELETE FROM request
+            WHERE user_id=? AND week_id = ?
+        """
+        params3=(u_id, w_id)
+        db.execute(sql3, params3)
+
+
+
     return redirect("/")
 
 

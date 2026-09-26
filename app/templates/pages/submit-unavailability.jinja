@@ -13,6 +13,8 @@
           Select the dates you are unavailable for:
           {% for week in weeks %}
             <label><input type="checkbox" name="weeks" value="{{ week.w_id }}"></label>{{ week.date }}<br>
+          {% else %}
+            <label>No New Dates</label>
           {% endfor %}
         </label>
 

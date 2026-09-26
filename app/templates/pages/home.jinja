@@ -21,7 +21,7 @@
     <section>
       <h2>Requests:</h2>
       {% for request in requests %}
-        <button onclick="window.location.href='/';" >{{ request.first_name }} -- {{ request.date }}</button>
+        <button onclick="window.location.href='/request/resolve/{{ request.u_id }}/{{ request.w_id }}';" >{{ request.first_name }} -- {{ request.date }}</button>
       {% else %}
         <h4>None!</h4>
       {% endfor %}
@@ -53,7 +53,7 @@
     <button onclick="window.location.href='/logout';" >logout</button>
     <button onclick="window.location.href='/roster';" >see full roster</button>
     <button onclick="window.location.href='/unavailability';" >submit unavailability</button>
-    <button onclick="window.location.href='/request';" >submit a request</button>
+    <button onclick="window.location.href='/request/submit';" >submit a request</button>
   
   {% else %}
 

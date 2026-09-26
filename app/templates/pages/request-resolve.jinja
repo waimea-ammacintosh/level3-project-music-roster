@@ -20,16 +20,20 @@
         <h5>{{ request.message }}</h5>
 
         <h3>Replacement</h3>
-        <form>
-            {% for instrument in instrument %}
-            <label>
-                {{ instrument.name }}
-                <select name="replacement">
-                    {% for user in available_users %}
-                        <option value="{{ user.f_name }}">{{ user.f_name }}</option>
-                    {% endfor %}
-                </select>
-            </label>
+        <form method="post" action="/request/resolve/{{ u_id }}/{{ w_id }}">
+            {% for instrument in instruments %}
+                <label>
+                    {{ instrument.name }}
+                    <select name="replacement-{{ instrument.name }}">
+                        {% for user in available_users %}
+                            <option value="{{ user.u_id }}">{{ user.f_name }}</option>
+                        {% else %}
+                            <label>No users available for this slot</label>
+                        {% endfor %}
+                    </select>
+                </label>
+            {% endfor %}
+            <button>Submit Change</button>
         </form>
            
 
