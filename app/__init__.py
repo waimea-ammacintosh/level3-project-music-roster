@@ -621,7 +621,7 @@ def show_resolve_request(u_id, w_id):
     return render_template("pages/request-resolve.jinja", u_id=u_id, w_id=w_id, request=request, available_users=available_users, instruments=instruments)
 
 #-----------------------------------------------------------
-# Resolve Request Page - shows resolve request form
+# Resolve Request - process resolve request form
 #-----------------------------------------------------------
 @app.post("/request/resolve/<int:u_id>/<int:w_id>")
 def process_resolve_request(u_id, w_id):
@@ -705,7 +705,7 @@ def show_edit_week(id):
         instruments = db.execute(sql2, params2).fetchall()
 
         sql3="""
-            SELECT user.first_name AS f_name, user.id AS u_id, instrument.id
+            SELECT user.first_name AS f_name, user.id AS u_id, instrument.id AS i_id
             FROM instrumentUser
             INNER JOIN user
             ON instrumentUser.user_id = user.id
@@ -719,8 +719,41 @@ def show_edit_week(id):
         users = db.execute(sql3, params3).fetchall()
 
 
-        return render_template("pages/week-edit.jinja", users=users, instruments=instruments, week=week)
+        return render_template("pages/week-edit.jinja", users=users, instruments=instruments, week=week, w_id=id)
 
+#-----------------------------------------------------------
+# Submit week - process week creation form
+#-----------------------------------------------------------
+@app.post("/week/edit/<int:w_id>")
+def process_week(w_id):
+    with connect_db() as db:
+        sql="""
+            SELECT name, id
+            FROM instrument
+        """
+        params=()
+        instruments = db.execute(sql, params).fetchall()
+
+        for instrument in instruments:
+            name = instrument.get('name')
+            musician = request.form.get(name).strip()
+            sql2="""
+                INSERT INTO roster (user_id, week_id, instrument_id)
+                VALUES (?, ?, ?)
+            """
+            params2=(musician, w_id, instrument.get('id'))
+            db.execute(sql2, params2)
+
+        sql3="""
+            SELECT date FROM week WHERE id =?
+        """
+        params3=(w_id,)
+        week = db.execute(sql3, params3).fetchone()
+
+        flash(f'week - {week['date']} successfuly created', 'success')
+
+
+    return redirect("/roster/create")
 
 #-----------------------------------------------------------
 # Help page - Show some help
