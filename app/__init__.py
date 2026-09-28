@@ -658,6 +658,69 @@ def process_resolve_request(u_id, w_id):
 
     return redirect("/")
 
+#-------------------------------------------------------------------
+# List of weeks to be made Page - Shows weeks to be added to roster
+#-------------------------------------------------------------------
+@app.get("/roster/create")
+def show_incomplete_weeks():
+    with connect_db() as db:
+        sql = """
+            SELECT id, DATE FROM week
+        """
+        params = ()
+        weeks = db.execute(sql, params).fetchall()
+
+        sql2 = """
+            SELECT week_id AS id FROM roster
+        """        
+        params2 = ()
+        roster = db.execute(sql2, params2).fetchall()
+        print(f'roster - {roster}')
+        print(f'weeks - {weeks}')
+
+        full_weeks = {week['id'] for week in roster}
+        useful_weeks = [week for week in weeks if week['id'] not in full_weeks]
+
+        return render_template("pages/weeks-to-complete-list.jinja", weeks=useful_weeks)
+
+#-----------------------------------------------------------
+# Add Week details - show form to add users to a week
+#-----------------------------------------------------------
+@app.get("/week/edit/<int:id>")
+def show_edit_week(id):
+    with connect_db() as db:
+
+        sql="""
+        SELECT date, id FROM week
+        WHERE id = ?
+        """
+        params=(id,)
+        week = db.execute(sql, params).fetchone()
+
+        sql2 = """
+            SELECT name, id FROM instrument
+        """
+        params2 = ()
+        # run query
+        instruments = db.execute(sql2, params2).fetchall()
+
+        sql3="""
+            SELECT user.first_name AS f_name, user.id AS u_id, instrument.id
+            FROM instrumentUser
+            INNER JOIN user
+            ON instrumentUser.user_id = user.id
+            INNER JOIN instrument
+            ON instrument.id = instrument_id
+            INNER JOIN unavailability
+            ON unavailability.user_id = user.id
+            WHERE unavailability.available = TRUE AND unavailability.week_id = ?
+        """
+        params3=(id,)
+        users = db.execute(sql3, params3).fetchall()
+
+
+        return render_template("pages/week-edit.jinja", users=users, instruments=instruments, week=week)
+
 
 #-----------------------------------------------------------
 # Help page - Show some help

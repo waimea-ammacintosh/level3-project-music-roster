@@ -1,0 +1,24 @@
+{#=====================================================
+  Individual week page
+=====================================================#}
+
+{% extends 'pages/_base.jinja' %}
+
+
+{% block content %}
+
+    <h2>Roster Creation</h2>
+
+    <section>
+
+        {% for week in weeks %}
+            <button onclick="window.location.href='/week/edit/{{ week.id }}';">{{ week.date }}</button>
+        {% endfor %}
+
+        <button onclick="window.location.href='/new/week';">+</button>
+
+    </section>
+    <button onclick="window.location.href='/';">Back</button>
+
+{% endblock %}
+
