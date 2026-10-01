@@ -4,21 +4,72 @@
 ===========================================================*/
 
 :root {
-    --text-col:         #111;
+    --primary-color: #688ca0;
+    --seccondary-color: #79abc7;
+    --accent-color: #9ebccd;
 
-    --back-col:         #eee;
-    --back-col-panel:   #fff;
+    --primary-color-light: color-mix(in srgb, var(--primary-color), #fff 20%);
+    --primary-color-lighter: color-mix(in srgb, var(--primary-color), #fff 50%);
+    --primary-color-dark: color-mix(in srgb, var(--primary-color), #000 25%);
+    --primary-color-darker: color-mix(in srgb, var(--primary-color), #000 50%);
 
-    --border-col:       #355;
+    --text-color: #000;
+    --inv-text-color: #fff;
 
-    --accent-col:       #e43;
+
+    --page-bg: var(--primary-color);
+    --panel-bg: var(--base-color-light);
+
+    --link-color: var(--accent-color);
+    --button-bg: var(--accent-color);
+    --button-color: var(--text-color);
+    --link-color: var(--accent-color);
+
+
+    --padding: 1rem;
+    --padding-sm: 0.5rem;
+    --padding-lr: 2rem;
+
+    --gap: 1rem;
+    --gap-sm: 0.5rem;
+    --gap-lr: 2rem;
+
+    --margin: 1rem;
+    --margin-sm: 0.5rem;
+    --margin-lr: 2rem;
+
+
+    --content-width: 60rem;
+    --content-width-sm: 30rem;
+    --content-width-lr: 90rem;
+
+    --button-width: 10rem;
+    --button-width-sm: 7rem;
+    --button-width-lr: 13rem;
+
+    --button-height: 3rem;
+    --button-width-sm: 1rem;
+    --button-width-lr: 5rem;
+
+    --font-size: 1rem;
+    --font-size-sm: 0.5rem;
+    --font-size-lr: 2rem;
+
+    --border-radius: 3rem;
+    --border-radius-sm: 1rem;
+    --border-radius-lr: 5rem;
+
+
+
+
 }
+
 
 
 /* Overall Layout -----------------------------------------------*/
 
 html {
-    background-color: var(--back-col);
+    background-color: var(--page-bg);
     color: var(--text-col);
 
     font-family: system-ui, sans-serif;
@@ -66,19 +117,23 @@ main > h2 {
 }
 
 
-/* Notes --------------------------------------------------*/
+/* Weeks --------------------------------------------------*/
 
-#users {
-    display: grid;
-    gap: 2rem;
-    grid-template-columns: repeat(auto-fit, minmax(min(15rem, 100%), 1fr));
-    align-items: start;
+#weeks {
+    display: flex;
+    gap: var(--gap);
+    flex-direction: column;
+    background-color: var(--accent-color);
+    border-radius: var(--border-radius);
+    align-items: center;
 
-    .user {
-        padding: 1rem;
-        box-shadow: 0 0.5rem 1rem #0004;
-        border: 1px solid var(--border-col);
-        background-color: var(--back-col-panel);
+    .week {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        padding: var(--padding);
 
         header {
             display: flex;

@@ -32,16 +32,24 @@
     </section>
 
   {% elif session["logged_in"] %}
-    <h3>Your Weeks</h3>
-    <section id="users">
+    <section id="weeks">
+          <h3>Your Weeks</h3>
       {% for week in session["user"]["weeks"] %}
-        <div class="user">
+        <div class="week">
 
                   <header>
                       <h3>{{ week.date }}</h3>
                   </header>
 
-                  <p>{{ week.instrument_name }}</p>
+                  <p>
+                    {% for instrument in week["instruments"] %}
+                      {% if instrument == "Worship Lead"%}
+                        WL
+                      {% else %}
+                        {{ instrument }}
+                      {% endif %}
+                    {% endfor %}
+                  </p>
                   <button onclick="window.location.href='/week/{{ week.id }}';" >Details</button>
                   
 

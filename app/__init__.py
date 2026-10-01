@@ -14,6 +14,7 @@ import os
 import uuid
 from werkzeug.utils import secure_filename
 from more_itertools import unique_justseen, unique_everseen
+from collections import defaultdict
 
 
 UPLOAD_FOLDER = os.path.join('app', 'static', 'uploads')
@@ -123,7 +124,30 @@ def process_login():
             """
         params2 = (user["id"],)
         # run query
-        weeks = db.execute(sql2, params2).fetchall()
+        weeks_data = db.execute(sql2, params2).fetchall()
+
+        sql3="""
+            SELECT week_id FROM roster
+            WHERE user_id=? 
+        """
+        params3 = (user['id'],)
+        week_ids = db.execute(sql3, params3).fetchall()
+
+        unique_week_ids = list(unique_justseen(week_ids))
+        weeks = []
+        for i in unique_week_ids:
+            week_instruments = []
+            week_data = {}
+            for week in weeks_data:
+                if week['id'] == i['week_id']:
+                    week_instruments.append(week['instrument_name'])
+            week_data['id'] = i['week_id']
+            week_data['instruments'] = week_instruments
+            week_data['date'] = week['date']
+            weeks.append(week_data)
+            
+
+
 
         # create session
         session["logged_in"] = True
@@ -257,7 +281,27 @@ def process_new_user():
             """
         params8 = (user["id"],)
         # run query
-        weeks = db.execute(sql8, params8).fetchall()
+        weeks_data = db.execute(sql8, params8).fetchall()
+       
+        sql9="""
+            SELECT week_id FROM roster
+            WHERE user_id=? 
+        """
+        params9 = (user['id'],)
+        week_ids = db.execute(sql9, params9).fetchall
+
+        unique_week_ids = list(unique_justseen(week_ids))
+        weeks = []
+        for i in unique_week_ids:
+            week_instruments = []
+            week_data = {}
+            for week in weeks_data:
+                if week['id'] == i['week_id']:
+                    week_instruments.append(week['instrument_name'])
+            week_data['id'] = i['week_id']
+            week_data['instruments'] = week_instruments
+            week_data['date'] = week['date']
+            weeks.append(week_data)
 
         session["logged_in"] = True
         session["user"] = {
