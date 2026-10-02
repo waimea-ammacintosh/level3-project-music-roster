@@ -32,36 +32,38 @@
     </section>
 
   {% elif session["logged_in"] %}
-    <section id="weeks">
-          <h3>Your Weeks</h3>
-      {% for week in session["user"]["weeks"] %}
-        <div class="week">
+    <div class="content-container">
+      <section id="weeks">
+            <h3>Your Weeks</h3>
+        {% for week in session["user"]["weeks"] %}
+          <div class="week">
+            <header>
+              <h3>{{ week.date }}</h3>
+            </header>
 
-                  <header>
-                      <h3>{{ week.date }}</h3>
-                  </header>
+            <p>
+              {% for instrument in week["instruments"] %}
+                {% if instrument == "Worship Lead"%}
+                  WL
+                {% else %}
+                  {{ instrument }}
+                {% endif %}
+              {% endfor %}
+            </p>
+            <button onclick="window.location.href='/week/{{ week.id }}';" >Details</button>
+          </div>
+        {% else %}
+          No Weeks
+        {% endfor %}
+      </section>
 
-                  <p>
-                    {% for instrument in week["instruments"] %}
-                      {% if instrument == "Worship Lead"%}
-                        WL
-                      {% else %}
-                        {{ instrument }}
-                      {% endif %}
-                    {% endfor %}
-                  </p>
-                  <button onclick="window.location.href='/week/{{ week.id }}';" >Details</button>
-                  
-
-              </div>
-      {% else %}
-        No Weeks
-      {% endfor %}
-    </section>
-    <button onclick="window.location.href='/logout';" >logout</button>
-    <button onclick="window.location.href='/roster';" >see full roster</button>
-    <button onclick="window.location.href='/unavailability';" >submit unavailability</button>
-    <button onclick="window.location.href='/request/submit';" >submit a request</button>
+      <section id="button-box">
+        <button onclick="window.location.href='/logout';" >logout</button>
+        <button onclick="window.location.href='/roster';" >see full roster</button>
+        <button onclick="window.location.href='/unavailability';" >submit unavailability</button>
+        <button onclick="window.location.href='/request/submit';" >submit a request</button>
+      </section>
+  </div>
   
   {% else %}
 
@@ -72,7 +74,7 @@
   {% endif %}
   
 
-  <button onclick="window.location.href='/users/show';" >see users</button>
+  {# <button onclick="window.location.href='/users/show';" >see users</button> #}
 
 {% endblock %}
 

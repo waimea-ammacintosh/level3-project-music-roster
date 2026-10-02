@@ -116,6 +116,15 @@ main > h2 {
     margin-block: 2rem;
 }
 
+/* Home page container ----------------------------------- */
+
+.content-container{
+    min-height: 70vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
 
 /* Weeks --------------------------------------------------*/
 
@@ -123,8 +132,8 @@ main > h2 {
     display: flex;
     gap: var(--gap);
     flex-direction: column;
-    background-color: var(--accent-color);
-    border-radius: var(--border-radius);
+    background-color: var(--seccondary-color);
+    border-radius: var(--border-radius-sm);
     align-items: center;
 
     .week {
@@ -145,8 +154,28 @@ main > h2 {
             font-size: 0.8rem;
             font-style: italic;
         }
+
+        button {
+            width: fit-content;
+        }
     }
 }
+
+/* Button Container ----------------------------------------*/
+
+#button-box {
+    width: 100%;
+    display: flex;
+    gap: var(--gap);
+    flex-direction: column;
+    background-color: var(--seccondary-color);
+    border-radius: var(--border-radius-sm);
+    align-items: center;
+    padding: var(--padding);
+
+    
+}
+
 /* Roster Table -------------------------------------------*/
 
 #roster {
@@ -162,3 +191,14 @@ main > h2 {
     }
 
 }
+
+/* Buttons------------------------------------------------- */
+
+button {
+        width: 90%;
+        height: 100%;
+        padding: var(--padding-sm);
+        background-color: var(--button-bg);
+        border-radius: var(--border-radius-sm);
+        border: 1px solid var(--primary-color-dark);
+    }
