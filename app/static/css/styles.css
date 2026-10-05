@@ -161,6 +161,25 @@ main > h2 {
     }
 }
 
+/* Background --------------------------------------------- */
+
+.background{
+    display: flex;
+    flex-direction: column;
+    justify-content: top;
+    align-items: center;
+    border-radius: var(--border-radius);
+    height: 70vh;
+    background-color: var(--seccondary-color);
+    padding: var(--padding-sm);
+
+    button {
+        height: auto;
+        margin: var(--margin);
+    }
+
+}
+
 /* Button Container ----------------------------------------*/
 
 #button-box {
