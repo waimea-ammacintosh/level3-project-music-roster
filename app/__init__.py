@@ -127,7 +127,8 @@ def process_login():
         weeks_data = db.execute(sql2, params2).fetchall()
 
         sql3="""
-            SELECT week_id FROM roster
+            SELECT roster.week_id, week.date FROM roster
+            LEFT JOIN week ON roster.week_id = week.id 
             WHERE user_id=? 
         """
         params3 = (user['id'],)
@@ -143,7 +144,7 @@ def process_login():
                     week_instruments.append(week['instrument_name'])
             week_data['id'] = i['week_id']
             week_data['instruments'] = week_instruments
-            week_data['date'] = week['date']
+            week_data['date'] = i['date']
             weeks.append(week_data)
             
 
@@ -284,7 +285,8 @@ def process_new_user():
         weeks_data = db.execute(sql8, params8).fetchall()
        
         sql9="""
-            SELECT week_id FROM roster
+            SELECT roster.week_id, week.date FROM roster
+            LEFT JOIN week ON roster.week_id = week.id 
             WHERE user_id=? 
         """
         params9 = (user['id'],)
@@ -300,7 +302,7 @@ def process_new_user():
                     week_instruments.append(week['instrument_name'])
             week_data['id'] = i['week_id']
             week_data['instruments'] = week_instruments
-            week_data['date'] = week['date']
+            week_data['date'] = i['date']
             weeks.append(week_data)
 
         session["logged_in"] = True

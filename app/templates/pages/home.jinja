@@ -6,16 +6,6 @@
 
 
 {% block content %}
-
-  <h2>
-    Welcome
-    {% if session["logged_in"]%}
-     {{ session["user"]["first_name"] }}!
-    {% else %}
-     User!
-    {% endif %}
-  </h2>
-
   
   {% if session['is_admin'] %}
     <section>

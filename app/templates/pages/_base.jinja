@@ -13,7 +13,7 @@
 
 	<title>Notes Demo {% block title %}{% endblock %}</title>
 
-    <link rel="icon" href="/static/images/note.svg">
+    <link rel="icon" href="/static/images/logo.png">
 
     <script src="/static/js/utils.js"></script>
 
@@ -24,17 +24,21 @@
 
 <body>
 
-    <header>
-        <a href="/">
-            Rosterer
-        </a>
+    {% if session["logged_in"] %}
+        <header>
+            <a href="/">
+                <img class="nav_img" src="/static/images/logo.png" alt="Logo of Rosterer">
+            </a>
 
-        <nav>
-            <a href="/">home</a>
-            <a href="/help">help</a>
-            <a href="/">Link</a>
-        </nav>
-    </header>
+            <h4>Welcome {{session["user"]["first_name"]}}</h4>
+
+            <a href="/logout">
+                <img class="nav_img" src="/static/images/log-out.svg" alt="Logout">
+            </a>
+
+
+        </header>
+    {% endif %}
 
     {# Show flash messages from any previous events #}
     {% include "partials/messages.jinja" %}

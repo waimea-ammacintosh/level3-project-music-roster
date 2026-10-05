@@ -96,14 +96,12 @@ body > header {
     align-items: center;
     justify-content: space-between;
     padding: 1rem;
+    background-color: var(--seccondary-color);
+    border-radius: var(--border-radius-sm);
 
-    nav {
-        display: flex;
-        gap: 1rem;
-
-        a {
-            color: var(--accent-col);
-        }
+    .nav_img {
+        height: 4rem;
+        width: 4rem;
     }
 }
 
@@ -135,6 +133,7 @@ main > h2 {
     background-color: var(--seccondary-color);
     border-radius: var(--border-radius-sm);
     align-items: center;
+    margin: var(--margin);
 
     .week {
         width: 100%;
@@ -221,3 +220,4 @@ button {
         border-radius: var(--border-radius-sm);
         border: 1px solid var(--primary-color-dark);
     }
+
