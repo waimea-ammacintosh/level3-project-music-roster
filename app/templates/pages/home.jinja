@@ -47,8 +47,7 @@
         {% endfor %}
       </section>
 
-      <section id="button-box">
-        <button onclick="window.location.href='/logout';" >logout</button>
+      <section class="button-box">  
         <button onclick="window.location.href='/roster';" >see full roster</button>
         <button onclick="window.location.href='/unavailability';" >submit unavailability</button>
         <button onclick="window.location.href='/request/submit';" >submit a request</button>
@@ -58,10 +57,15 @@
   {% else %}
 
     <section class="background">
+      <h1>Welcome, User! </h1>
       <button onclick="window.location.href='/register';" >Register</button>
       <h4>Or</h4>
       <button onclick="window.location.href='/login';" >Sign In</button>
       <h6>Please Register or Sign In to Continue</h6>
+    </section>
+    <section class="button-box">
+      <button onclick="window.location.href='/contact';" >Contact</button>
+      <button onclick="window.location.href='/legal';" >Legal info</button>
     </section>
   {% endif %}
   

@@ -802,18 +802,29 @@ def process_week(w_id):
     return redirect("/roster/create")
 
 #-----------------------------------------------------------
-# Help page - Show some help
+# Contact page - Show Contact details
 #-----------------------------------------------------------
-@app.get("/help")
-def show_help():
+@app.get("/contact")
+def show_contact():
+    with connect_db() as db:
+        sql="""
+            SELECT first_name, last_name, email FROM user
+            WHERE is_admin = TRUE
+        """
+        params=()
+        admin_details = db.execute(sql, params).fetchall()
 
-    flash("Test message")
-    flash("Test SUCCESS message", "success")
-    flash("Test INFO message", "info")
-    flash("Test WARNING message", "warning")
-    flash("Test ERROR message", "error")
 
-    return render_template("pages/help.jinja")
+
+    return render_template("pages/contact.jinja", admin_details=admin_details)
+
+#-----------------------------------------------------------
+# Legal page - Show Legal details
+#-----------------------------------------------------------
+@app.get("/legal")
+def show_legal(): 
+    
+    return render_template("pages/legal.jinja")
 
 #===========================================================
 # Configure the app

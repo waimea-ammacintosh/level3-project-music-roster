@@ -114,9 +114,22 @@ main > h2 {
     margin-block: 2rem;
 }
 
+/* Sections ---------------------------------------------- */
+
+section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    button {
+        margin-top: var(--margin-sm);
+    }
+}
+
 /* Home page container ----------------------------------- */
 
-.content-container{
+.content-container {
     min-height: 70vh;
     display: flex;
     flex-direction: column;
@@ -133,7 +146,7 @@ main > h2 {
     background-color: var(--seccondary-color);
     border-radius: var(--border-radius-sm);
     align-items: center;
-    margin: var(--margin);
+    margin: var(--margin-sm);
 
     .week {
         width: 100%;
@@ -141,7 +154,7 @@ main > h2 {
         flex-direction: row;
         align-items: center;
         justify-content: space-between;
-        padding: var(--padding);
+        padding: var(--padding-sm);
 
         header {
             display: flex;
@@ -181,7 +194,7 @@ main > h2 {
 
 /* Button Container ----------------------------------------*/
 
-#button-box {
+.button-box {
     width: 100%;
     display: flex;
     gap: var(--gap);
@@ -190,6 +203,7 @@ main > h2 {
     border-radius: var(--border-radius-sm);
     align-items: center;
     padding: var(--padding);
+    margin-top: var(--margin);
 
     
 }
@@ -220,4 +234,22 @@ button {
         border-radius: var(--border-radius-sm);
         border: 1px solid var(--primary-color-dark);
     }
+
+/* form --------------------------------------------------*/ 
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap);
+    width: 100%;
+    background-color: var(--seccondary-color);
+    border-radius: var(--border-radius-sm);
+    align-items: center;
+    justify-content: center;
+
+    max-width: var(--content-width-sm);
+    margin-inline: auto;
+    padding: var(--padding);
+
+}
 

@@ -34,7 +34,7 @@
       </label>
 
       <label>
-        Instrument
+        Instrument<br>
         {% for instrument in instruments %}
           <label><input type="checkbox" name="instrument" value="{{ instrument.name }}"></label>{{ instrument.name }}<br>
         {% endfor %}
@@ -48,10 +48,13 @@
         </select>
       </label>
 
-      <button>Submit</button>
+      <button>Register</button>
+      
+      <button onclick="window.location.href='/';" >Cancel</button>
 
     </form>
 
+    <h6>All ready got an account? <a href="/login">Sign In</a></h5>
   </section>
 
 {% endblock %}

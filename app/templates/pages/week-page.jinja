@@ -11,7 +11,7 @@
 
     <section>
 
-        <h3>{{ week_data.practice_date }}</h3>
+        <h3> Practice: {{ week_data.practice_date }}</h3>
         <table id="roster">
             <tbody>
                 {% for instrument in instruments %}
@@ -54,8 +54,9 @@
             <h5>No files yet!</h5>
         {% endfor %}
 
+        <button onclick="window.location.href='/';">Back</button>
     </section>
-    <button onclick="window.location.href='/';">Back</button>
+    
 
 {% endblock %}
 

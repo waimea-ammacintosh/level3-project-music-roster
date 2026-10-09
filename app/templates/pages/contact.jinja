@@ -1,0 +1,28 @@
+{#=====================================================
+  Contact page
+=====================================================#}
+
+{% extends 'pages/_base.jinja' %}
+
+
+{% block content %}
+
+  <section class="background">
+    <h1>Contact details</h1>
+
+    <h2>Admin details:</h2>
+    {% for admin in admin_details %}
+      <h4>Name: {{ admin.first_name }} {{ admin.last_name }}</h4>
+      <h4>Email: <a href="mailto:{{ admin.email }}">{{ admin.email }}</a></h4>
+      <br>
+    {% endfor %}
+
+    <h2>Developer details:</h2>
+    <h4>Name: Aaron Macintosh</h4>
+    <h4>Email: <a href="mailto:aaron.macintosh@iclould.com">aaron.macintosh@iclould.com</a></h4>
+  </section>
+  <button onclick="window.location.href='/';" >Back</button>
+
+
+{% endblock %}
+
