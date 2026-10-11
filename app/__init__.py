@@ -15,6 +15,8 @@ import uuid
 from werkzeug.utils import secure_filename
 from more_itertools import unique_justseen, unique_everseen
 from collections import defaultdict
+from pandas import to_datetime
+from datetime import timedelta, datetime
 
 
 UPLOAD_FOLDER = os.path.join('app', 'static', 'uploads')
@@ -800,6 +802,38 @@ def process_week(w_id):
 
 
     return redirect("/roster/create")
+
+#-----------------------------------------------------------
+# Create week - process week creation form
+#-----------------------------------------------------------
+@app.get("/new/week")
+def create_week():
+    with connect_db() as db:
+        sql="""
+            SELECT date
+            FROM week
+        """
+        params=()
+        weeks = db.execute(sql, params).fetchall() 
+
+        last_week = to_datetime(next(iter(weeks[-1].values())))
+        date_object = last_week + timedelta(days = 7)
+        date = (date_object).strftime("%Y%m%d")
+        practice_date = (date_object - timedelta(days = 7)).strftime("%Y%m%d")
+
+        sql2="""
+            INSERT INTO week (date, practice_date)
+            VALUES (?,?)
+            RETURNING id
+        """
+        params2=(date, practice_date)
+        week_id = db.execute(sql2, params2).fetchone()
+
+        flash(f'week - {date} successfuly initialized', 'success')
+
+
+    return redirect(url_for('show_edit_week', id=week_id))
+
 
 #-----------------------------------------------------------
 # Contact page - Show Contact details
