@@ -346,7 +346,7 @@ def show_roster():
         """
         params = ()
         roster = db.execute(sql, params).fetchall()
-        print(roster)
+        
 
         sql2 = """
             SELECT date FROM week
@@ -581,7 +581,20 @@ def show_request():
         params=(session['user']['id'],)
         weeks = db.execute(sql, params).fetchall()
 
+        sql2="""
+            SELECT week_id, week.date FROM request
+            INNER JOIN week
+            ON week_id = week.id
+            WHERE user_id = ?
+        """
+        params2=(session['user']['id'],)
+        prev_submitted_weeks = db.execute(sql2, params2).fetchall()
+
     unique_weeks = list(unique_justseen(weeks))
+
+    for week in prev_submitted_weeks:
+        if week in unique_weeks:
+            unique_weeks.remove(week)
 
     return render_template("pages/request-submit.jinja", weeks=unique_weeks)
 
