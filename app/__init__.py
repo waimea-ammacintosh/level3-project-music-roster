@@ -292,7 +292,7 @@ def process_new_user():
             WHERE user_id=? 
         """
         params9 = (user['id'],)
-        week_ids = db.execute(sql9, params9).fetchall
+        week_ids = db.execute(sql9, params9).fetchall()
 
         unique_week_ids = list(unique_justseen(week_ids))
         weeks = []
@@ -594,27 +594,30 @@ def process_request():
         week = request.form.get('week')
         message = request.form.get('message', '').strip()
 
+        if week:
+            if message:
+                sql = """
+                    INSERT INTO request (week_id, user_id, message) VALUES (?, ?, ?)
+                """
+                params=(week, session['user']['id'], message )
+                db.execute(sql, params)
+            else:
+                sql2 = """
+                    INSERT INTO request (week_id, user_id, message) VALUES (?, ?, ?)
+                """
+                params2=(week, session['user']['id'], 'No Message')
+                db.execute(sql2, params2)
 
-        if message:
-            sql = """
-                INSERT INTO request (week_id, user_id, message) VALUES (?, ?, ?)
+            sql3="""
+                UPDATE unavailability
+                SET available = FALSE
+                WHERE user_id = ?
             """
-            params=(week, session['user']['id'], message )
-            db.execute(sql, params)
+            params3=(session['user']['id'],)
+            db.execute(sql3, params3)
         else:
-            sql2 = """
-                INSERT INTO request (week_id, user_id, message) VALUES (?, ?, ?)
-            """
-            params2=(week, session['user']['id'], 'No Message')
-            db.execute(sql2, params2)
-
-        sql3="""
-            UPDATE unavailability
-            SET available = FALSE
-            WHERE user_id = ?
-        """
-        params3=(session['user']['id'])
-        db.execute(sql3, params3)
+            flash('Please select a week you wish to change', 'error')
+            return redirect("/request/submit")
 
       
     flash('Submitted request', 'success')
@@ -818,8 +821,8 @@ def create_week():
 
         last_week = to_datetime(next(iter(weeks[-1].values())))
         date_object = last_week + timedelta(days = 7)
-        date = (date_object).strftime("%Y%m%d")
-        practice_date = (date_object - timedelta(days = 7)).strftime("%Y%m%d")
+        date = (date_object).strftime("%Y-%m-%d")
+        practice_date = (date_object - timedelta(days = 7)).strftime("%Y-%m-%d")
 
         sql2="""
             INSERT INTO week (date, practice_date)
@@ -828,11 +831,27 @@ def create_week():
         """
         params2=(date, practice_date)
         week_id = db.execute(sql2, params2).fetchone()
+        id = week_id['id']
+
+        sql3="""
+            SELECT id FROM user
+        """
+        params3=()
+        user_ids = db.execute(sql3, params3).fetchall()
+
+        for user in user_ids:
+            sql4="""
+                INSERT INTO unavailability (week_id, user_id, available, completed)
+                VALUES (?, ?, FALSE, FALSE)
+            """
+            params4=(id, user['id'])
+            db.execute(sql4, params4)
+
 
         flash(f'week - {date} successfuly initialized', 'success')
 
 
-    return redirect(url_for('show_edit_week', id=week_id))
+    return redirect(url_for('show_edit_week', id=id))
 
 
 #-----------------------------------------------------------
