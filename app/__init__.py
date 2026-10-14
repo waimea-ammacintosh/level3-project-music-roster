@@ -325,6 +325,7 @@ def process_new_user():
 # Roster Page - Shows full roster
 #-----------------------------------------------------------
 @app.get("/roster")
+@login_required
 def show_roster():
     with connect_db() as db:
         sql = """
@@ -393,6 +394,7 @@ def show_roster():
 # Submit unavailability Page - Form to submit unavailability
 #-----------------------------------------------------------
 @app.get("/unavailability")
+@login_required
 def show_unavailability_form():
     with connect_db() as db:
         sql = """
@@ -418,6 +420,7 @@ def show_unavailability_form():
 # Handle unavailability form
 #-----------------------------------------------------------
 @app.post("/unavailability")
+@login_required
 def process_unavailability():
     with connect_db() as db:
         submitted_weeks = request.form.getlist('weeks')
@@ -477,6 +480,7 @@ def process_unavailability():
 # Individual Week Page - Shows details for one week
 #-----------------------------------------------------------
 @app.get("/week/<int:id>")
+@login_required
 def show_week(id):
     with connect_db() as db:
         sql = """
@@ -533,6 +537,7 @@ def show_week(id):
 # New File Upload - handles new file upload form
 #-----------------------------------------------------------
 @app.post("/newfile/week/<int:id>")
+@login_required
 def add_file(id):
     # Get the file selected via the form
     file = request.files.get('file', None)
@@ -564,6 +569,7 @@ def add_file(id):
 # User List page - show all users
 #-----------------------------------------------------------
 @app.get("/users/show")
+@login_required
 def show_users():
     with connect_db() as db:
         sql = """
@@ -597,6 +603,7 @@ def show_users():
 # Submit Request Page - shows submit request form
 #-----------------------------------------------------------
 @app.get("/request/submit")
+@login_required
 def show_request():
     with connect_db() as db:
         sql="""
@@ -629,6 +636,7 @@ def show_request():
 # Handle Submit Request form
 #-----------------------------------------------------------
 @app.post("/request/submit")
+@login_required
 def process_request():
     with connect_db() as db:
         week = request.form.get('week')
@@ -667,6 +675,7 @@ def process_request():
 # Resolve Request Page - shows resolve request form
 #-----------------------------------------------------------
 @app.get("/request/resolve/<int:u_id>/<int:w_id>")
+@login_required
 def show_resolve_request(u_id, w_id):
     with connect_db() as db:
         sql="""
@@ -725,6 +734,7 @@ def show_resolve_request(u_id, w_id):
 # Resolve Request - process resolve request form
 #-----------------------------------------------------------
 @app.post("/request/resolve/<int:u_id>/<int:w_id>")
+@login_required
 def process_resolve_request(u_id, w_id):
     with connect_db() as db:
         sql="""
@@ -763,6 +773,7 @@ def process_resolve_request(u_id, w_id):
 # List of weeks to be made Page - Shows weeks to be added to roster
 #-------------------------------------------------------------------
 @app.get("/roster/create")
+@login_required
 def show_incomplete_weeks():
     with connect_db() as db:
         sql = """
@@ -788,6 +799,7 @@ def show_incomplete_weeks():
 # Add Week details - show form to add users to a week
 #-----------------------------------------------------------
 @app.get("/week/edit/<int:id>")
+@login_required
 def show_edit_week(id):
     with connect_db() as db:
 
@@ -826,6 +838,7 @@ def show_edit_week(id):
 # Submit week - process week creation form
 #-----------------------------------------------------------
 @app.post("/week/edit/<int:w_id>")
+@login_required
 def process_week(w_id):
     with connect_db() as db:
         sql="""
@@ -860,6 +873,7 @@ def process_week(w_id):
 # Create week - process week creation form
 #-----------------------------------------------------------
 @app.get("/new/week")
+@login_required
 def create_week():
     with connect_db() as db:
         sql="""
