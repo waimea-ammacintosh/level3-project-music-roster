@@ -17,32 +17,70 @@ Continue to develop the web application to the point that it provides all key fu
     - Etc.
 
 
-## Testing FEATURE NAME HERE
+## Testing Roster display
 
-Replace this text with notes about what you are testing, how you tested it, and the outcome of the testing
+I am testing the display of the roster. This is to see, with the test data I have put into the system, if it can display the full roster with every person and instrument in the correct week.
 
-**PLACE SCREENSHOTS AND/OR ANIMATED GIFS OF THE TESTING HERE**
+Using the following data, The roster returned should be:
 
-![Placeholder](screenshots/placeholder.png)
+![Expected roster table](screenshots/Expected-Roster.png)
+
+Table Contents:
+
+![Roster Table Content](screenshots/Roster-Content.png)
+![Instrument table content](screenshots/Instrument-table-Content.png)
+
+![Current User Table Content](screenshots/User-Table-Content-New.png)
+![Week Table Content](screenshots/Week-Table-Content.png)
+
+
+When I ran my algorithm (below), I kept getting an error, and when I fixed the error, it would return two empty lists, which is not what should happen.
+
+![Bad roster SQL and algorithm](screenshots/Roster-Display-Old.png)
 
 ### Changes / Improvements
 
-Replace this text with notes any improvements you made as a result of the testing.
+When this would not work, I came up with a new approach that was much simpler, and worked perfectly. This new SQL query makes use of a Cross Join to join the tables, which was something new that I hadn't learnt before, and would then loop through the data on the Jinja template to get the correct display.
 
-**PLACE SCREENSHOTS AND/OR ANIMATED GIFS OF THE IMPROVED SYSTEM HERE**
+![Good roster SQL](screenshots/Roster-Display-New.png)
+
+![Correct roster is shown](screenshots/Roster-display-correct.gifn b)
 
 
-## Testing FEATURE NAME HERE
+## Testing User Register (adding user to user table)
 
-Replace this text with notes about what you are testing, how you tested it, and the outcome of the testing
+I am testing whether my app can add a user and all its associated data to the db. I tested this by getting my user register form, and inputting a test user. When this happened, everything worked as I intended it, and the correct tables were updated to show the new user.
 
-**PLACE SCREENSHOTS AND/OR ANIMATED GIFS OF THE TESTING HERE**
+Original user Table:
+
+![Original User Table](screenshots/User-Table-Content-New.png)
+
+New User Table:
+
+![user Table with new test user implemented](screenshots/User-Table-Test-User.png)
+
+Instrument-User Table:
+
+![New User-Instrument table showing new user](screenshots/Intsrument-User-Table-Content-New.png)
+
+
+This resulted in the following card being displayed on the user list:
+
+![Test User Card on User list](screenshots/Test-User-Card.png)
+
+
+## Testing Resolve request
+
+I am testing to see whether the admin users can resolve requests made by a user. This can happen when a user unexpectedly falls ill, or makes plans after they submit their unavailability ect.. I tested this by making a request in an account, then logging into the admin account, and resolving the request. The request was able to be submitted and 
+resolved, however, I noticed that people where being showed as possible replacements even when they didn't play that instrument.   
+
+![Request where anyone can be anything](screenshots/requeset-bad.gif)
 
 ### Changes / Improvements
 
-Replace this text with notes any improvements you made as a result of the testing.
+To improve the system, I added some code to add an "Instrument" to each person, and made it so that only people who played that instrument could be put down for that instrument
 
-**PLACE SCREENSHOTS AND/OR ANIMATED GIFS OF THE IMPROVED SYSTEM HERE**
+![Improved request resolving](screenshots/requeset-good.gif)
 
 
 ## Testing FEATURE NAME HERE

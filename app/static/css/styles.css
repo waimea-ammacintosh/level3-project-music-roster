@@ -220,6 +220,7 @@ section {
 
     td {
         border: 1px solid;
+        padding: var(--padding-sm);
     }
 
 }

@@ -11,34 +11,38 @@
 
     <section>
 
-        <table id="roster">
-            <thead>
-                <tr>
-                    <th></th>
-                    {% for week in weeks %}
-                        <th class"date_cell">
-                            {{ week.date }}
-                        </th>
-                    {% endfor %}
-                </tr>
-            </thead>
-            <tbody>
-                {% for instrument in instruments %}
+        {% for table in num_tables %}
+            <table id="roster">
+                <thead>
                     <tr>
-                        <td class"instrument_cell">
-                            {{ instrument.name }}
-                        </td>
-                        {% for week in roster %}
-                            {% if week.i_id == instrument.id %}
-                                <td class"user_cell">
-                                    {{ week.u_fname }}
-                                </td>
+                        <th></th>
+                        {% for week in weeks %}
+                            {% if week.table_id == table %}
+                                <th class="date_cell">
+                                    {{ week.date }}
+                                </th>
                             {% endif %}
                         {% endfor %}
                     </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    {% for instrument in instruments %}
+                        <tr>
+                            <td class="instrument_cell">
+                                {{ instrument.name }}
+                            </td>
+                            {% for week in roster %}
+                                {% if week.i_id == instrument.id and week.table_id == table %}
+                                    <td class="user_cell">
+                                        {{ week.u_fname }}
+                                    </td>
+                                {% endif %}
+                            {% endfor %}
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endfor %}
 
         <button onclick="window.location.href='/';">Back</button>
     </section>
