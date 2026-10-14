@@ -13,7 +13,7 @@
 
         <h5>Name: {{ request.f_name }} {{ request.l_name}}</h5>
         <h5>Date: {{ request.date}}</h5>
-        <h5>Instrument: {% for instrument in instrument%}{{ instrument.name }}<br>{% endfor %}</h5>
+        <h5>Instrument: {% for instrument in instruments %}{{ instrument.name }}<br>{% endfor %}</h5>
         
 
         <h3>Message</h3>
@@ -26,7 +26,9 @@
                     {{ instrument.name }}
                     <select name="replacement-{{ instrument.name }}">
                         {% for user in available_users %}
-                            <option value="{{ user.u_id }}">{{ user.f_name }}</option>
+                            {% if instrument.name == user.instrument %}
+                                <option value="{{ user.u_id }}">{{ user.f_name }}</option>
+                            {% endif %}
                         {% else %}
                             <label>No users available for this slot</label>
                         {% endfor %}

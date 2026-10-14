@@ -7,8 +7,6 @@ Implement the database, populated with test data. Create queries that retrieve t
 
 ### Specific Goals
 
-**Edit these goals as needed**
-
 - Implement the database
 - Add test data to the database
 - Create the following web pages:
@@ -73,57 +71,6 @@ Display:
 ### Testing Outcome
 
 As shown in the display, the correct data is displayed for each user, so the system can show the correct information when retrieving data about a user, which could be added to a session.
-
-## Testing Roster display
-
-I am testing the display of the roster. This is to see, with the test data I have put into the system, if it can display the full roster with every person and instrument in the correct week.
-
-Using the following data, The roster returned should be:
-
-![Expected roster table](screenshots/Expected-Roster.png)
-
-Table Contents:
-
-![Roster Table Content](screenshots/Roster-Content.png)
-![Instrument table content](screenshots/Instrument-table-Content.png)
-
-![Current User Table Content](screenshots/User-Table-Content-New.png)
-![Week Table Content](screenshots/Week-Table-Content.png)
-
-
-When I ran my algorithm (below), I kept getting an error, and when I fixed the error, it would return two empty lists, which is not what should happen.
-
-![Bad roster SQL and algorithm](screenshots/Roster-Display-Old.png)
-
-### Changes / Improvements
-
-When this would not work, I came up with a new approach that was much simpler, and worked perfectly. This new SQL query makes use of a Cross Join to join the tables, which was something new that I hadn't learnt before, and would then loop through the data on the Jinja template to get the correct display.
-
-![Good roster SQL](screenshots/Roster-Display-New.png)
-
-![Correct roster is shown](screenshots/Roster-display-correct.gif)
-
-
-## Testing User Register (adding user to user table)
-
-I am testing whether my app can add a user and all its associated data to the db. I tested this by getting my user register form, and inputting a test user. When this happened, everything worked as I intended it, and the correct tables were updated to show the new user.
-
-Original user Table:
-
-![Original User Table](screenshots/User-Table-Content-New.png)
-
-New User Table:
-
-![user Table with new test user implemented](screenshots/User-Table-Test-User.png)
-
-Instrument-User Table:
-
-![New User-Instrument table showing new user](screenshots/Intsrument-User-Table-Content-New.png)
-
-
-This resulted in the following card being displayed on the user list:
-
-![Test User Card on User list](screenshots/Test-User-Card.png)
 
 
 ## Sprint Review

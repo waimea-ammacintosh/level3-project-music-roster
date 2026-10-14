@@ -331,7 +331,8 @@ def show_roster():
             SELECT
                 instrument.id AS i_id,
                 user.first_name AS u_fname,
-                user.last_name AS u_lname
+                user.last_name AS u_lname,
+                week.date
             FROM week
             CROSS JOIN instrument
 
@@ -347,12 +348,38 @@ def show_roster():
         params = ()
         roster = db.execute(sql, params).fetchall()
         
-
         sql2 = """
             SELECT date FROM week
         """        
         params2 = ()
         weeks = db.execute(sql2, params2).fetchall()
+
+        # adding a table id (groups of 4 weeks) to the weeks, for display on the page
+        table_id = 1
+        weeks_gone = 1
+        for week in weeks:
+            # has 5 weeks gone
+            if weeks_gone < 4:
+                # not yet, so add table id, add one to weeks gone, and continue
+                week['table_id'] = table_id
+                weeks_gone += 1
+            else:
+                # yes, so add table id, reset how many weeks have passed, and add one to table group id
+                week['table_id'] = table_id
+                weeks_gone = 1
+                table_id += 1 
+
+        # how many tables to display on page
+        num_tables = unique_everseen(d['table_id'] for d in weeks)
+
+        # add table_id to roster entries
+        for entry in roster:
+            for week in weeks:
+                if entry['date'] == week['date']:
+                    entry['table_id'] = week['table_id']
+
+
+            
 
         sql3 = """
             SELECT name, id FROM instrument
@@ -360,7 +387,7 @@ def show_roster():
         params3=()
         instruments = db.execute(sql3, params3).fetchall()
 
-        return render_template("pages/roster-show.jinja", roster=roster, instruments=instruments, weeks=weeks)
+        return render_template("pages/roster-show.jinja", roster=roster, instruments=instruments, weeks=weeks, num_tables=num_tables)
 
 #-----------------------------------------------------------
 # Submit unavailability Page - Form to submit unavailability
@@ -370,8 +397,6 @@ def show_unavailability_form():
     with connect_db() as db:
         sql = """
             SELECT
-                user.first_name AS u_fname,
-                user.id AS u_id,
                 week.id AS w_id,
                 week.date,
                 unavailability.completed
@@ -396,7 +421,7 @@ def show_unavailability_form():
 def process_unavailability():
     with connect_db() as db:
         submitted_weeks = request.form.getlist('weeks')
-        submitted_weeks = [int(week) for week in submitted_weeks]
+        unavailable_weeks = [int(week) for week in submitted_weeks]
 
         sql = """
                     SELECT
@@ -413,33 +438,35 @@ def process_unavailability():
         params = (session['user']['id'],)
         weeks = db.execute(sql, params).fetchall()
 
-        for week in submitted_weeks:
-            for i in weeks:
-                if week == i['id']:
-                    weeks.remove(i)
-
+        available_weeks = []
+        for week in weeks:
+            for s_week in submitted_weeks:
+                # is there a match
+                if s_week == week['id']:
+                    # yes, so break loop
+                    break
+                else:
+                    # no, so continue
+                    continue
+            # if here, no matches, so add it to available weeks
+            available_weeks.append(week)
+            
+        for week in unavailable_weeks:
             sql2 = """
                 UPDATE unavailability
                 SET completed = TRUE, available = FALSE
-                WHERE week_id =?
+                WHERE week_id =? AND user_id =?
             """
-            params2=(week,)
+            params2=(week, session['user']['id'])
             db.execute(sql2, params2)
 
-        for week in weeks:
-            sql3="""
-                SELECT id FROM week
-                WHERE date =?
-            """
-            params3=(week['date'],)
-            week_id = db.execute(sql3, params3).fetchone()
-            
+        for week in available_weeks:
             sql4 = """
                 UPDATE unavailability
                 SET completed = TRUE, available = TRUE
                 WHERE week_id =?
             """
-            params4=(week_id['id'],)
+            params4=(week['id'],)
             db.execute(sql4, params4)
       
     flash('Submitted', 'success')
@@ -675,10 +702,20 @@ def show_resolve_request(u_id, w_id):
                 ORDER BY user.id ASC
             """
             params3=(instrument.get('id'), u_id)
-            available_users.extend(db.execute(sql3, params3).fetchall())
+            users = db.execute(sql3, params3).fetchall()
+            print(f"users - {users}")
+            for user in users:
+                user['instrument'] = instrument['name']
+                print(f'User - {user}')
+            print(f' Users - {users}')
+            available_users.extend(users)
+            print(f"available users - {available_users}")
+            
+            
+            
 
         available_users = list(unique_justseen(available_users))
-        print(available_users)
+        print(f"available users - {available_users}")
 
 
 
