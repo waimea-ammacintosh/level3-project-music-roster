@@ -10,6 +10,7 @@ from os import getenv
 from io import BytesIO
 import html
 from app.helpers import *
+from app.helpers.auth import admin_required
 import os
 import uuid
 from werkzeug.utils import secure_filename
@@ -464,15 +465,18 @@ def process_unavailability():
             db.execute(sql2, params2)
 
         for week in available_weeks:
-            sql4 = """
+            sql3 = """
                 UPDATE unavailability
                 SET completed = TRUE, available = TRUE
                 WHERE week_id =?
             """
-            params4=(week['id'],)
-            db.execute(sql4, params4)
+            params3=(week['id'],)
+            db.execute(sql3, params3)
+
+        first_week = weeks[1]['date']
+        last_week = weeks[-1]['date']
       
-    flash('Submitted', 'success')
+    flash(f'Submitted unavailablity between {first_week} and {last_week}', 'success')
     return redirect("/")
 
 
@@ -569,7 +573,7 @@ def add_file(id):
 # User List page - show all users
 #-----------------------------------------------------------
 @app.get("/users/show")
-@login_required
+@admin_required
 def show_users():
     with connect_db() as db:
         sql = """
@@ -667,15 +671,23 @@ def process_request():
             flash('Please select a week you wish to change', 'error')
             return redirect("/request/submit")
 
+        sql4="""
+            SELECT date FROM week
+            WHERE id=?
+        """
+        params4=(week)
+        date=db.execute(sql4, params4).fetchone()
+        date=date['date']
+
       
-    flash('Submitted request', 'success')
+    flash(f'Submitted change request for {date}', 'success')
     return redirect("/")
 
 #-----------------------------------------------------------
 # Resolve Request Page - shows resolve request form
 #-----------------------------------------------------------
 @app.get("/request/resolve/<int:u_id>/<int:w_id>")
-@login_required
+@admin_required
 def show_resolve_request(u_id, w_id):
     with connect_db() as db:
         sql="""
@@ -734,7 +746,7 @@ def show_resolve_request(u_id, w_id):
 # Resolve Request - process resolve request form
 #-----------------------------------------------------------
 @app.post("/request/resolve/<int:u_id>/<int:w_id>")
-@login_required
+@admin_required
 def process_resolve_request(u_id, w_id):
     with connect_db() as db:
         sql="""
@@ -773,7 +785,7 @@ def process_resolve_request(u_id, w_id):
 # List of weeks to be made Page - Shows weeks to be added to roster
 #-------------------------------------------------------------------
 @app.get("/roster/create")
-@login_required
+@admin_required
 def show_incomplete_weeks():
     with connect_db() as db:
         sql = """
@@ -799,7 +811,7 @@ def show_incomplete_weeks():
 # Add Week details - show form to add users to a week
 #-----------------------------------------------------------
 @app.get("/week/edit/<int:id>")
-@login_required
+@admin_required
 def show_edit_week(id):
     with connect_db() as db:
 
@@ -838,7 +850,7 @@ def show_edit_week(id):
 # Submit week - process week creation form
 #-----------------------------------------------------------
 @app.post("/week/edit/<int:w_id>")
-@login_required
+@admin_required
 def process_week(w_id):
     with connect_db() as db:
         sql="""
@@ -873,7 +885,7 @@ def process_week(w_id):
 # Create week - process week creation form
 #-----------------------------------------------------------
 @app.get("/new/week")
-@login_required
+@admin_required
 def create_week():
     with connect_db() as db:
         sql="""
