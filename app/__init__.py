@@ -442,20 +442,19 @@ def process_unavailability():
         params = (session['user']['id'],)
         weeks = db.execute(sql, params).fetchall()
 
-        available_weeks = []
+        # set all weeks to completed and true, later we will update the unavailable dates to be unavailable
         for week in weeks:
-            for s_week in submitted_weeks:
-                # is there a match
-                if s_week == week['id']:
-                    # yes, so break loop
-                    break
-                else:
-                    # no, so continue
-                    continue
-            # if here, no matches, so add it to available weeks
-            available_weeks.append(week)
-            
+            sql3 = """
+                UPDATE unavailability
+                SET completed = TRUE, available = TRUE
+                WHERE week_id =? AND user_id=?
+            """
+            params3=(week['id'], session['user']['id'])
+            db.execute(sql3, params3)    
+        
         for week in unavailable_weeks:
+            print(week)
+            
             sql2 = """
                 UPDATE unavailability
                 SET completed = TRUE, available = FALSE
@@ -464,19 +463,12 @@ def process_unavailability():
             params2=(week, session['user']['id'])
             db.execute(sql2, params2)
 
-        for week in available_weeks:
-            sql3 = """
-                UPDATE unavailability
-                SET completed = TRUE, available = TRUE
-                WHERE week_id =? AND user_id=?
-            """
-            params3=(week['id'], session['user']['id'])
-            db.execute(sql3, params3)
+        
 
         first_week = weeks[1]['date']
         last_week = weeks[-1]['date']
       
-    flash(f'Submitted unavailablity between {first_week} and {last_week}', 'success')
+    flash(f'Submitted unavailability between {first_week} and {last_week}', 'success')
     return redirect("/")
 
 

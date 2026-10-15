@@ -85,7 +85,7 @@ To improve the system, I added some code to add an "Instrument" to each person, 
 
 ## Testing Week Initialization
 
-I am testing to see if an admin user can initialise a week. This should make an empty week that, when the users submit their unavailability, the admin can populate with musicians, to get added to the roster. I tested this by making a few test weeks to see if the correct date week was made, and if it would be made correctly. The testing showed a positive result on creating weeks, and the correct date (one week since the previous week) was implemented.
+I am testing to see if an admin user can initialize a week. This should make an empty week that, when the users submit their unavailability, the admin can populate with musicians, to get added to the roster. I tested this by making a few test weeks to see if the correct date week was made, and if it would be made correctly. The testing showed a positive result on creating weeks, and the correct date (one week since the previous week) was implemented.
 
 ![Creating a week or two](screenshots/creating-weeks.gif)
 
@@ -96,9 +96,9 @@ The testing showed the system working perfectly fine, so no changes were require
 
 ## Testing Week Creation
 
-I am testing to see whether or not the admin can add people to a week, and for that change to
+I am testing to see whether or not the admin can add people to a week, and for it to be updated throughout the site. I tested this by making a few empty test weeks, then submitting unavailability for different people, then making the new week, based off the availability. When I tested this, it would show a list of all the users that played that instrument, even if they said that they were unavailable. This means that people could be put down for weeks they said they couldn't do.
 
-**PLACE SCREENSHOTS AND/OR ANIMATED GIFS OF THE TESTING HERE**
+![Week creation where you can be put for any week](screenshots/week-creation-bad.gif)
 
 ### Changes / Improvements
 
