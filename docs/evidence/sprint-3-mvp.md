@@ -85,7 +85,7 @@ To improve the system, I added some code to add an "Instrument" to each person, 
 
 ## Testing Week Initialization
 
-I am testing to see if an admin user can initialise a week. This should make an empty week that, when the users submit thier unavialability, the admin can populate with musicians, to get added to the roster. I tested this by making a few test weeks to see if the correct date week was made, and if it would be made correctly. The testing showed a positive result on creating weeks, and the correct date (one week since the previous week) was implemented.
+I am testing to see if an admin user can initialise a week. This should make an empty week that, when the users submit their unavailability, the admin can populate with musicians, to get added to the roster. I tested this by making a few test weeks to see if the correct date week was made, and if it would be made correctly. The testing showed a positive result on creating weeks, and the correct date (one week since the previous week) was implemented.
 
 ![Creating a week or two](screenshots/creating-weeks.gif)
 
