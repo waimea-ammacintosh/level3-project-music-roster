@@ -468,9 +468,9 @@ def process_unavailability():
             sql3 = """
                 UPDATE unavailability
                 SET completed = TRUE, available = TRUE
-                WHERE week_id =?
+                WHERE week_id =? AND user_id=?
             """
-            params3=(week['id'],)
+            params3=(week['id'], session['user']['id'])
             db.execute(sql3, params3)
 
         first_week = weeks[1]['date']

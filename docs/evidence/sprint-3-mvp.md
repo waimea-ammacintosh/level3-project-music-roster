@@ -94,6 +94,23 @@ I am testing to see if an admin user can initialise a week. This should make an 
 The testing showed the system working perfectly fine, so no changes were required.
 
 
+## Testing Week Creation
+
+I am testing to see whether or not the admin can add people to a week, and for that change to
+
+**PLACE SCREENSHOTS AND/OR ANIMATED GIFS OF THE TESTING HERE**
+
+### Changes / Improvements
+
+Replace this text with notes any improvements you made as a result of the testing.
+
+**PLACE SCREENSHOTS AND/OR ANIMATED GIFS OF THE IMPROVED SYSTEM HERE**
+
+### Changes / Improvements
+
+The testing showed the system working perfectly fine, so no changes were required.
+
+
 ## Testing FEATURE NAME HERE
 
 Replace this text with notes about what you are testing, how you tested it, and the outcome of the testing
