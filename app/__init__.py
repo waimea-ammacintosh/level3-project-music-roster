@@ -465,7 +465,7 @@ def process_unavailability():
 
         
 
-        first_week = weeks[1]['date']
+        first_week = weeks[0]['date']
         last_week = weeks[-1]['date']
       
     flash(f'Submitted unavailability between {first_week} and {last_week}', 'success')

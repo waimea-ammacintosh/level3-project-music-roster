@@ -102,13 +102,13 @@ I am testing to see whether or not the admin can add people to a week, and for i
 
 ### Changes / Improvements
 
-Replace this text with notes any improvements you made as a result of the testing.
+To fix this, I fixed a bug in the submitting unavailability form, where it would mark every week in the form as available, even if they said that they are unavailable for that day. When this got fixed, the form worked perfectly, as shown in the gif.
 
-**PLACE SCREENSHOTS AND/OR ANIMATED GIFS OF THE IMPROVED SYSTEM HERE**
+![Week creation where only people available for that week can be put](screenshots/week-creation-good.gif)
 
-### Changes / Improvements
+List of what the different test users put down for reference:
 
-The testing showed the system working perfectly fine, so no changes were required.
+![Table of user data](screenshots/Table-of-user-data.png)
 
 
 ## Testing FEATURE NAME HERE
