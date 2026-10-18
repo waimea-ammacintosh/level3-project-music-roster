@@ -70,7 +70,7 @@ class FileTable:
             filename    TEXT NOT NULL,
             week_id     INTEGER NOT NULL,
 
-            FOREIGN KEY (week_id) REFERENCES week(id)
+            FOREIGN KEY (week_id) REFERENCES week(id) ON DELETE CASCADE
         )
     """
 
@@ -115,7 +115,7 @@ class RequestTable:
             user_id    INTEGER NOT NULL,     
 
             FOREIGN KEY (user_id) REFERENCES user(id),
-            FOREIGN KEY (week_id) REFERENCES week(id)  
+            FOREIGN KEY (week_id) REFERENCES week(id) ON DELETE CASCADE
         )
     """
 
@@ -161,7 +161,7 @@ class RosterTable:
             instrument_id   INTEGER NOT NULL,
 
             FOREIGN KEY (user_id) REFERENCES user(id)
-            FOREIGN KEY (week_id) REFERENCES week(id)
+            FOREIGN KEY (week_id) REFERENCES week(id) ON DELETE CASCADE
             FOREIGN KEY (instrument_id) REFERENCES instrument(id)
         )
     """
@@ -188,7 +188,7 @@ class UnavailabilityTable:
             completed   BOOLEAN NOT NULL DEFAULT FALSE,
 
             FOREIGN KEY (user_id) REFERENCES user(id)
-            FOREIGN KEY (week_id) REFERENCES week(id)
+            FOREIGN KEY (week_id) REFERENCES week(id) ON DELETE CASCADE
         )
     """
 

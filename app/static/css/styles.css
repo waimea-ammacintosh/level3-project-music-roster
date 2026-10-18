@@ -236,7 +236,7 @@ button {
         border: 1px solid var(--primary-color-dark);
     }
 
-/* form --------------------------------------------------*/ 
+/* form --------------------------------------------------*/
 
 form {
     display: flex;
@@ -254,3 +254,12 @@ form {
 
 }
 
+/* Horizontal bar ----------------------------------------*/
+
+.bar {
+    height: 2px;
+    background-color:#0000009d;
+    border: none;
+    width: 90%;
+    margin: var(--margin-sm);
+}

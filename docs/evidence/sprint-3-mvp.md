@@ -47,7 +47,7 @@ When this would not work, I came up with a new approach that was much simpler, a
 ![Correct roster is shown](screenshots/Roster-display-correct.gifn b)
 
 
-## Testing User Register (adding user to user table)
+## Testing User Register
 
 I am testing whether my app can add a user and all its associated data to the db. I tested this by getting my user register form, and inputting a test user. When this happened, everything worked as I intended it, and the correct tables were updated to show the new user.
 
@@ -111,7 +111,44 @@ List of what the different test users put down for reference:
 ![Table of user data](screenshots/Table-of-user-data.png)
 
 
-## Testing FEATURE NAME HERE
+## Testing Submitting Unavailability
+
+I am testing if the user can submit unavailability, and the if system handles it in the right way. To test this, I made a few test weeks, then went into a users account, and submitted unavailability. Then, I went to the admins account, and showed that the user did not show up as available to be on for the day that they submitted as unavailable. When I did this, the system worked as I expected it to, and the user only showed up on the days that they were available.
+
+![Submitting unavailability](screenshots/submit_unavailability.gif)
+
+### Changes / Improvements
+
+As my system worked well, it did not need any improvements.
+
+
+## Testing Submitting a Request
+
+Replace this text with notes about what you are testing, how you tested it, and the outcome of the testing
+
+**PLACE SCREENSHOTS AND/OR ANIMATED GIFS OF THE TESTING HERE**
+
+### Changes / Improvements
+
+Replace this text with notes any improvements you made as a result of the testing.
+
+**PLACE SCREENSHOTS AND/OR ANIMATED GIFS OF THE IMPROVED SYSTEM HERE**
+
+
+## Testing Display of one weeks Data
+
+Replace this text with notes about what you are testing, how you tested it, and the outcome of the testing
+
+**PLACE SCREENSHOTS AND/OR ANIMATED GIFS OF THE TESTING HERE**
+
+### Changes / Improvements
+
+Replace this text with notes any improvements you made as a result of the testing.
+
+**PLACE SCREENSHOTS AND/OR ANIMATED GIFS OF THE IMPROVED SYSTEM HERE**
+
+
+## Testing File Upload
 
 Replace this text with notes about what you are testing, how you tested it, and the outcome of the testing
 

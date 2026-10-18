@@ -59,7 +59,21 @@ def home():
     else:
         requests = None
     
- 
+    #---------------------------------------------
+    # Delete past stuff
+    with connect_db() as db:
+        sql2 ="PRAGMA foreign_keys = ON"
+        db.execute(sql2)
+        current_date=datetime.now()
+        print(current_date)
+        sql3="""
+            SELECT date FROM week WHERE id < ?
+        """
+        params3=(current_date,)
+        weeks_to_delete= db.execute(sql3,params3)
+
+        for week in weeks_to_delete:
+            
 
     return render_template("pages/home.jinja", requests = requests)
 
@@ -919,7 +933,7 @@ def create_week():
         flash(f'week - {date} successfuly initialized', 'success')
 
 
-    return redirect(url_for('show_edit_week', id=id))
+    return redirect("/roster/create")
 
 
 #-----------------------------------------------------------
