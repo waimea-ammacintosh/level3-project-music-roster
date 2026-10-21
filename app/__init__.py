@@ -18,6 +18,7 @@ from more_itertools import unique_justseen, unique_everseen
 from collections import defaultdict
 from pandas import to_datetime
 from datetime import timedelta, datetime
+from dateutil.relativedelta import relativedelta, SU
 
 
 UPLOAD_FOLDER = os.path.join('app', 'static', 'uploads')
@@ -59,20 +60,56 @@ def home():
     else:
         requests = None
     
-    #---------------------------------------------
+#---------------------------------------------
     # Delete past stuff
     with connect_db() as db:
+        # make sure foreign key logic is allowed
         sql2 ="PRAGMA foreign_keys = ON"
         db.execute(sql2)
-        current_date=datetime.now()
+        # get date for deleting
+        current_date=datetime.now() - timedelta(days=1)
         print(current_date)
+
+        # get all dates to delete
         sql3="""
-            SELECT date FROM week WHERE id < ?
+            SELECT date, id FROM week WHERE date < ?
         """
         params3=(current_date,)
-        weeks_to_delete= db.execute(sql3,params3)
+        weeks_to_delete= db.execute(sql3,params3).fetchall()
+        print(weeks_to_delete)
 
+        # delete files related to the weeks
         for week in weeks_to_delete:
+            # get files
+            sql4="""
+                SELECT filename FROM file WHERE week_id = ? 
+            """
+            params4=(week['id'],)
+            files = db.execute(sql4, params4).fetchall()
+            # delete files
+            for file in files:
+                file_name = file['filename']
+                # Get the path of the file
+                filepath = os.path.join(UPLOAD_FOLDER, file_name)
+                print(filepath)
+                # Delete file from disk
+                os.remove(filepath)
+            
+            # delete records from db
+            sql5="""
+                DELETE FROM file WHERE week_id = ?
+            """
+            params5=(week['id'],)
+            db.execute(sql5, params5)
+
+        # delete week, then changes will cascade
+        sql6="""
+            DELETE FROM week WHERE date <?
+        """
+        params6=(current_date,)
+        db.execute(sql6, params6)
+            
+
             
 
     return render_template("pages/home.jinja", requests = requests)
@@ -657,7 +694,7 @@ def process_request():
                 sql = """
                     INSERT INTO request (week_id, user_id, message) VALUES (?, ?, ?)
                 """
-                params=(week, session['user']['id'], message )
+                params=(week, session['user']['id'], message)
                 db.execute(sql, params)
             else:
                 sql2 = """
@@ -853,7 +890,7 @@ def show_edit_week(id):
         return render_template("pages/week-edit.jinja", users=users, instruments=instruments, week=week, w_id=id)
 
 #-----------------------------------------------------------
-# Submit week - process week creation form
+# Submit week - process week fill out form
 #-----------------------------------------------------------
 @app.post("/week/edit/<int:w_id>")
 @admin_required
@@ -888,7 +925,7 @@ def process_week(w_id):
     return redirect("/roster/create")
 
 #-----------------------------------------------------------
-# Create week - process week creation form
+# Create week - process week creation
 #-----------------------------------------------------------
 @app.get("/new/week")
 @admin_required
@@ -899,11 +936,19 @@ def create_week():
             FROM week
         """
         params=()
-        weeks = db.execute(sql, params).fetchall() 
+        weeks = db.execute(sql, params).fetchall()
 
-        last_week = to_datetime(next(iter(weeks[-1].values())))
-        date_object = last_week + timedelta(days = 7)
-        date = (date_object).strftime("%Y-%m-%d")
+        # check if there are any existing weeks in the db
+        if weeks:
+            # yes, so go off them to create next object
+            last_week = to_datetime(next(iter(weeks[-1].values())))
+            date_object = last_week + timedelta(days = 7)
+            date = (date_object).strftime("%Y-%m-%d")
+        else:
+            # no, so calculate next sundays date
+            date_object = date.today() + relativedelta(weekday=SU(+1))
+            date = (date_object).strftime("%Y-%m-%d")
+
         practice_date = (date_object - timedelta(days = 7)).strftime("%Y-%m-%d")
 
         sql2="""
@@ -960,6 +1005,32 @@ def show_contact():
 def show_legal(): 
     
     return render_template("pages/legal.jinja")
+
+
+#-----------------------------------------------------------
+# delete page route
+#-----------------------------------------------------------
+@app.get("/delete")
+def delete():
+    if session['is_admin']:
+        flash('Cannot Delete Admin Account', 'error')
+    else:
+        with connect_db() as db:
+            # turn on foreign key logic
+            sql="PRAGMA foreign_keys = ON"
+            db.execute(sql)
+
+            # delete user
+            sql2="DELETE FROM user WHERE id = ?"
+            params2=(session['user']['id'],)
+            db.execute(sql2, params2)
+            # clear session
+            session["logged_in"] = False
+            session["user"] = {}
+            session['is_admin'] = False
+
+    return redirect("/")
+
 
 #===========================================================
 # Configure the app

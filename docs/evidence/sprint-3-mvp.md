@@ -124,18 +124,16 @@ As my system worked well, it did not need any improvements.
 
 ## Testing Submitting a Request
 
-Replace this text with notes about what you are testing, how you tested it, and the outcome of the testing
+I am testing to see if a user can successfully submit a request for one of their weeks. I tested this by submitting a trial request by a user. When I did this, the request was successfully handled by the program, and the correct things showed up for information when the admin went to resolve the request.
 
-**PLACE SCREENSHOTS AND/OR ANIMATED GIFS OF THE TESTING HERE**
+![Submitting a request](screenshots/submit_request.gif)
 
 ### Changes / Improvements
 
-Replace this text with notes any improvements you made as a result of the testing.
-
-**PLACE SCREENSHOTS AND/OR ANIMATED GIFS OF THE IMPROVED SYSTEM HERE**
+As the system worked as intended, the Web App did not need any improvements
 
 
-## Testing Display of one weeks Data
+## Testing Display of One Weeks Data
 
 Replace this text with notes about what you are testing, how you tested it, and the outcome of the testing
 
@@ -160,6 +158,18 @@ Replace this text with notes any improvements you made as a result of the testin
 
 **PLACE SCREENSHOTS AND/OR ANIMATED GIFS OF THE IMPROVED SYSTEM HERE**
 
+
+## Testing Week Delete
+
+Replace this text with notes about what you are testing, how you tested it, and the outcome of the testing
+
+**PLACE SCREENSHOTS AND/OR ANIMATED GIFS OF THE TESTING HERE**
+
+### Changes / Improvements
+
+Replace this text with notes any improvements you made as a result of the testing.
+
+**PLACE SCREENSHOTS AND/OR ANIMATED GIFS OF THE IMPROVED SYSTEM HERE**
 
 ## ETC...
 

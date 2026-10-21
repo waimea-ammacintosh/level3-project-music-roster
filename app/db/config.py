@@ -54,6 +54,8 @@ class WeekTable:
     SEED_DATA = """
         INSERT INTO week (date, practice_date)
         VALUES
+        ('2026-10-20', '2026-10-17'),
+        ('2026-10-21', '2026-10-18'), 
         ('2026-11-08', '2026-11-05'),
         ('2026-11-15', '2026-11-12'),
         ('2026-11-22', '2026-11-19'),
@@ -114,7 +116,7 @@ class RequestTable:
             message    TEXT NOT NULL,
             user_id    INTEGER NOT NULL,     
 
-            FOREIGN KEY (user_id) REFERENCES user(id),
+            FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE,
             FOREIGN KEY (week_id) REFERENCES week(id) ON DELETE CASCADE
         )
     """
@@ -135,7 +137,7 @@ class InstrumentUserTable:
             user_id         INTEGER NOT NULL,
             instrument_id   INTEGER NOT NULL,
 
-            FOREIGN KEY (user_id) REFERENCES user(id),
+            FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE,
             FOREIGN KEY (instrument_id) REFERENCES instrument(id)
         )
     """
@@ -160,7 +162,7 @@ class RosterTable:
             week_id         INTEGER NOT NULL,
             instrument_id   INTEGER NOT NULL,
 
-            FOREIGN KEY (user_id) REFERENCES user(id)
+            FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE
             FOREIGN KEY (week_id) REFERENCES week(id) ON DELETE CASCADE
             FOREIGN KEY (instrument_id) REFERENCES instrument(id)
         )
@@ -187,7 +189,7 @@ class UnavailabilityTable:
             available   BOOLEAN NOT NULL,
             completed   BOOLEAN NOT NULL DEFAULT FALSE,
 
-            FOREIGN KEY (user_id) REFERENCES user(id)
+            FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE
             FOREIGN KEY (week_id) REFERENCES week(id) ON DELETE CASCADE
         )
     """

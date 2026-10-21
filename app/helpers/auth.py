@@ -28,7 +28,7 @@ def login_required(func):
     return wrapper
 
 #-----------------------------------------------------------
-# A decorator function to check user logged in
+# A decorator function to check if user is an admin
 # - This is determined by a 'logged_in' value being present
 #   in the session
 #-----------------------------------------------------------
@@ -47,5 +47,4 @@ def admin_required(func):
         return redirect("/")
 
     return wrapper
-
 
