@@ -164,20 +164,36 @@ File Download:
 
 ### Changes / Improvements
 
-The system worked well, being able to 
+The system worked well, being able to handle uploading, downloading and only allowing certain types of files, so it did not need changing
 
 
 ## Testing Week Delete
 
-Replace this text with notes about what you are testing, how you tested it, and the outcome of the testing
+I am testing the automatic delete of weeks. When the home page is opened, the program automatically checks for past weeks, and deletes them if any are present. I tested this by making a week in the past, with links to files, and all tables.
 
-**PLACE SCREENSHOTS AND/OR ANIMATED GIFS OF THE TESTING HERE**
+Weeks being deleted:
+
+![weeks to be deleted](screenshots/weeks-to-be-deleted.png)
+
+Data to be deleted:
+
+![1st lot of data to be deleted](screenshots/delete-data-1.png)
+
+![2nd lot of data to be deleted](screenshots/delete-data-2.png)
+
+Delete actions:
+
+![Delete actions](screenshots/delete-actions.png)
+
+New Data:
+
+![New Data 1](screenshots/New-data-1.png)
+
+![New Data 2](screenshots/New-data-2.png)
 
 ### Changes / Improvements
 
-Replace this text with notes any improvements you made as a result of the testing.
-
-**PLACE SCREENSHOTS AND/OR ANIMATED GIFS OF THE IMPROVED SYSTEM HERE**
+This worked well the first time, however, if a week is put in the db with seed data, if the file is already deleted, It would throw an error. 
 
 ## ETC...
 

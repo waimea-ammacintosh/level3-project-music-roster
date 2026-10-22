@@ -62,52 +62,51 @@ def home():
     
 #---------------------------------------------
     # Delete past stuff
-    # with connect_db() as db:
+    with connect_db() as db:
         # make sure foreign key logic is allowed
-        # sql2 ="PRAGMA foreign_keys = ON"
-        # db.execute(sql2)
-        # get date for deleting
-        # current_date=datetime.now() - timedelta(days=1)
-        # print(current_date)
-# 
+        sql2 ="PRAGMA foreign_keys = ON"
+        db.execute(sql2)
+        # get date for deleting (-1, as this will delete the day only if the day has finished)
+        current_date=datetime.now() - timedelta(days=1)
+        print(current_date)
+
         # get all dates to delete
-        # sql3="""
-            # SELECT date, id FROM week WHERE date < ?
-        # """
-        # params3=(current_date,)
-        # weeks_to_delete= db.execute(sql3,params3).fetchall()
-        # print(weeks_to_delete)
-# 
+        sql3="""
+            SELECT date, id FROM week WHERE date < ?
+        """
+        params3=(current_date,)
+        weeks_to_delete= db.execute(sql3,params3).fetchall()
+        print(weeks_to_delete)
+
         # delete files related to the weeks
-        # for week in weeks_to_delete:
+        for week in weeks_to_delete:
             # get files
-            # sql4="""
-                # SELECT filename FROM file WHERE week_id = ? 
-            # """
-            # params4=(week['id'],)
-            # files = db.execute(sql4, params4).fetchall()
+            sql4="""
+                SELECT filename FROM file WHERE week_id = ? 
+            """
+            params4=(week['id'],)
+            files = db.execute(sql4, params4).fetchall()
             # delete files
-            # for file in files:
-                # file_name = file['filename']
+            for file in files:
+                file_name = file['filename']
                 # Get the path of the file
-                # filepath = os.path.join(UPLOAD_FOLDER, file_name)
-                # print(filepath)
+                filepath = os.path.join(UPLOAD_FOLDER, file_name)
                 # Delete file from disk
-                # os.remove(filepath)
-            # 
+                os.remove(filepath)
+            
             # delete records from db
-            # sql5="""
-                # DELETE FROM file WHERE week_id = ?
-            # """
-            # params5=(week['id'],)
-            # db.execute(sql5, params5)
-# 
+            sql5="""
+                DELETE FROM file WHERE week_id = ?
+            """
+            params5=(week['id'],)
+            db.execute(sql5, params5)
+
         # delete week, then changes will cascade
-        # sql6="""
-            # DELETE FROM week WHERE date <?
-        # """
-        # params6=(current_date,)
-        # db.execute(sql6, params6)
+        sql6="""
+            DELETE FROM week WHERE date <?
+        """
+        params6=(current_date,)
+        db.execute(sql6, params6)
             
 
             

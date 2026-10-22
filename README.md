@@ -15,7 +15,7 @@ The app has the following key features:
 ## Live Site
 
 The site is hosted on **Render.com** and can be [accessed live at this link](https://level3-project-music-roster.onrender.com/)
-For intended UI puropses, please inspect, and change device size to phone. 
+For intended UI purposes, please inspect, and change device size to phone. 
 
 
 ## Supporting Documents
