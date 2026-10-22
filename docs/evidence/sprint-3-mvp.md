@@ -148,15 +148,23 @@ Replace this text with notes any improvements you made as a result of the testin
 
 ## Testing File Upload
 
-Replace this text with notes about what you are testing, how you tested it, and the outcome of the testing
+I am testing to see if the system can upload a file to the system, to be displayed for users on that week to download. I tested this by uploading a file to a week where the user was a Week leader, as only week leaders can add files. When I added the file, it only allowed the correct file types to be selected, and when I uploaded it it got added successfully to the uploads folder, and users could successfully download the file.
 
-**PLACE SCREENSHOTS AND/OR ANIMATED GIFS OF THE TESTING HERE**
+Allowed Formats:
+
+![Allowed formats for the file upload form](screenshots/allowed-formats.png)
+
+File Upload:
+
+![Uploading a file](screenshots/file_upload.gif)
+
+File Download:
+
+![Downloading a file](screenshots/file_download.gif)
 
 ### Changes / Improvements
 
-Replace this text with notes any improvements you made as a result of the testing.
-
-**PLACE SCREENSHOTS AND/OR ANIMATED GIFS OF THE IMPROVED SYSTEM HERE**
+The system worked well, being able to 
 
 
 ## Testing Week Delete
