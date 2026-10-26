@@ -29,8 +29,6 @@
                             {% if instrument.name == user.instrument %}
                                 <option value="{{ user.u_id }}">{{ user.f_name }}</option>
                             {% endif %}
-                        {% else %}
-                            <label>No users available for this slot</label>
                         {% endfor %}
                     </select>
                 </label>

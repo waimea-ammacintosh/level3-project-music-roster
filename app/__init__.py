@@ -91,8 +91,9 @@ def home():
                 file_name = file['filename']
                 # Get the path of the file
                 filepath = os.path.join(UPLOAD_FOLDER, file_name)
-                # Delete file from disk
-                os.remove(filepath)
+                # Delete file from disk if it exists
+                if os.path.exists(filepath):
+                    os.remove(filepath)
             
             # delete records from db
             sql5="""
@@ -463,6 +464,7 @@ def show_unavailability_form():
         """
         params = (session['user']['id'],)
         weeks = db.execute(sql, params).fetchall()
+        print(weeks)
 
         return render_template("pages/submit-unavailability.jinja", weeks=weeks)
 

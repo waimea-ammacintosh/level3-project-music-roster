@@ -34,10 +34,14 @@
       </label>
 
       <label>
-        Instrument<br>
-        {% for instrument in instruments %}
-          <label><input type="checkbox" name="instrument" value="{{ instrument.name }}"></label>{{ instrument.name }}<br>
-        {% endfor %}
+        Instrument(s):<br>
+        <div class="checkbox-radio">
+          {% for instrument in instruments %}
+            <div class="option">
+              <label><input type="checkbox" name="instrument" value="{{ instrument.name }}" class="clicked">{{ instrument.name }}</label>
+            </div>
+          {% endfor %}
+        </div>
       </label>
 
       <label>

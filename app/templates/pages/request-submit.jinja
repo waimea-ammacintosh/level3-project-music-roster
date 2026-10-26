@@ -12,11 +12,15 @@
       <form method="post" action="/request/submit">
         <label>
           Select the date you want to change:
-          {% for week in weeks %}
-            <label><input type="radio" name="week" value="{{ week.week_id }}"></label>{{ week.date }}<br>
-          {% else %}
-            <h4>No Weeks!</h4>
-          {% endfor %}
+          <div class="checkbox-radio">
+            {% for week in weeks %}
+            <div class="option">
+              <label><input type="radio" name="week" value="{{ week.week_id }}" class="clicked"></label>{{ week.date }}
+            </div>
+            {% else %}
+              <h4>No Weeks!</h4>
+            {% endfor %}
+          </div>
         </label>
         <label>
           Message

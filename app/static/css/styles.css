@@ -91,6 +91,8 @@ main {
 /* Header & Nav -----------------------------------------------*/
 
 body > header {
+    position: sticky;
+    top: 0;
     display: flex;
     gap: 1rem;
     align-items: center;
@@ -100,8 +102,8 @@ body > header {
     border-radius: var(--border-radius-sm);
 
     .nav_img {
-        height: 4rem;
-        width: 4rem;
+        height: 1.6rem;
+        width: 1.6rem;
     }
 }
 
@@ -241,16 +243,25 @@ button {
 form {
     display: flex;
     flex-direction: column;
-    gap: var(--gap);
+    margin: var(--margin);
     width: 100%;
     background-color: var(--seccondary-color);
     border-radius: var(--border-radius-sm);
     align-items: center;
     justify-content: center;
-
     max-width: var(--content-width-sm);
     margin-inline: auto;
     padding: var(--padding);
+
+    label {
+        width: 90%;
+        margin: var(--margin-sm);
+
+        input:not(.clicked) {
+            width: 100%;
+        }
+
+    }
 
 }
 

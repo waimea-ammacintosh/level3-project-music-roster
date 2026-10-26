@@ -42,5 +42,17 @@ window.onload = (event) => {
             if (message) message.remove()
         })
     }
+
+    //--------------------------------------------------
+    // Dismiss flash messages after 7 seconds
+    //--------------------------------------------------
+    const messageList2 = document.getElementById('flash-messages')
+
+    if (messageList2) {
+        setTimeout(() => {
+            const message = messageList2.querySelector('.flash-message')
+            if (message) message.remove()
+            }, 7000)
+    }
 }
 

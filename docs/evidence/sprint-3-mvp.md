@@ -193,9 +193,9 @@ New Data:
 
 ### Changes / Improvements
 
-This worked well the first time, however, if a week is put in the db with seed data, if the file is already deleted, It would throw an error. 
+This worked well the first time, however, if a week is put in the db with seed data, if the file is already deleted, It would throw an error. To improve this, I added a check to make sure the app would only delete a file if one with its name exists in the uploads folder.
 
-## ETC...
+![Check if file exists](screenshots/file-check.png)
 
 
 ## Sprint Review
