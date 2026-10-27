@@ -17,6 +17,8 @@
     --text-color: #111111;
     --inv-text-color: #d3d3d3;
 
+    --element-color-light: #111111;
+    --element-color-dark: #d3d3d3;
 
     --page-bg-light: #d1d1d1;
     --page-bg-dark: #313131;
@@ -33,7 +35,7 @@
     --padding-lr: 2rem;
 
     --gap: 1rem;
-    --gap-sm: 0.5rem;
+    --gap-sm: 0.01rem;
     --gap-lr: 2rem;
 
     --margin: 1rem;
@@ -47,11 +49,11 @@
 
     --button-width: 10rem;
     --button-width-sm: 7rem;
-    --button-width-lr: 13rem;
+    --button-width-lr: 20rem;
 
     --button-height: 3rem;
-    --button-width-sm: 1rem;
-    --button-width-lr: 5rem;
+    --button-height-sm: 1rem;
+    --button-height-lr: 5rem;
 
     --font-size: 1rem;
     --font-size-sm: 0.5rem;
@@ -99,30 +101,37 @@ main {
 
 /* Header & Nav -----------------------------------------------*/
 
-body > header {
-    position: sticky;
-    top: 0;
+#top {
+    width: 100%;
     display: flex;
-    gap: 1rem;
-    align-items: center;
-    justify-content: space-between;
-    padding: 1rem;
-    background-color: var(--primary-color);
-    border-radius: var(--border-radius-sm);
+    justify-content: center;
 
-    .nav_img {
-        height: 1.6rem;
-        width: 1.6rem;
+    header {
+        width: 100%;
+        max-width: var(--content-width);
+        position: sticky;
+        top: 0;
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1rem;
+        background-color: var(--primary-color);
+        border-radius: var(--border-radius-sm);
+
+        .nav_img {
+            height: 1.6rem;
+            width: 1.6rem;
+        }
     }
 }
-
 
 /* Page Headings -----------------------------------------------*/
 
 main > h2 {
     font-size: 2rem;
     text-align: center;
-    margin-block: 2rem;
+    margin-block: 1rem;
 }
 
 /* Sections ---------------------------------------------- */
@@ -149,7 +158,27 @@ section {
 
     #weeks {
         width: 100%;
-        max-width: 30rem;
+        max-width: var(--content-width-sm);
+    }
+
+    .button-box {
+        width: 100%;
+        max-width: var(--content-width-sm);
+    }
+
+    .background {
+        width: 100%;
+        max-width: var(--content-width-sm);
+        margin: var(--margin);
+    }
+
+    form {
+        width: 100%;
+        max-width: var(--content-width-sm);
+    }
+
+    h5 {
+        text-align: center;
     }
 }
 
@@ -158,12 +187,13 @@ section {
 
 #weeks {
     display: flex;
-    gap: var(--gap);
+    gap: var(--gap-sm);
     flex-direction: column;
     background-color: var(--primary-color);
     border-radius: var(--border-radius-sm);
     align-items: center;
     margin: var(--margin-sm);
+    padding: var(--padding-sm);
 
     .week {
         width: 100%;
@@ -213,6 +243,7 @@ section {
 
 .button-box {
     width: 100%;
+    max-width: var(--content-width);
     display: flex;
     gap: var(--gap);
     flex-direction: column;
@@ -247,6 +278,7 @@ section {
 
 button {
         width: 90%;
+        max-width: var(--button-width-lr);
         height: 100%;
         padding: var(--padding-sm);
         background-color: var(--button-bg);
@@ -285,10 +317,21 @@ form {
 
 .bar {
     height: 2px;
-    background-color:#0000009d;
     border: none;
     width: 90%;
     margin: var(--margin-sm);
+}
+
+@media(prefers-color-scheme: light) {
+    .bar {
+        background-color: var(--element-color-light);
+    }
+}
+
+@media(prefers-color-scheme: dark) {
+    .bar {
+        background-color: var(--element-color-dark);
+    }
 }
 
 /* Links ------------------------------------------------ */

@@ -103,15 +103,23 @@ When I showed this to the user, they said that was too long, and suggested 5 sec
 
 ## Testing Page Layout
 
-Replace with What you tested, How you tested it, the out come of the testing
+When I showed the website to the end user, they said that some of the pages could have better layouts. For example, on the individual week page, they thought that the files that have already been uploaded should be above the form to upload more files, and on the homepage, they thought that the buttons for taking you to an individual week page took up too much space, and should be links instead. To fix these problems, and more, I went through the pages to make sure that they all had a good and consistent layout.
 
-Images of testing
+Old Layouts:
+
+![Buttons](screenshots/colour.png)
+
+![Attatchments below](screenshots/Attatchments-below.png)
+
+New Layouts:
+
+![Links](screenshots/links.png)
+
+![Attatchments above](screenshots/attatchments-above.png)
 
 ### Changes / Improvements
 
-Replace with changes and improvements made due to testing
-
-Images of improved system
+When I showed these changes to the end user, they were happy, so I did not need to update the system.
 
 ## Testing TEST NAME HERE 
 

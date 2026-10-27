@@ -7,29 +7,32 @@
 
 {% block content %}
 
-    <h2>{{ week.date }}</h2>
 
-    <section>
+    <div class="content-container">
+        <h2>{{ week.date }}</h2>
 
-            <form method="post" action="/week/edit/{{ w_id }}">
-                {% for instrument in instruments %}
-                <label>
-                    {{ instrument.name }}
-                    <select name="{{ instrument.name }}">
-                        {% for user in users %}
-                            {% if user.i_id == instrument.id %}
-                                <option value="{{ user.u_id }}">{{ user.f_name }}</option>
-                            {% endif %}
-                        {% endfor %}
-                        <option value="">None</option>
-                    </select>
-                </label>
-                {% endfor %}
+        <section class="background">
 
-                <button>Complete week</button>
-                </form>
-    </section>
-    <button onclick="window.location.href='/roster/create';">Back</button>
+                <form method="post" action="/week/edit/{{ w_id }}">
+                    {% for instrument in instruments %}
+                    <label>
+                        {{ instrument.name }}
+                        <select name="{{ instrument.name }}">
+                            {% for user in users %}
+                                {% if user.i_id == instrument.id %}
+                                    <option value="{{ user.u_id }}">{{ user.f_name }}</option>
+                                {% endif %}
+                            {% endfor %}
+                            <option value="">None</option>
+                        </select>
+                    </label>
+                    {% endfor %}
+
+                    <button>Complete Week</button>
+                    </form>
+        </section>
+        <button onclick="window.location.href='/roster/create';">Back</button>
+    </div>
 
 {% endblock %}
 

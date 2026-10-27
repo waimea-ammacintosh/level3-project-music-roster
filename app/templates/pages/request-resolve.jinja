@@ -9,16 +9,13 @@
 
     <h2>Resolve Request</h2>
 
-    <section>
+    <div class="content-container">
 
         <h5>Name: {{ request.f_name }} {{ request.l_name}}</h5>
         <h5>Date: {{ request.date}}</h5>
-        <h5>Instrument: {% for instrument in instruments %}{{ instrument.name }}<br>{% endfor %}</h5>
-        
-
+        <h5>Instrument(s):<br> {% for instrument in instruments %}{{ instrument.name }}<br>{% endfor %}</h5>
         <h3>Message</h3>
         <h5>{{ request.message }}</h5>
-
         <h3>Replacement</h3>
         <form method="post" action="/request/resolve/{{ u_id }}/{{ w_id }}">
             {% for instrument in instruments %}
@@ -35,10 +32,8 @@
             {% endfor %}
             <button>Submit Change</button>
         </form>
-           
-
-    </section>
-    <button onclick="window.location.href='/';">Back</button>
+        <button onclick="window.location.href='/';">Back</button>
+    </div>
 
 {% endblock %}
 

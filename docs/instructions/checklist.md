@@ -99,7 +99,7 @@ Use complex techniques to develop a digital media outcome means that, taking int
    - [x] You have **automated aspects of your system** through scripts (e.g. Python)
 
 3. You must apply appropriate data integrity and testing procedures:
-   - [ ] All webpage text should be checked for **accuracy** (e.g. spell-checked)
+   - [x] All webpage text should be checked for **accuracy** (e.g. spell-checked)
    - [x] Any **data shown is as expected** (i.e. matches database / calculated values)
 
 4. You have applied user experience (UX) principles relevant to the purpose of your system:

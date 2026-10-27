@@ -25,19 +25,20 @@
 <body>
 
     {% if session["logged_in"] %}
-        <header>
-            <a href="/">
-                <img class="nav_img" src="/static/images/logo.png" alt="Logo of Rosterer">
-            </a>
+        <div id='top'>
+            <header>
+                <a href="/">
+                    <img class="nav_img" src="/static/images/logo.png" alt="Logo of Rosterer">
+                </a>
 
-            <h4>Welcome {{session["user"]["first_name"]}}</h4>
+                <h4>Welcome {{session["user"]["first_name"]}}</h4>
 
-            <a href="/logout">
-                <img class="nav_img" src="/static/images/log-out.svg" alt="Logout">
-            </a>
+                <a href="/logout">
+                    <img class="nav_img" src="/static/images/log-out.svg" alt="Logout">
+                </a>
 
-
-        </header>
+            </header>
+        </div>
     {% endif %}
 
     {# Show flash messages from any previous events #}

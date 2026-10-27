@@ -11,7 +11,7 @@
 
     <section>
         {# info about week #}
-        <h3> Practice: {{ week_data.practice_date }}</h3>
+        <h3> Practice Date: {{ week_data.practice_date }}</h3>
         <table id="roster">
             <tbody>
                 {% for instrument in instruments %}
@@ -33,6 +33,11 @@
 
         {# attatchments #}
         <h2>Attatchments</h2>
+        {% for file in files %}
+            <a href="/static/uploads/{{ file.filename }}" download> {{ file.filename }}</a><br>
+        {% else %}
+            <h5>No files yet!</h5>
+        {% endfor %}
         {% if worship_leader['user_id'] == session['user']['id'] %}
             <form method="post" action="/newfile/week/{{ week_id }}" enctype="multipart/form-data">
     
@@ -48,13 +53,7 @@
 
                 <button>Add New File</button>
                 </form>
-        {% endif %}
-        {% for file in files %}
-            <a href="/static/uploads/{{ file.filename }}" download> {{ file.filename }}</a><br>
-        {% else %}
-            <h5>No files yet!</h5>
-        {% endfor %}
-
+        {% endif %} 
         <button onclick="window.location.href='/';">Back</button>
     </section>
     

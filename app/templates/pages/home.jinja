@@ -44,7 +44,7 @@
                 {% endif %}
               {% endfor %}
             </p>
-            <button onclick="window.location.href='/week/{{ week.id }}';" >Details</button>
+            <a href='/week/{{ week.id }}';" >Details</a>
           </div>
         {% else %}
           No Weeks
@@ -64,17 +64,19 @@
   {% else %}
 
     {# logged out homepage #}
-    <section class="background">
-      <h1>Welcome, User! </h1>
-      <button onclick="window.location.href='/register';" >Register</button>
-      <h4>Or</h4>
-      <button onclick="window.location.href='/login';" >Sign In</button>
-      <h6>Please Register or Sign In to Continue</h6>
-    </section>
-    <section class="button-box">
-      <button onclick="window.location.href='/contact';" >Contact</button>
-      <button onclick="window.location.href='/legal';" >Legal info</button>
-    </section>
+    <div class="content-container">
+      <section class="background">
+        <h1>Welcome, User! </h1>
+        <button onclick="window.location.href='/register';" >Register</button>
+        <h4>Or</h4>
+        <button onclick="window.location.href='/login';" >Sign In</button>
+        <h6>Please Register or Sign In to Continue</h6>
+      </section>
+      <section class="button-box">
+        <button onclick="window.location.href='/contact';" >Contact</button>
+        <button onclick="window.location.href='/legal';" >Legal info</button>
+      </section>
+    
   {% endif %}
 
 {% endblock %}
