@@ -7,6 +7,7 @@
 
 {% block content %}
   
+  {# admin homepage #}
   {% if session['is_admin'] %}
     <section>
       <h2>Requests:</h2>
@@ -23,6 +24,7 @@
       <button onclick="window.location.href='/logout';" >logout</button>
     </section>
 
+  {# logged in homepage #}
   {% elif session["logged_in"] %}
     <div class="content-container">
       <section id="weeks">
@@ -61,6 +63,7 @@
   
   {% else %}
 
+    {# logged out homepage #}
     <section class="background">
       <h1>Welcome, User! </h1>
       <button onclick="window.location.href='/register';" >Register</button>
@@ -73,9 +76,6 @@
       <button onclick="window.location.href='/legal';" >Legal info</button>
     </section>
   {% endif %}
-  
-
-  {# <button onclick="window.location.href='/users/show';" >see users</button> #}
 
 {% endblock %}
 

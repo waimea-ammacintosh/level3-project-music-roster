@@ -52,7 +52,7 @@ window.onload = (event) => {
         setTimeout(() => {
             const message = messageList2.querySelector('.flash-message')
             if (message) message.remove()
-            }, 7000)
+            }, 6000)
     }
 }
 

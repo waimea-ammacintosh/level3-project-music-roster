@@ -145,7 +145,7 @@ noticed that some text boxes had incorrect spelling and grammar.
 
 As a result of this, I went and made a final design, with a UI that looks clean, and takes into consideration all the feedback that my end user gave me.
 
-[This](https://design.penpot.app/#/view?file-id=3be9e5e1-190f-8090-8008-6f1d02c8b427&page-id=f0485fb1-4e63-8165-8008-3908f4b684e6&section=interactions&index=0&share-id=3be9e5e1-190f-8090-8008-77495b79cbb4) demo shows the final UI.
+[This](https://design.penpot.app/#/view?file-id=3be9e5e1-190f-8090-8008-6f1d02c8b427&page-id=f0485fb1-4e63-8165-8008-3908f4b684e6&section=interactions&index=0&share-id=3be9e5e1-190f-8090-8008-77495b79cbb4) demo shows the final UI prototype.
 
 
 ## Sprint Review

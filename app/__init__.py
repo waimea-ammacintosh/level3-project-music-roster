@@ -3,6 +3,7 @@
 # By AARON MACINTOSH
 #===========================================================
 
+# Imports
 from flask import Flask, request, session, render_template, flash, redirect, send_file, make_response, url_for
 from werkzeug.security import generate_password_hash, check_password_hash
 from dotenv import load_dotenv
@@ -20,7 +21,7 @@ from pandas import to_datetime
 from datetime import timedelta, datetime
 from dateutil.relativedelta import relativedelta, SU
 
-
+# Uploads folder path
 UPLOAD_FOLDER = os.path.join('app', 'static', 'uploads')
 
 
@@ -59,33 +60,74 @@ def home():
             requests = db.execute(sql, params).fetchall()
     else:
         requests = None
+
+    # remake the weeks part of the session, in case it has changed since the last time they opened the app if they are logged in
+    if session['logged_in']:
+        with connect_db() as db:
+            sql2 = """
+                        SELECT week.date, week.id, instrument.name AS instrument_name
+                        FROM roster
+                        INNER JOIN week
+                        ON roster.week_id = week.id
+                        INNER JOIN instrument
+                        ON roster.instrument_id = instrument.id
+                        WHERE user_id = ?
+                        ORDER BY week.id ASC    
+                    """
+            params2 = (session['user']["id"],)
+            # run query
+            weeks_data = db.execute(sql2, params2).fetchall()
+            sql3="""
+                SELECT roster.week_id, week.date FROM roster
+                LEFT JOIN week ON roster.week_id = week.id 
+                WHERE user_id=? 
+            """
+            params3 = (session['user']["id"],)
+            week_ids = db.execute(sql3, params3).fetchall()
+
+            # delete duplicate weeks
+            unique_week_ids = list(unique_justseen(week_ids))
+            weeks = []
+            for i in unique_week_ids:
+                week_instruments = []
+                week_data = {}
+                for week in weeks_data:
+                    if week['id'] == i['week_id']:
+                        week_instruments.append(week['instrument_name'])
+                week_data['id'] = i['week_id']
+                week_data['instruments'] = week_instruments
+                week_data['date'] = i['date']
+                weeks.append(week_data)
+
+            session['user']['weeks'] = weeks
+     
     
 #---------------------------------------------
     # Delete past stuff
     with connect_db() as db:
         # make sure foreign key logic is allowed
-        sql2 ="PRAGMA foreign_keys = ON"
-        db.execute(sql2)
+        sql4 ="PRAGMA foreign_keys = ON"
+        db.execute(sql4)
         # get date for deleting (-1, as this will delete the day only if the day has finished)
         current_date=datetime.now() - timedelta(days=1)
         print(current_date)
 
         # get all dates to delete
-        sql3="""
+        sql5="""
             SELECT date, id FROM week WHERE date < ?
         """
-        params3=(current_date,)
-        weeks_to_delete= db.execute(sql3,params3).fetchall()
+        params5=(current_date,)
+        weeks_to_delete= db.execute(sql5, params5).fetchall()
         print(weeks_to_delete)
 
         # delete files related to the weeks
         for week in weeks_to_delete:
             # get files
-            sql4="""
+            sql6="""
                 SELECT filename FROM file WHERE week_id = ? 
             """
-            params4=(week['id'],)
-            files = db.execute(sql4, params4).fetchall()
+            params6=(week['id'],)
+            files = db.execute(sql6, params6).fetchall()
             # delete files
             for file in files:
                 file_name = file['filename']
@@ -96,18 +138,18 @@ def home():
                     os.remove(filepath)
             
             # delete records from db
-            sql5="""
+            sql7="""
                 DELETE FROM file WHERE week_id = ?
             """
-            params5=(week['id'],)
-            db.execute(sql5, params5)
+            params7=(week['id'],)
+            db.execute(sql7, params7)
 
         # delete week, then changes will cascade
-        sql6="""
+        sql8="""
             DELETE FROM week WHERE date <?
         """
-        params6=(current_date,)
-        db.execute(sql6, params6)
+        params8=(current_date,)
+        db.execute(sql8, params8)
             
 
             
@@ -188,6 +230,7 @@ def process_login():
         params3 = (user['id'],)
         week_ids = db.execute(sql3, params3).fetchall()
 
+        # delete duplicate weeks
         unique_week_ids = list(unique_justseen(week_ids))
         weeks = []
         for i in unique_week_ids:
@@ -231,7 +274,6 @@ def show_register():
             SELECT *
             FROM instrument
         """
-
         params = ()
         instruments = db.execute(sql, params).fetchall()
 
@@ -346,6 +388,7 @@ def process_new_user():
         params9 = (user['id'],)
         week_ids = db.execute(sql9, params9).fetchall()
 
+        # delete duplicate weeks
         unique_week_ids = list(unique_justseen(week_ids))
         weeks = []
         for i in unique_week_ids:
@@ -380,6 +423,7 @@ def process_new_user():
 @login_required
 def show_roster():
     with connect_db() as db:
+        # get roster data
         sql = """
             SELECT
                 instrument.id AS i_id,
@@ -431,9 +475,7 @@ def show_roster():
                 if entry['date'] == week['date']:
                     entry['table_id'] = week['table_id']
 
-
-            
-
+        # get instrument names
         sql3 = """
             SELECT name, id FROM instrument
         """
@@ -449,6 +491,7 @@ def show_roster():
 @login_required
 def show_unavailability_form():
     with connect_db() as db:
+        # select weeks the user hasn't filled out yet
         sql = """
             SELECT
                 week.id AS w_id,
@@ -464,7 +507,6 @@ def show_unavailability_form():
         """
         params = (session['user']['id'],)
         weeks = db.execute(sql, params).fetchall()
-        print(weeks)
 
         return render_template("pages/submit-unavailability.jinja", weeks=weeks)
 
@@ -476,9 +518,11 @@ def show_unavailability_form():
 @login_required
 def process_unavailability():
     with connect_db() as db:
+        # get data from form
         submitted_weeks = request.form.getlist('weeks')
         unavailable_weeks = [int(week) for week in submitted_weeks]
 
+        # select all weeks that were in the form, to update later
         sql = """
                     SELECT
                         week.id,
@@ -504,6 +548,7 @@ def process_unavailability():
             params3=(week['id'], session['user']['id'])
             db.execute(sql3, params3)    
         
+        # update weeks said to be unavailable to be unavailable
         for week in unavailable_weeks:
             print(week)
             
@@ -516,7 +561,7 @@ def process_unavailability():
             db.execute(sql2, params2)
 
         
-
+        # get first and last weeks for flash
         first_week = weeks[0]['date']
         last_week = weeks[-1]['date']
       
@@ -531,6 +576,7 @@ def process_unavailability():
 @login_required
 def show_week(id):
     with connect_db() as db:
+        # get data about users on one week
         sql = """
             SELECT
                 instrument.id AS i_id,
@@ -552,6 +598,7 @@ def show_week(id):
         params = (id,)
         week = db.execute(sql, params).fetchall()
 
+        # get data about the date
         sql2="""
             SELECT date, practice_date FROM week
             WHERE id=?
@@ -559,12 +606,14 @@ def show_week(id):
         params2=(id,)
         week_data = db.execute(sql2, params2).fetchone()
 
+        # get instrument data
         sql3 = """
             SELECT name, id FROM instrument
         """
         params3=()
         instruments = db.execute(sql3, params3).fetchall()
 
+        # get file data
         sql4="""
             SELECT filename, week_id FROM file
             WHERE week_id=?
@@ -572,6 +621,7 @@ def show_week(id):
         params4=(id,)
         files = db.execute(sql4, params4).fetchall()
 
+        # is the user a the worship leader for this week
         sql5 = """
             SELECT user_id FROM roster
             WHERE instrument_id = '1' AND week_id=?
@@ -614,46 +664,13 @@ def add_file(id):
         return redirect(url_for('show_week', id=id))
 
 #-----------------------------------------------------------
-# User List page - show all users
-#-----------------------------------------------------------
-@app.get("/users/show")
-@admin_required
-def show_users():
-    with connect_db() as db:
-        sql = """
-            SELECT user.id, user.first_name, user.last_name, user.email, user.is_admin
-            FROM user
-        """
-        
-        params = ()
-        users = db.execute(sql, params).fetchall()
-
-
-        for user in users:
-
-            sql = """
-                SELECT instrument.name
-                FROM instrumentUser
-                INNER JOIN instrument
-                ON instrumentUser.instrument_id = instrument.id
-                WHERE user_id = ?    
-            """
-
-            params = (user["id"],)
-            # run query
-            instruments = db.execute(sql, params).fetchall()
-            user["instruments"] = instruments
-
-        return render_template("pages/user-list.jinja", users=users, instruments=instruments)
-
-
-#-----------------------------------------------------------
 # Submit Request Page - shows submit request form
 #-----------------------------------------------------------
 @app.get("/request/submit")
 @login_required
 def show_request():
     with connect_db() as db:
+        # get weeks the user is on, to display for selecting
         sql="""
             SELECT week_id, week.date FROM roster
             INNER JOIN week
@@ -663,6 +680,7 @@ def show_request():
         params=(session['user']['id'],)
         weeks = db.execute(sql, params).fetchall()
 
+        # dont let user submit a request for multiple weeks
         sql2="""
             SELECT week_id, week.date FROM request
             INNER JOIN week
@@ -687,23 +705,29 @@ def show_request():
 @login_required
 def process_request():
     with connect_db() as db:
+        # get and sanitize form data
         week = request.form.get('week')
         message = request.form.get('message', '').strip()
 
+        # check if the user selected a week
         if week:
+            # yes, so check if a message was sent
             if message:
+                # yes, input request into db with message
                 sql = """
                     INSERT INTO request (week_id, user_id, message) VALUES (?, ?, ?)
                 """
                 params=(week, session['user']['id'], message)
                 db.execute(sql, params)
             else:
+                # no, so input request into db without message
                 sql2 = """
                     INSERT INTO request (week_id, user_id, message) VALUES (?, ?, ?)
                 """
                 params2=(week, session['user']['id'], 'No Message')
                 db.execute(sql2, params2)
 
+            # update the availability of the user for this week to be false, so they cant be re-rostered for that week
             sql3="""
                 UPDATE unavailability
                 SET available = FALSE
@@ -711,10 +735,12 @@ def process_request():
             """
             params3=(session['user']['id'],)
             db.execute(sql3, params3)
+        # no, so tell them to select a week
         else:
             flash('Please select a week you wish to change', 'error')
             return redirect("/request/submit")
-
+        
+        # select date for flash
         sql4="""
             SELECT date FROM week
             WHERE id=?
@@ -734,6 +760,7 @@ def process_request():
 @admin_required
 def show_resolve_request(u_id, w_id):
     with connect_db() as db:
+        # select the data about the request
         sql="""
             SELECT week_id, week.date, user_id, user.first_name AS f_name, user.last_name AS l_name, message FROM request
             INNER JOIN week
@@ -745,6 +772,7 @@ def show_resolve_request(u_id, w_id):
         params=(u_id, w_id)
         request = db.execute(sql, params).fetchone()
 
+        # select the data about the instruments the user has on that day
         sql2="""
             SELECT instrument.name, instrument.id
             FROM roster
@@ -755,6 +783,7 @@ def show_resolve_request(u_id, w_id):
         params2=(u_id, w_id)
         instruments = db.execute(sql2, params2).fetchall()
 
+        # select the available users for that day and those instruments
         available_users = []
         for instrument in instruments:
             sql3="""
@@ -768,22 +797,14 @@ def show_resolve_request(u_id, w_id):
             """
             params3=(instrument.get('id'), u_id)
             users = db.execute(sql3, params3).fetchall()
-            print(f"users - {users}")
+
+            # add the instrument name to the user object
             for user in users:
                 user['instrument'] = instrument['name']
-                print(f'User - {user}')
-            print(f' Users - {users}')
             available_users.extend(users)
-            print(f"available users - {available_users}")
             
-            
-            
-
+        # remove duplicates
         available_users = list(unique_justseen(available_users))
-        print(f"available users - {available_users}")
-
-
-
     return render_template("pages/request-resolve.jinja", u_id=u_id, w_id=w_id, request=request, available_users=available_users, instruments=instruments)
 
 #-----------------------------------------------------------
@@ -793,6 +814,7 @@ def show_resolve_request(u_id, w_id):
 @admin_required
 def process_resolve_request(u_id, w_id):
     with connect_db() as db:
+        # select instruments to be updated
         sql="""
             SELECT instrument.name, instrument.id
             FROM roster
@@ -803,6 +825,7 @@ def process_resolve_request(u_id, w_id):
         params=(u_id, w_id)
         instruments = db.execute(sql, params).fetchall()
 
+        # replace all instruments the user was on that week with the new players
         for instrument in instruments:
             name = instrument.get('name')
             replacement = request.form.get(f'replacement-{name}').strip()
@@ -814,15 +837,13 @@ def process_resolve_request(u_id, w_id):
             params2=(replacement, w_id, instrument.get('id'))
             db.execute(sql2, params2)
 
+        # delete the request from the db, so it doesn't get resolved twice
         sql3="""
             DELETE FROM request
             WHERE user_id=? AND week_id = ?
         """
         params3=(u_id, w_id)
         db.execute(sql3, params3)
-
-
-
     return redirect("/")
 
 #-------------------------------------------------------------------
@@ -832,20 +853,21 @@ def process_resolve_request(u_id, w_id):
 @admin_required
 def show_incomplete_weeks():
     with connect_db() as db:
+        # get all weeks
         sql = """
             SELECT id, DATE FROM week
         """
         params = ()
         weeks = db.execute(sql, params).fetchall()
 
+        # select all weeks with entries in the roster table
         sql2 = """
             SELECT week_id AS id FROM roster
         """        
         params2 = ()
         roster = db.execute(sql2, params2).fetchall()
-        print(f'roster - {roster}')
-        print(f'weeks - {weeks}')
 
+        # separate the weeks that are already made from the others
         full_weeks = {week['id'] for week in roster}
         useful_weeks = [week for week in weeks if week['id'] not in full_weeks]
 
@@ -858,7 +880,7 @@ def show_incomplete_weeks():
 @admin_required
 def show_edit_week(id):
     with connect_db() as db:
-
+        # select the date of the week being edited
         sql="""
         SELECT date, id FROM week
         WHERE id = ?
@@ -866,6 +888,7 @@ def show_edit_week(id):
         params=(id,)
         week = db.execute(sql, params).fetchone()
 
+        # get instruments
         sql2 = """
             SELECT name, id FROM instrument
         """
@@ -873,6 +896,7 @@ def show_edit_week(id):
         # run query
         instruments = db.execute(sql2, params2).fetchall()
 
+        # select all users that are available for that week
         sql3="""
             SELECT user.first_name AS f_name, user.id AS u_id, instrument.id AS i_id
             FROM instrumentUser
@@ -897,6 +921,7 @@ def show_edit_week(id):
 @admin_required
 def process_week(w_id):
     with connect_db() as db:
+        # select instruments
         sql="""
             SELECT name, id
             FROM instrument
@@ -904,6 +929,7 @@ def process_week(w_id):
         params=()
         instruments = db.execute(sql, params).fetchall()
 
+        # insert the users the admin selected for the week
         for instrument in instruments:
             name = instrument.get('name')
             musician = request.form.get(name).strip()
@@ -914,6 +940,7 @@ def process_week(w_id):
             params2=(musician, w_id, instrument.get('id'))
             db.execute(sql2, params2)
 
+        # select date for flash
         sql3="""
             SELECT date FROM week WHERE id =?
         """
@@ -932,6 +959,7 @@ def process_week(w_id):
 @admin_required
 def create_week():
     with connect_db() as db:
+        # select weeks to check if any exist yet
         sql="""
             SELECT date
             FROM week
@@ -949,9 +977,10 @@ def create_week():
             # no, so calculate next sundays date
             date_object = date.today() + relativedelta(weekday=SU(+1))
             date = (date_object).strftime("%Y-%m-%d")
-
+        # calculate the practice date (Thurdsday before the sunday)
         practice_date = (date_object - timedelta(days = 7)).strftime("%Y-%m-%d")
 
+        # enter into weeks, but not anything into roster
         sql2="""
             INSERT INTO week (date, practice_date)
             VALUES (?,?)
@@ -967,6 +996,7 @@ def create_week():
         params3=()
         user_ids = db.execute(sql3, params3).fetchall()
 
+        # create records in unavailability table, so users can submit unavailability for that week 
         for user in user_ids:
             sql4="""
                 INSERT INTO unavailability (week_id, user_id, available, completed)
@@ -974,7 +1004,6 @@ def create_week():
             """
             params4=(id, user['id'])
             db.execute(sql4, params4)
-
 
         flash(f'week - {date} successfuly initialized', 'success')
 
@@ -988,6 +1017,7 @@ def create_week():
 @app.get("/contact")
 def show_contact():
     with connect_db() as db:
+        # select admin details
         sql="""
             SELECT first_name, last_name, email FROM user
             WHERE is_admin = TRUE
@@ -1014,6 +1044,7 @@ def show_legal():
 @app.get("/delete")
 def delete():
     if session['is_admin']:
+        # cant delete admin account
         flash('Cannot Delete Admin Account', 'error')
     else:
         with connect_db() as db:

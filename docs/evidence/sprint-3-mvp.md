@@ -135,13 +135,21 @@ As the system worked as intended, the Web App did not need any improvements
 
 ## Testing Display of One Weeks Data
 
-Replace this text with notes about what you are testing, how you tested it, and the outcome of the testing
+I am testing whether the system can display the data of a week when a user who is rostered for that week goes to see the information for that week. I tested this by making a test week with one of my test users being rostered for that week, and then seeing how the system displays the data. When I did this, the system displayed all the right data associated with the one week.
 
-**PLACE SCREENSHOTS AND/OR ANIMATED GIFS OF THE TESTING HERE**
+![Week data being displayed](screenshots/week-display.gif)
+
+Data in db:
+
+![data about the files and users and such](screenshots/week-data.png)
+
+![data about the weeks](screenshots/New-data-2.png)
+
+![Roster content](screenshots/Roster-Content.png)
 
 ### Changes / Improvements
 
-Replace this text with notes any improvements you made as a result of the testing.
+As the system worked fine, it did not need any improvements.
 
 **PLACE SCREENSHOTS AND/OR ANIMATED GIFS OF THE IMPROVED SYSTEM HERE**
 
@@ -200,5 +208,4 @@ This worked well the first time, however, if a week is put in the db with seed d
 
 ## Sprint Review
 
-Replace this text with a statement about how the sprint has moved the project forward - key success point, any things that didn't go so well, etc.
-
+This sprint helped move the project forward, as it allowed me to make the web app work, and function as desired by the end user. It also allowed me to get a tangible and usable web app that I could test and make sure that it worked in the ways it was supposed to, and showed me bugs that needed fixing, ready for the final app. A key success point was the way that the project managed to come together and have a fully functioning app for the user and I to test. Something that didn't go well was the speed at which the project progressed. I would have liked to have more time to style and work on my project from an aesthetic point of view, but the functionality took longer than I was expecting.

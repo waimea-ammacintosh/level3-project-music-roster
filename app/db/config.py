@@ -54,8 +54,7 @@ class WeekTable:
     SEED_DATA = """
         INSERT INTO week (date, practice_date)
         VALUES
-        ('2026-10-20', '2026-10-17'),
-        ('2026-10-21', '2026-10-18'), 
+ 
         ('2026-11-08', '2026-11-05'),
         ('2026-11-15', '2026-11-12'),
         ('2026-11-22', '2026-11-19'),
@@ -98,9 +97,13 @@ class InstrumentTable:
         INSERT INTO instrument (name)
         VALUES
         ('Worship Lead'),
-        ('bass'),
-        ('acoustic guitar'),
-        ('sing')
+        ('Bass'),
+        ('Acoustic Guitar'),
+        ('Sing'),
+        ('Drums'),
+        ('Piano'),
+        ('Other'),
+        ('Sound')
         
 
     """

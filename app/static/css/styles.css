@@ -7,17 +7,19 @@
     --primary-color: #688ca0;
     --seccondary-color: #79abc7;
     --accent-color: #9ebccd;
+    
 
     --primary-color-light: color-mix(in srgb, var(--primary-color), #fff 20%);
     --primary-color-lighter: color-mix(in srgb, var(--primary-color), #fff 50%);
     --primary-color-dark: color-mix(in srgb, var(--primary-color), #000 25%);
     --primary-color-darker: color-mix(in srgb, var(--primary-color), #000 50%);
 
-    --text-color: #000;
-    --inv-text-color: #fff;
+    --text-color: #111111;
+    --inv-text-color: #d3d3d3;
 
 
-    --page-bg: var(--primary-color);
+    --page-bg-light: #d1d1d1;
+    --page-bg-dark: #313131;
     --panel-bg: var(--base-color-light);
 
     --link-color: var(--accent-color);
@@ -59,20 +61,27 @@
     --border-radius-sm: 1rem;
     --border-radius-lr: 5rem;
 
-
-
-
 }
 
 
 
 /* Overall Layout -----------------------------------------------*/
 
-html {
-    background-color: var(--page-bg);
-    color: var(--text-col);
+@media(prefers-color-scheme: light) {
+    html {
+        background-color: var(--page-bg-light);
+        color: var(--text-color);
+        font-family: 'Epunda Sans', sans-serif;
 
-    font-family: system-ui, sans-serif;
+    }
+}
+
+@media(prefers-color-scheme: dark) {
+    html {
+        background-color: var(--page-bg-dark);
+        color: var(--inv-text-color);
+        font-family: 'Epunda Sans', sans-serif;
+    }
 }
 
 
@@ -98,7 +107,7 @@ body > header {
     align-items: center;
     justify-content: space-between;
     padding: 1rem;
-    background-color: var(--seccondary-color);
+    background-color: var(--primary-color);
     border-radius: var(--border-radius-sm);
 
     .nav_img {
@@ -136,6 +145,12 @@ section {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    align-items: center;
+
+    #weeks {
+        width: 100%;
+        max-width: 30rem;
+    }
 }
 
 
@@ -145,7 +160,7 @@ section {
     display: flex;
     gap: var(--gap);
     flex-direction: column;
-    background-color: var(--seccondary-color);
+    background-color: var(--primary-color);
     border-radius: var(--border-radius-sm);
     align-items: center;
     margin: var(--margin-sm);
@@ -184,7 +199,7 @@ section {
     align-items: center;
     border-radius: var(--border-radius);
     height: 70vh;
-    background-color: var(--seccondary-color);
+    background-color: var(--primary-color);
     padding: var(--padding-sm);
 
     button {
@@ -215,6 +230,7 @@ section {
 #roster {
     border: 1px solid;
     border-collapse: collapse;
+    margin: var(--margin);
 
     th {
         border: 1px solid;
@@ -245,7 +261,7 @@ form {
     flex-direction: column;
     margin: var(--margin);
     width: 100%;
-    background-color: var(--seccondary-color);
+    background-color: var(--primary-color);
     border-radius: var(--border-radius-sm);
     align-items: center;
     justify-content: center;
@@ -273,4 +289,10 @@ form {
     border: none;
     width: 90%;
     margin: var(--margin-sm);
+}
+
+/* Links ------------------------------------------------ */
+
+a {
+    color: var(--link-color);
 }
