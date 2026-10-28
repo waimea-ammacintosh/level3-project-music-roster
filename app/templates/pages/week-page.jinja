@@ -16,13 +16,13 @@
             <tbody>
                 {% for instrument in instruments %}
                     <tr>
-                        <td class"instrument_cell">
+                        <td class="instrument_cell">
                             {{ instrument.name }}
                         </td>
                         {% for i in week %}
                             {% if i.i_id == instrument.id %}
-                                <td class"user_cell">
-                                    {{ i.u_fname }}
+                                <td class="user_cell">
+                                    {{ i.u_fname }} {% if i.u_lname %} {{ i.u_lname }} {% endif %}
                                 </td>
                             {% endif %}
                         {% endfor %}

@@ -1,6 +1,6 @@
 /*===========================================================
-  PROJECT NAME HERE
-  By YOUR NAME HERE
+  Music Roster Project
+  By Aaron Macintosh
 ===========================================================*/
 
 :root {
@@ -225,7 +225,6 @@ section {
 .background{
     display: flex;
     flex-direction: column;
-    justify-content: top;
     align-items: center;
     border-radius: var(--border-radius);
     height: 70vh;
@@ -253,6 +252,10 @@ section {
     padding: var(--padding);
     margin-top: var(--margin);
 
+    a {
+        color: var(--primary-color-darker)
+    }
+
     
 }
 
@@ -262,6 +265,7 @@ section {
     border: 1px solid;
     border-collapse: collapse;
     margin: var(--margin);
+    width: 100%;
 
     th {
         border: 1px solid;
@@ -300,6 +304,7 @@ form {
     max-width: var(--content-width-sm);
     margin-inline: auto;
     padding: var(--padding);
+    
 
     label {
         width: 90%;
@@ -309,6 +314,15 @@ form {
             width: 100%;
         }
 
+    }
+
+    .checkbox-radio {
+        display: flex;
+        flex-direction: column;
+    }
+
+    h4 {
+        text-align: center;
     }
 
 }

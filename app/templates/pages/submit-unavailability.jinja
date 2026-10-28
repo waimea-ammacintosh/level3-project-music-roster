@@ -11,17 +11,12 @@
     <section>
       {% if weeks %}
         <form method="post" action="/unavailability">
-          <label>
-            Select the dates you are <strong>Unavailable</strong> for:
-            <div class="checkbox-radio">
-              {% for week in weeks %}
-                <div class="option">
-                  <label><input type="checkbox" name="weeks" value="{{ week.w_id }}" class="clicked"></label>{{ week.date }}
-                </div>
-              {% endfor %}
-            </div>
-          </label>
-
+          <h4>Select the dates you are <strong>Unavailable</strong> for:</h4>
+          <div class="checkbox-radio">
+            {% for week in weeks %}
+              <label class="option"><input type="checkbox" name="weeks" value="{{ week.w_id }}" class="clicked">{{ week.date }}</label>
+            {% endfor %}
+          </div>
           <button>Submit</button>
         </form>
 

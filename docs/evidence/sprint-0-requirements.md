@@ -2,7 +2,7 @@
 
 ## Identified Problem or Need
 
-There is a problem that many people who regualarly organise music rosters, such as my church, where it is a lengthy process, where they have to send out many emails, and get feedback on availavility. Then, they have to manually go through on excell, and enter all the dates and people. This can take multiple iterations to make sure everyone is happy, and is available on the weeks they are rostered on for. It is a very lengthy process that could be shortened and simplified with a well implemented web app.
+There is a problem that many people who regualarly organise music rosters, such as my church. It is a lengthy process, where they have to send out many emails, and get feedback on availavility. Then, they have to manually go through on excel, and enter all the dates and people. This can take multiple iterations to make sure everyone is happy, and is available on the weeks they are rostered on for. It is a very lengthy process that could be shortened and simplified with a well implemented web app.
 
 
 ## End-User Requirements
@@ -31,9 +31,9 @@ When I make this app, I will need to consider design choices that will make my a
 
 
 
-## Useability
+## Usability
 
-Useability refers to how easy the app is to use. For example, Does the app help users minimise and undo errors?, Does the app follow Nielsens Usability Heuristics?, Does the app follow common conventions to maximise user useability?
+Usability refers to how easy the app is to use. For example, Does the app help users minimize and undo errors?, Does the app follow Nielsen's Usability Heuristics?, Does the app follow common conventions to maximize user usability?
 
 ### Relevance to the System
 
@@ -51,11 +51,11 @@ Functionality refers to how functional the app is, in terms of things like glitc
 
 ### Relevance to the System
 
-This implication is relevent to this app, as my app needs to be functional for users to enjoy using the app. For my app to be a success, it must function as expected, and if it does not, people will not use it.
+This implication is relevant to this app, as my app needs to be functional for users to enjoy using the app. For my app to be a success, it must function as expected, and if it does not, people will not use it.
 
 ### Impact / Considerations
 
-To make sure this implication is planned for, I will need to consider how the app will work, and what possible insecurities or bugs may arise from the design. I will need to make sure I optimise my coding to reduce lag and bugs. I will make sure to thoroughly test my app when I have finished making it to check everything works as expected. This implication will affect my project as I will need to consider making my app well optimised and free of bugs and errors.
+To make sure this implication is planned for, I will need to consider how the app will work, and what possible insecurities or bugs may arise from the design. I will need to make sure I optimize my coding to reduce lag and bugs. I will make sure to thoroughly test my app when I have finished making it to check everything works as expected. This implication will affect my project as I will need to consider making my app well optimized and free of bugs and errors.
 
 
 

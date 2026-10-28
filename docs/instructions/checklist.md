@@ -8,9 +8,9 @@
 Use complex techniques to develop a database means that, taking into account the problem / need and the end users:
 
 1. You must first define the purpose of your system and the end-users' needs:
-   - [ ] Define the **purpose of the system** that uses the database
-   - [ ] Describe the **needs of the end-users**
-   - [ ] Define the **key functionality** of the proposed system
+   - [x] Define the **purpose of the system** that uses the database
+   - [x] Describe the **needs of the end-users**
+   - [x] Define the **key functionality** of the proposed system
 
 2. You need to design the structure of the database:
    - [x] **Tables** - at least two that are linked by a relationship
@@ -35,9 +35,9 @@ Use complex techniques to develop a database means that, taking into account the
    - [x] Show that any input user data **updates the database as expected**
 
 6. You need to explain and address relevant implications:
-   - [ ] Identify the **implications most relevant** to your project
-   - [ ] Explain **what the implications mean** and **why each is relevant** to your project
-   - [ ] Explain **how each implication will impact your specific project** (considerations / choices / designs)
+   - [x] Identify the **implications most relevant** to your project
+   - [x] Explain **what the implications mean** and **why each is relevant** to your project
+   - [x] Explain **how each implication will impact your specific project** (considerations / choices / designs)
    - [ ] At the end of your project, you need to **explain what you did in your project to address each implication**
 
 *Note: You must satisfy **all** of the criteria above to pass*
@@ -86,9 +86,9 @@ Use complex techniques to develop a refined database means **all of the criteria
 Use complex techniques to develop a digital media outcome means that, taking into account the problem / need and the end users:
 
 1. You must first define the purpose of your system and the end-users' needs:
-   - [ ] Define the **purpose of the system** that uses the database
-   - [ ] Describe the **needs of the end-users**
-   - [ ] Define the **key functionality** of the proposed system
+   - [x] Define the **purpose of the system** that uses the database
+   - [x] Describe the **needs of the end-users**
+   - [x] Define the **key functionality** of the proposed system
 
 2. You must use appropriate complex tools and techniques, for example:
    - [x] You have used **non-core functionality** of tools / libraries (i.e. you have extended these beyond their supplied defaults)
@@ -103,13 +103,13 @@ Use complex techniques to develop a digital media outcome means that, taking int
    - [x] Any **data shown is as expected** (i.e. matches database / calculated values)
 
 4. You have applied user experience (UX) principles relevant to the purpose of your system:
-   - [ ] You have **identified key UX principles** that are relevant
+   - [x] You have **identified key UX principles** that are relevant
    - [ ] You **applied these UX principles** in your system's design and development
 
 5. You need to explain and address relevant implications:
-   - [ ] Identify the **implications most relevant** to your project
-   - [ ] Explain **what the implications mean** and **why each is relevant** to your project
-   - [ ] Explain **how each implication will impact your specific project** (considerations / choices / designs)
+   - [x] Identify the **implications most relevant** to your project
+   - [x] Explain **what the implications mean** and **why each is relevant** to your project
+   - [x] Explain **how each implication will impact your specific project** (considerations / choices / designs)
    - [ ] At the end of your project, you need to **explain what you did in your project to address each implication**
 
 

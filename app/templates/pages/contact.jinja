@@ -7,21 +7,24 @@
 
 {% block content %}
 
-  <section class="background">
-    <h1>Contact Details</h1>
-    {# show contact details for admin and developer #}
-    <h2>Admin Details:</h2>
-    {% for admin in admin_details %}
-      <h4>Name: {{ admin.first_name }} {{ admin.last_name }}</h4>
-      <h4>Email: <a href="mailto:{{ admin.email }}">{{ admin.email }}</a></h4>
-      <br>
-    {% endfor %}
+  <div class="content-container">
+    <section class="background">
+      <h1>Contact Details</h1>
+      <h5>If you have any complaints, suggestions, or just need to contact someone, here is the contact info for you admin, and for me.</h5>
+      {# show contact details for admin and developer #}
+      <h2>Admin Details:</h2>
+      {% for admin in admin_details %}
+        <h4>Name: {{ admin.first_name }} {{ admin.last_name }}</h4>
+        <h4>Email: <a href="mailto:{{ admin.email }}">{{ admin.email }}</a></h4>
+        <br>
+      {% endfor %}
 
-    <h2>Developer Details:</h2>
-    <h4>Name: Aaron Macintosh</h4>
-    <h4>Email: <a href="mailto:aaron.macintosh@iclould.com">aaron.macintosh@iclould.com</a></h4>
-  </section>
-  <button onclick="window.location.href='/';" >Back</button>
+      <h2>Developer Details:</h2>
+      <h4>Name: Aaron Macintosh</h4>
+      <h4>Email: <a href="mailto:aaron.macintosh@iclould.com">aaron.macintosh@iclould.com</a></h4>
+    </section>
+    <button onclick="window.location.href='/';" >Back</button>
+  </div>
 
 
 {% endblock %}
