@@ -27,7 +27,7 @@ This implication is relevant to this project, as I will need this app to be used
 
 ### Impact / Considerations
 
-When I make this app, I will need to consider design choices that will make my app accessible on both computers and phones, as if I make the design only compatable for one screen type, people who use the other may have a very hard time navigating the app, so it would not be accessible to them. I also need to make considerations that make it easy for older people or other people who are not as good at using technology, as if I do not, I might end up making an app that is very to complicated for these people to use, so it would not be accessible to them.
+When I make this app, I will need to consider design choices that will make my app accessible on both computers and phones, as if I make the design only compatable for one screen type, people who use the other may have a very hard time navigating the app, so it would not be accessible to them. I also need to make considerations that make it easy for older people or other people who are not as good at using technology, as if I do not, I might end up making an app that is very complicated for these people to use, so it would not be accessible to them.
 
 
 

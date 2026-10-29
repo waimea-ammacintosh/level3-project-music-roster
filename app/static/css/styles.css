@@ -254,6 +254,11 @@ section {
 
     a {
         color: var(--primary-color-darker)
+        
+    }
+
+    a:hover {
+        color: var(--link-color);
     }
 
     
@@ -352,4 +357,5 @@ form {
 
 a {
     color: var(--link-color);
+    text-align: center;
 }
