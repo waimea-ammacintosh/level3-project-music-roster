@@ -626,7 +626,7 @@ def show_week(id):
 
         # get file data
         sql4 = """
-            SELECT filename, week_id FROM file
+            SELECT filename, week_id, id FROM file
             WHERE week_id=?
         """
         params4 = (id,)
@@ -1075,10 +1075,10 @@ def show_legal():
 
 
 # -----------------------------------------------------------
-# delete page route
+# delete account route
 # -----------------------------------------------------------
-@app.get("/delete")
-def delete():
+@app.get("/delete/account")
+def delete_week():
     if session["is_admin"]:
         # cant delete admin account
         flash("Cannot Delete Admin Account", "error")
@@ -1098,6 +1098,35 @@ def delete():
             session["is_admin"] = False
 
     return redirect("/")
+
+# -----------------------------------------------------------
+# delete file route
+# -----------------------------------------------------------
+@app.get("/delete/file/<int:id>")
+def delete_file(id):
+    with connect_db() as db:
+        sql = """
+            SELECT filename FROM file WHERE id = ? 
+        """
+        params = (id,)
+        file = db.execute(sql, params).fetchall()
+        # delete file
+        file_name = file["filename"]
+        # Get the path of the file
+        filepath = os.path.join(UPLOAD_FOLDER, file_name)
+        # Delete file from disk if it exists
+        if os.path.exists(filepath):
+            os.remove(filepath)
+        # delete record from db
+        sql2 = """
+            DELETE FROM file WHERE id = ?
+            RETURNING week_id
+        """
+        params2 = (id,)
+        week_id = db.execute(sql2, params2).fetchone()
+        flash(f"{file_name} deleted", "success")  
+
+    return redirect(url_for("show_week", id=week_id['week_id']))
 
 
 # ===========================================================

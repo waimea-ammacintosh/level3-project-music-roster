@@ -14,12 +14,12 @@ Replace this text with notes about what you did during the project to address th
 
 ### Functionality
 
-Replace this text with notes about what you did during the project to address the implication - design features, etc.
+During the project, I made several considerations and descisions to address the implication of Functionality. For example, I thoroughly tested every aspect of my app to make sure that no bugs would occur for the user. This increases the functionality of the web app, as it means that I have made sure that the app is fully functional, and the UX of my web app is one that the users can enjoy without being bombarded with bugs and errors. Another way I have implemented and addressed the implication of functionality is by trying to optimize my code as much as I can within my own knowledge. This addresses the implication of functionality, as it means that the web app is running as efficiently as possible, while still being my own work. This means that the UX is as smooth as possible, with little to no wait time when an action is performed, increasing the functionality and overall enjoyment of my web app.
 
 
 ### Legal
 
-Replace this text with notes about what you did during the project to address the implication - design features, etc.
+As my web app is collecting data, it was very important for me to adhere to the relevant New Zealand laws, specifically the NZ Online Privacy Act 2020. I adhered to this law, and thereby addressed the Legal implication by adhering to the two main principles of this Act that apply to my web app. The first one being that I have to have a clearly marked section that explains what data I am collecting, and why and how I am collecting/storing their data. I adressed this principle by adding a page that the users can easily see that explains all these things. The second principle is one that mostly protects myself from having any legal responsibility from any harmful content/messages distributed via my web app. As users can upload files for other users to see, and send messages to the admin, to be protected legaly in case any of the content is harmful and the recipient wants to take legal action, I must adhere to the 'safe harbour' protocol. This means I must provide contact details to me, so I can notify the user who submitted the harmful content, and tell them to take it down. I did this by addind to the previous legal section in my web app to also include a section notifying the users of how to make a complaint to me, and a section providing my contact for them to make the complaint to. I also added a button to delete files, which was directly inspired by this implication, as I only thought about adding one when I was thinking of how to increase the legality of my website, and the safe harbour protocol. These additions have made my web app much more legal than if I hadn't thought about them, whic adresses the legal implication of my web app.
 
 
 ### Aesthetic

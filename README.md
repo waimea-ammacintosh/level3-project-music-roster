@@ -5,10 +5,12 @@
 This is an app that allows users to manage and create a music roster
 
 The app has the following key features:
-- Feature one
-- Feature two
-- Feature three
-- ...
+- Admin half of website to create a roster, and resolve any requests made by a user.
+- Areas for musicians to see what dates they are rostered on.
+- Custom page for each specific week for users rostered for that week to see information about.
+- Ability for the users to submit unavailability in advance.
+- Ability for the users to submit a change request in case anything unexpected comes up.
+- Ability for the week music leader to upload files for other users to download.
 
 
 
@@ -50,7 +52,6 @@ Test User 3 (admin):
 - Username: jimmy@yahoo.com
 - Password: admin123
 
-...
 
 
 ## Technologies Used
@@ -59,4 +60,3 @@ Test User 3 (admin):
 - [Python](https://www.python.org/) as the programming language used
 - [SQLite](https://sqlite.org/) for the database
 - [Jinja2](https://jinja.palletsprojects.com/templates/) for page templating
-
