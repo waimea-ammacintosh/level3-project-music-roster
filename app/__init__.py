@@ -859,6 +859,9 @@ def process_resolve_request(u_id, w_id):
         for instrument in instruments:
             name = instrument.get("name")
             replacement = request.form.get(f"replacement-{name}").strip()
+            if not replacement:
+                flash(f"Please select a replacement for {name}", "error")
+                return redirect(f"/request/resolve/{u_id}/{w_id}")
             sql2 = """
                 UPDATE roster
                 SET user_id = ?
