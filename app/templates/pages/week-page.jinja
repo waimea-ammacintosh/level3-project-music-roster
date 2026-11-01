@@ -34,7 +34,7 @@
         {# attatchments #}
         <h2>Attatchments</h2>
         {% for file in files %}
-            <a href="/static/uploads/{{ file.filename }}" download> {{ file.filename }}</a><br>
+            <a href="/static/uploads/{{ file.filename }}" download> {{ file.filename }}</a> {% if worship_leader['user_id'] == session['user']['id'] %} <button onclick="return confirm('Are you sure you want to delete {{ file.filename }}?')" href="/delete/file/{{ file.id }}">🗑</button><br>
         {% else %}
             <h5>No files yet!</h5>
         {% endfor %}
