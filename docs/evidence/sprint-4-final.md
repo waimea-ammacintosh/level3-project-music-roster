@@ -160,6 +160,19 @@ To fix this, I added the width: 100%; css tag to the stylesheet of the tables, a
 ![Responsive tables](screenshots/table-good.gif)
 
 
+## Testing Delete Files
+
+When I was thinking about the implications that I had identified at the start of the project, I realized that to fully comply with the New Zealand Law, and be free from legal obligations, I needed to add a way for the users to delete files that they had uploaded. I made a button and a function to allow this function to happen. However, the styles were very bad.
+
+![Ugly Buttons](screenshots/buttons-ugly.png)
+
+### Changes / Improvements
+
+To fix this, I added a text overflow and width/max width on the links, changed the height and width of the buttons to be the square I wanted, and used the space-between justify-content to make all the buttons align on the right.
+
+![Beautiful Buttons](screenshots/buttons-beautiful.png)
+
+
 ## Sprint Review
 
 This sprint was a very good one. It helped move the project forward, as it helped me to finish the project. In this sprint, I went from a functioning site, to one that looks good, and implements the design choices that my end user and I had decided on while the project was just in the prototyping phase. It also allowed me to make design choices for the final product that we hadn't considered while it was still in the prototype, or development phase. This sprint saw the conclusion of the project in terms of functionality, UX, and UI choices, and is now ready for use. What went well with this sprint was how it took relatively little time to finalize compared to the other sprints, which took longer than I had expected. This was a success, as it meant that although I was behind during the other sprints, this sprint helped me to catch up on time, to be able to finish the project on time. Something that didn't go so well was some design choices that I thought the end user was happy with, they decided that they should be changed. This was mostly the colour of the background. This set me back, as I had to now worry about restyling most things to work with the new background colours that the end user chose. Overall, however, the sprint was a massive success, as it helped finish the project, and by the end of it, I had a web app that both me and my end user was happy with.

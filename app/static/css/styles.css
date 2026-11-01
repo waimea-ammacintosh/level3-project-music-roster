@@ -50,10 +50,12 @@
     --button-width: 10rem;
     --button-width-sm: 7rem;
     --button-width-lr: 20rem;
+    --button-width-square: 3rem;
 
     --button-height: 3rem;
     --button-height-sm: 1rem;
     --button-height-lr: 5rem;
+    --button-height-square: 3rem;
 
     --font-size: 1rem;
     --font-size-sm: 0.5rem;
@@ -358,4 +360,31 @@ form {
 a {
     color: var(--link-color);
     text-align: center;
+}
+
+/* File ------------------------------------------------- */
+
+.file {
+    width: 100%;
+    max-width: var(--content-width-sm);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    a {
+        text-align: left;
+        text-wrap: wrap;
+        overflow-wrap: break-word;
+        max-width: 70%;
+        
+    }
+
+
+    button {
+        width: var(--button-width-square);
+        height: var(--button-height-square);
+        margin: var(--margin-sm);
+    }
+
 }
