@@ -7,14 +7,23 @@ Continue to develop the web application to the point that it provides all key fu
 
 ### Specific Goals
 
-**Edit these goals as needed**
 
 - Create the following web pages:
-    - Form for ...
-    - Etc.
+    - Form for Sign in/up
+    - Form for submitting unavailability
+    - Form for submitting a request
+    - Form for adding file
+    - Form for resolving a request
+    - Form for creating week
+    - Page for displaying roster
+    - Page for displaying individual week
+    - Page for initializing weeks
+    - Home page
 - Develop SQL database queries to:
-    - Add a new ...
-    - Etc.
+    - Add a new user
+    - Add new weeks
+    - Delete old weeks
+    - select week data
 
 
 ## Testing Roster display
