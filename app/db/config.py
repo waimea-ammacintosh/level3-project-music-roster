@@ -40,6 +40,7 @@ class UserTable:
         ('tom.rone@scary.com', 'Tom', 'Rone', 'scrypt:32768:8:1$tfKjizzt87rOrItD$7c0b7b8269434224f29ec37e0b8de4dbee1f54fbd0d5a48225845a9706362702e7ffaff2fc9aa6d452a18a00e618e23114b164403350f68da2781dd9c4a0efed', FALSE),
         ('com.com@com.com', 'Com', 'Com', 'scrypt:32768:8:1$tfKjizzt87rOrItD$7c0b7b8269434224f29ec37e0b8de4dbee1f54fbd0d5a48225845a9706362702e7ffaff2fc9aa6d452a18a00e618e23114b164403350f68da2781dd9c4a0efed', FALSE),
         ('greg@gmail.com', 'Gref', 'Shoern', 'scrypt:32768:8:1$tfKjizzt87rOrItD$7c0b7b8269434224f29ec37e0b8de4dbee1f54fbd0d5a48225845a9706362702e7ffaff2fc9aa6d452a18a00e618e23114b164403350f68da2781dd9c4a0efed', FALSE),
+        ('timmy@dead.com', 'Tommy', 'Walter', 'scrypt:32768:8:1$tfKjizzt87rOrItD$7c0b7b8269434224f29ec37e0b8de4dbee1f54fbd0d5a48225845a9706362702e7ffaff2fc9aa6d452a18a00e618e23114b164403350f68da2781dd9c4a0efed', FALSE)
     """
 
 # Add more table classes here...
@@ -155,7 +156,30 @@ class InstrumentUserTable:
         (1, 1),
         (1, 2),
         (1, 4),
-        (2, 3)
+        (2, 3),
+        (4, 4),
+        (4, 7),
+        (4, 8),
+        (5, 5),
+        (5, 7),
+        (5, 8),
+        (5, 3),
+        (6, 1),
+        (6, 2),
+        (6, 5),
+        (6, 7),
+        (7, 6),
+        (7, 7),
+        (7, 8),
+        (8, 1),
+        (8, 2),
+        (8, 3),
+        (8, 4),
+        (8, 5),
+        (8, 6),
+        (8, 7),
+        (8, 8)
+
             
     """
 
@@ -179,9 +203,21 @@ class RosterTable:
         INSERT INTO roster (user_id, week_id, instrument_id)
         VALUES
         (1, 1, 1),
+        (1, 1, 2),
         (2, 1, 3),
+        (8, 1, 4),
+        (5, 1, 5),
+        (7, 1, 6),
+        (6, 1, 7),
+        (4, 1, 8),
+        (7, 2, 1),
         (1, 2, 2),
-        (1, 2, 1)
+        (2, 2, 3),
+        (1, 2, 4),
+        (5, 2, 5),
+        (7, 2, 6),
+        (6, 2, 7),
+        (4, 2, 8)
             
     """
 
@@ -211,7 +247,27 @@ class UnavailabilityTable:
         (2, 1, TRUE, TRUE),
         (2, 2, FALSE, TRUE),
         (2, 3, FALSE, FALSE),
-        (2, 4, FALSE, FALSE)
+        (2, 4, FALSE, FALSE),
+        (4, 1, TRUE, TRUE),
+        (4, 2, TRUE, TRUE),
+        (4, 3, FALSE, TRUE),
+        (4, 4, TRUE, TRUE),
+        (5, 1, TRUE, TRUE),
+        (5, 2, TRUE, TRUE),
+        (5, 3, TRUE, TRUE),
+        (5, 4, FALSE, TRUE),
+        (6, 1, TRUE, TRUE),
+        (6, 2, FALSE, TRUE),
+        (6, 3, TRUE, TRUE),
+        (6, 4, FALSE, TRUE),
+        (7, 1, FALSE, TRUE),
+        (7, 2, TRUE, TRUE),
+        (7, 3, FALSE, TRUE),
+        (7, 4, FALSE, TRUE),
+        (8, 1, TRUE, TRUE),
+        (8, 2, FALSE, TRUE),
+        (8, 3, TRUE, TRUE),
+        (8, 4, TRUE, TRUE)
     """
 #----------------------------------------------------------------------------
 # Table registry

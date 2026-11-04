@@ -104,13 +104,13 @@ Use complex techniques to develop a digital media outcome means that, taking int
 
 4. You have applied user experience (UX) principles relevant to the purpose of your system:
    - [x] You have **identified key UX principles** that are relevant
-   - [ ] You **applied these UX principles** in your system's design and development
+   - [x] You **applied these UX principles** in your system's design and development
 
 5. You need to explain and address relevant implications:
    - [x] Identify the **implications most relevant** to your project
    - [x] Explain **what the implications mean** and **why each is relevant** to your project
    - [x] Explain **how each implication will impact your specific project** (considerations / choices / designs)
-   - [ ] At the end of your project, you need to **explain what you did in your project to address each implication**
+   - [x] At the end of your project, you need to **explain what you did in your project to address each implication**
 
 
 *Note: You must satisfy **all** of the criteria above to pass*
@@ -125,8 +125,8 @@ Use complex techniques to develop an informed digital media outcome means **all 
    - [x] Show the **improvements made** as a result
 
 2. You have used testing tools to help improve your web site:
-   - [ ] You have used **code validation** tools for generated HTML and CSS
-   - [ ] You have **fixed any issues** identified
+   - [x] You have used **code validation** tools for generated HTML and CSS
+   - [x] You have **fixed any issues** identified
 
 3. You have applied user experience (UX) principles to improve the quality of your web site:
    - [x] Show evidence that you **tested your system against identified UX principles** during development

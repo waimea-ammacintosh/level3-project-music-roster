@@ -53,7 +53,7 @@ When this would not work, I came up with a new approach that was much simpler, a
 
 ![Good roster SQL](screenshots/Roster-Display-New.png)
 
-![Correct roster is shown](screenshots/Roster-display-correct.gifn b)
+![Correct roster is shown](screenshots/Roster-display-correct.gif)
 
 
 ## Testing User Register
@@ -100,7 +100,9 @@ I am testing to see if an admin user can initialize a week. This should make an 
 
 ### Changes / Improvements
 
-The testing showed the system working perfectly fine, so no changes were required.
+When I tested this, the system worked good, but when I was considering the UX, I realized that the current system returned the user to that weeks' creation page, but this would be a bad UX for the user, as no musicians would have been able to enter any unavailability yet, so no-one could be put in the system, so it was a useless feature. Furthermore, if the admin wanted to add multiple weeks at a time, they would have to exit a page every single time, which would get very annoying if you were trying to do a few months at time. To fix this, and thereby improving the UX by adhering to the UX principles of Clear User Flows and Keep Tasks Quick, I made the 'New' button redirect to the roster creation page. This made the task of creating weeks quick and clear, improving UX of the web app.
+
+![Good UX](screenshots/week-init-good-ux.gif)
 
 
 ## Testing Week Creation
@@ -159,8 +161,6 @@ Data in db:
 ### Changes / Improvements
 
 As the system worked fine, it did not need any improvements.
-
-**PLACE SCREENSHOTS AND/OR ANIMATED GIFS OF THE IMPROVED SYSTEM HERE**
 
 
 ## Testing File Upload

@@ -298,12 +298,6 @@ def process_new_user():
         email = request.form.get("email", "").strip().lower()
         password = request.form.get("password", "").strip()
         instruments = request.form.getlist("instrument")
-        role = request.form.get("role", "").strip()
-
-        # check wether user is admin
-        is_admin = False
-        if role == "Admin":
-            is_admin = True
 
         pass_hash = generate_password_hash(password)
 
@@ -327,7 +321,7 @@ def process_new_user():
             VALUES (?, ?, ?, ?, ?)
             RETURNING id;
             """
-        params2 = (first_name, last_name, email, pass_hash, is_admin)
+        params2 = (first_name, last_name, email, pass_hash, False)
         user = db.execute(sql2, params2).fetchone()
         user_id = next(iter(user.values()))
 
