@@ -2,5 +2,5 @@ title: Music Roster Project
 description: A system for managing and creating a music roster
 author: Aaron Macintosh
 
-development: true
-picotheme: azure
+development: false
+picotheme: pumpkin
