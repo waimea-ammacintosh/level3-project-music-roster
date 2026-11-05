@@ -38,8 +38,7 @@ Users will see text data (their names, instruments, and the names/instruments of
 
 ### Required Data Processing
 
-Replace this text with a description of how the data will be processed to achieve the desired output(s) - any processes / formulae?
-
+The data will be processed with SQL queries such as SELECT, INSERT, and using multiple JOINS, such as CROSS JOIN to select the roster data.
 
 ### Testing
  
@@ -50,6 +49,12 @@ I showed this database to my end-user, and they had some ideas. They thought tha
 Taking into account his suggestions, and created a new database design, with a new instruments and link table, and a new roles and link table.
 
 ![2nd DB Design](screenshots/db-2.png)
+
+## Final DB design
+
+After Consideration with both my end user, and with testing in my actual web app, I decided to make a few changes to the db. These include changes such as adding an 'instrument' column to the roster table so that the system can handle people with multiple instruments, and getting rid of the role table, as we decided that the only roles would be admin or regular user, so I instead added a boolean column called 'is_admin' to the user table.
+
+![Final DB Design](screenshots/db-final.png)
 
 ## UI 'Flow'
 
